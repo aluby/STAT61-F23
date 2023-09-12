@@ -1,0 +1,42 @@
+---
+title: "Homework 01: Due 9/13"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+1. Fill out the [Stat061 Intro Survey](https://forms.gle/wHcF7DhhPzY8cddX6) 
+
+1. Try out the review problems on "Homework 00" and reflect on the following questions
+    a) How many questions were you able to finish?
+    b) How many questions are you confident you'd be able to finish if you spent more time on them?
+    c) Are there any questions you are 100% confident that you did *not* learn how to solve in calculus or probability? If so, explain. 
+    d) Are there any particular topics that you feel you need to review in order to be successful in this class? 
+
+1. For each of the following probability distributions, find (a) the likelihood function for an iid sample of $X_1, X_2, ..., X_n$, (b) the MLE, (c) the method of moments estimator. 
+    i) the parameter $\lambda$ for a Poisson distribution where $P(X = k) = \frac{\lambda^k}{k!} e^{-\lambda}$ for $k=$ 0, 1, 2, $\ldots$.
+    ii) the parameter $p$ in the Geometric distribution where $P(X = k) = p(1 - p)^{k-1}$ for $k= $ 1, 2, 3, $\ldots$.
+    iii) the parameter $\alpha$ in the distribution with pdf $f(x | \alpha) = \frac{\Gamma(2\alpha)}{\Gamma(\alpha)^2}[x(1-x)]^{\alpha -1}$ where $x \in [0,1]$. (Hint: You may not be able to find a close form solution here, just remark on what equation the MLE of $\alpha$ would have to satisfy.)
+    iv) the parameter $\beta$ in the Pareto distribution with pdf $f(x | \beta) = \frac{\beta}{x^{\beta+1}}$ where $x > 1$. (Hint: $E(X) = \frac{\beta}{\beta-1}$ and $Var(X) = \frac{\beta}{(\beta-1)^2(\beta-2)}$).
+
+1. This problem is inspired by the famous “German Tank Problem", where the numbers of tanks in use in WWII were estimated based on the serial numbers found on captured tanks. Suppose a company manufactures certain objects and has printed a sequential serial number on the objects, starting with 1 and ending with N, where N is the number of objects that have been manufactured. One object has been selected at random, and the serial number observed. Assume the observed serial number $x$ is a draw from a discrete Uniform distribution: $P(X = x) = 1/N$, for $x = 1,...,N$. Suppose the observed serial number is 888.
+    a) Write out the likelihood function $L(N)$, which gives the probability of observing the value $x$ if we assume there are $N$ tanks total, for any possible value $N$
+    a) Sketch out a graph of the log-likelihood function $l(N) = \log(L(N))$ for a reasonable range of $N$. At what value $\hat{N}$ is $l(N)$ maximized? 
+    a) Find the expected value of $X$. Use this to identify a MoM estimator for $N$ and evaluate for the observed data. 
+
+1. Find the MoM estimator for $\theta$ for the Uniform($0,\theta$) distribution. Calculate the value of this estimate $\hat{\theta}$ that would be obtained for the sample $\{44, 92, 12, 21, 56\}$. Why is this estimate not sensible? 

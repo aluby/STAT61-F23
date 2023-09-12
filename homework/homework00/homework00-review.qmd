@@ -1,0 +1,73 @@
+---
+title: "Homework 00: Probability & Calculus Review"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+  docx:
+    toc: false
+---
+
+The prerequisites for Stat61 are probability (Stat51) and multivariable calculus (Math 33, 34, 35). I will also assume some familiarity with matrix algebra. If you do not know your calculus and probability reasonably well, you may have a hard time following the course material and keeping up with assignments. In particular, you will need to be comfortable with limits, infinite series, differentiation, and integration. In addition, it is recommended that you've seen some elementary statistics at the level of Stat 11. 
+
+To give you an idea of what you're expected to know, try out the following calculus and probability questions. This is not homework, you do not need to turn it in! It's OK if you don't immediately remember how to solve everything, but you should be able to complete most of these problems relatively quickly with a small amount of looking back at prior notes or googling. This is *not* an exhaustive list of topics, but a sample of the mechanics that I'll assume you can mostly figure out on your own (but it's OK if it takes some time!) If you have trouble with most of the questions, please see me during the first two weeks of class. 
+
+## Calculus Review
+
+1. Simplify $\sum_{k=0}^\infty x^k$ if $0<x<1$.
+1. Simplify $\sum_{k=0}^\infty kx^k$ if $0<x<1$. (*Hint*: use the result from the previous question)
+1. What is the value of $\sum_{k=1}^\infty \frac{1}{k}$?
+1. Show that $\sum_{k=0}^\infty \frac{x^k}{k!}\;=\; e^x$. 
+1. Find the derivative with respect to $x$ of $f(x)  = xe^{-x}$.
+1. Find the antiderivative of $f(x) = x e^{-x}$.
+1. Find the partial derivatives of $f(x,y) = y^x$ where $x>1, y>1$.
+1. Find the value of $\mu$ (in terms of the $x_i$'s) that maximizes the function
+$$L(\mu) \;=\; \exp\left[-\frac{1}{2} \sum_{i=1}^n (x_i-\mu)^2/2\right].$$
+1. Show that
+$$ \sum_{i=1}^n (x_i-\mu)^2 \;=\; n(\bar{x}-\mu)^2\,+\, \sum_{i=1}^n(x_i-\bar{x})^2,\quad\quad \mbox{where}\; \bar{x} \;=\; \frac{1}{n}\sum_{i=1}^n x_i.$$
+
+## Probability Review
+
+1. Target's Market Pantry sells a mixed fruit variety of "fruit" snacks that my nephew loves.  Each packet contains 15 fruit snacks with five flavors (grape, strawberry, orange, peach, and raspberry). In one recent packet he exclaimed delight that he got 4 strawberry (his favorite), 4 orange (second favorite), 3 raspberry, 3 peach and 1 grape (least favorite.) 
+    a) If my nephew reaches into the recent packet and picks out 5 fruit snacks at once what is the probability he will select at least one strawberry?
+    b)  If he reaches in and picks out 5 fruit snacks at once, what is the probability he will select one of each flavor?
+    c) If he samples 5 \emph{with replacement}, what is the probability he will select at least one strawberry?
+  
+1. Let $X$ be the number on a standard die roll (so $X$ is chosen uniformly from the set $\{1, 2, 3, 4, 5, 6\}$).
+    a) What is the moment generating function (MGF) of $X$?
+    b) Suppose that ten dice are rolled independently and $Y$ is the sum of the numbers on all the dice. What is the moment generating function (MGF) of $Y$?
+  
+1. Suppose $X$ has a continuous probability distribution $f_X$ such that $E(X) = 10$ and $Var(X) = 10$. Let $X_1, X_2, ... X_{5}$ be continuous independent random variables with the probability distribution $f_X$.  Let $Y = \frac{\sum_{i=1}^{5} X_i}{5}$.  Using the Central Limit Theorem, find the approximate probability $P(5 \leq Y \leq 15)$.  
+
+1. Suppose the measurement error of a certain scale is known to follow a continuous distribution whose probability density function is
+$$
+f(x) =
+\begin{cases}
+1+x & -1 \leq x \leq 0 \\
+1-x & 0 \leq x \leq 1 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+   a) Find the probability density function of $|X|$, the absolute measurement error.
+   b) Find $E(X)$ and $Var(X)$.
+   
+1. Suppose that the random variables $X$, $Y$, and $Z$ have the multivariate PDF for $0<x<1$, $0<y<1$, and $z>0$. 
+  $$f_{X,Y,Z} = (x+y)e^{-z}$$
+    a) Find $f_{X,Y}(x,y)$
+    b) $f_{Y,Z}(y,z)$
+    c) $f_Z(z)$
+

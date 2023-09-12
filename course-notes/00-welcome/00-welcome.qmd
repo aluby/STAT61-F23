@@ -1,0 +1,201 @@
+---
+title: "Welcome to Stat061!"
+author: "Prof Amanda Luby"
+format: 
+  revealjs:
+    incremental: true
+    embed-resources: true
+---
+
+## Plan for today
+
+1.  Syllabus
+2.  Context for the class
+3.  Course expectations
+
+## A bit about me
+
+-   I've been at Swarthmore since 2019
+- I live near campus and you may see me walking my dog
+-   I have a PhD in Statistics & Data Science from CMU
+-   My research area is models for decision-making, particularly applied to forensic science
+-   I was on research leave last year and spent some time at the Netherlands Forensic Institute
+-   My office is right down the hall
+-   Office hours are tentatively scheduled for M/W 2:30-4. I may adjust based on survey responses
+
+# Syllabus
+
+## Course description
+
+This course is an introduction to the mathematical theory of frequentist and Bayesian statistical inference. Topics include parameter estimation, confidence intervals and hypothesis testing, linear models, and Bayesian inference.
+
+Students who analyze data, or who aspire to develop new methods for analyzing data, should be well-grounded in mathematical statistics. 
+
+## Course Objectives 
+
+By the end of this course, you should be able to: 
+
+  - Derive estimators for parameters using maximum likelihood, the method of moments, and Bayesian techniques 
+  - Evaluate the performance of estimators and describe their strengths and weaknesses 
+  - Demonstrate a sophisticated understanding of the mathematics behind hypothesis tests, confidence intervals, and linear models   
+  - Use the statistical package R to implement basic simulations of estimation scenarios
+
+## Textbook:
+
+*Introduction to Mathematical Statistics and Its Applications* by Larsen and Marx.
+
+-   Any edition online or in print is fine
+-   We'll be following fairly closely for the first half of the semester or so
+-   Up to you how you use the textbook
+
+ *Mathematical Statistics and Data Analysis* by Rice
+
+-   Not required
+-   Deeper mathematics
+
+## Computing: {.scrollable}
+
+-   We're going to be using R with RStudio throughout the semester to explore statistics concepts through simulation alongside the math. *Prior coding experience is recommended but not required*
+
+-   You should all have accounts for the RStudio server, which you can access through the browser and doesn't require any downloads.
+
+-   If you prefer, you can also download R and RStudio on your own computer. Your computations would run faster, and would not go away when you graduate.
+
+-   Next week, we'll have our first "lab" day and I'll walk you through how to get started. If you don't have a laptop you can easily bring to class, please let me know ASAP so we can get you set up with a loaner.
+
+## Assignments
+
+-   Homework will be assigned once per week, due on gradescope by midnight on Wednesday night
+-   No-questions-asked 12 hour extension if you need it
+-   Longer extensions must be arranged in advance.
+-   Assignment submissions should be typeset using quarto or markdown or latex OR neatly written and scanned and submitted as a PDF file.
+-   You're responsible for submitting readable work
+
+## Regrade request policy
+
+Grading is often a tedious task, and the grading team will sometimes make mistakes. I am always happy to fix these mistakes, and gradescope makes it easy to do so. However, it takes time to read through these requests and I've noticed an increase in unwarranted regrade requests in recent years. This semester, I am instituting an "NFL Coaches Challenge"-style regrade request rule. Every student will start the semester with 2 regrade requests available to them. If you submit a regrade request and I agree with you, you get it back. If you submit a regrade request for something that was not a grading mistake, you lose that request.
+
+## Quizzes
+
+-   There will be three quizzes, tentatively scheduled for Wednesdays (Sept 27, Oct 25 (after fall break), Nov 22 (before Thanksgiving))
+-   If I need to reschedule, I'll give you at least two weeks notice.
+-   Any conflicts must be communicated to me in writing at least two weeks in advance to be able to schedule a make-up quiz.
+-   If an emergency arises, please contact me as soon as possible.
+
+## Final Exam and Project
+
+-   The final exam will take place during the finals period. The exam schedule will be posted by the registrar once it is determined. Final exams are not rescheduled due to travel plans.
+-   The final exam is worth 20% of your final grade
+-   We'll also have a final project, due during the finals period, that will be worth 10% of your grade.
+
+## Final grades
+
+-   40% homework
+-   30% quizzes (10% each)
+-   20% final exam
+-   10% final project
+-   5% participation, in-class activities, and labs
+-   Letter grades will be assigned based on the usual grading scale (A = 93%+, A- = 90-92.9%, B+ = 88-89.9%, B = 83-87.9, etc.)
+
+## Advice from past students: {.smaller}
+
+-   Start the problem sets early and go to office hours!
+-   Work with other people in the class, collaboration is key
+-   Be willing to ask lots of questions and don't be afraid to ask for help!
+-   I would advise for them to attend office hours and the stat clinic since early on to get help and not be worrying about assignments at the last minute.
+-   I would advise future students to reach out and ask questions as soon if they have any confusion. Understanding statistical concepts and working with R can be frustrating at times, but people are here to help you along the way!
+-   Don't let work snowball! Try to get help early and often and an imperfect problem set is better than no problem set.
+-   lots of R here! Organization is key, and you'll do well as long as you start homeworks early, communicate with the professor and with your fellow classmates. There's a good support system.
+
+## The "Genius Myth" {style="font-size: 90%;"}
+
+I've found that many Swatties buy into the "genius myth" when it comes to math/stat courses: that you need to be a "math person" and have some innate mathematical ability in order to do well or become a statistics major. **This could not be further from the truth!** The best statisticians don't necessarily have the "best" math or programming background, but are people that are able to formulate interesting questions and use math and programming to rigorously answer those questions. Many of the best statisticians I know became statisticians because they were initially interested in something else (biology, public health, psychology, neuroscience, physics, etc.) and realized that being able to answer important questions with data was not only valuable but fun and interesting. Being able to perform interesting statistical analyses is a skill that is learned, not an innate ability, and working hard at developing that skill is the point of this course.
+
+## Academic Integrity {style="font-size: 80%;"}
+
+I encourage you to discuss the homework problems with others and use the resources available to you to try to figure out tough problems. Write up your solutions on your own. Exams must be done by yourself without communicating with others; all work must be your own. Copying. paraphrasing, summarizing , submitting work generated by a large language model, etc., will not be tolerated. Please ask if you are unsure of whether or not your actions are complying with the assignment/quiz/exam instructions. You are ultimately responsible for any work that you submit. If you submit anything that you do not fully understand and could explain to others, it is likely not your own work. Always ask if you are unsure, always default to acknowledging any help received or resources used. Any violations of this policy will result in a zero on the assignment/quiz/project in question and a full letter grade reduction from the final course grade. A second violation, or an especially egregious violation, will result in a failing grade for the course.
+
+## Diversity & Inclusion
+
+We all come to class with different backgrounds and experiences, and this diversity makes our class environment richer. We value diversity and inclusion, and are committed to a climate of mutual respect and full participation in and out of the classroom. This class strives to be a learning environment that is usable, equitable, inclusive and welcoming, regardless of race, ethnicity, religion, gender and gender identities, sexual orientation, ability, socioeconomic background, and nationality. If you anticipate or experience any barriers to learning, please discuss your concerns with me.
+
+## Accomodations {style="font-size: 90%;"}
+
+If you believe you need accommodations for a disability or a chronic medical condition, please contact Student Disability Services via email at studentdisabilityservices\@swarthmore.edu to arrange an appointment to discuss your needs. As appropriate, the office will issue students with documented disabilities or medical conditions a formal Accommodations Letter. Since accommodations require early planning and are not retroactive, please contact Student Disability Services as soon as possible. For details about the accommodations process, visit the Student Disability Services website. You are also welcome to contact me privately to discuss your academic needs. However, all disability-related accommodations must be arranged, in advance, through Student Disability Services
+
+## Stat Clinic/Academic Support {style="font-size: 70%;"}
+
+Stat clinics are drop-in study sessions run by friendly and knowledgeable upperclassmen every Sunday-Wednesday night 7-10 pm in SC 158.  The clinicians who support our course are available on Tuesday and Wednesday evenings. Clinics are a wonderful opportunity to study, do homework, meet/work with classmates, and ask questions about statistics and math.  Because clinics are drop-in, you are welcome to come and go as you please. Please write your name and course in the sign-in binder and the time you enter and leave the clinic so the Math/Stat Department has a record of your attendance.  To make the most of your time at clinic, be sure to first try problems on your own, or bring questions you have from your text or lecture.  Having your textbook, lecture notes, and online resources handy is essential because these are helpful resources for both you and the Clinician working with you.  There will likely be other students at Clinic with questions for the Clinician, so be open to working on other problems, thinking about and trying to work through the question you have for the Clinician, working with classmates, or doing other coursework while you wait to speak with the Clinician.  
+
+## Title IX
+
+Please be aware that all faculty are "responsible employees", which means that if you tell me about a situation involving sexual harassment, sexual assault, dating violence, domestic violence, or stalking, I must share that information with the Title IX Coordinator. Although I have to make this notification, you will control how your case will be handled, including whether or not you wish to meet with the Title IX coordinator or pursue a formal complaint.
+
+## CAPS
+
+If you or anyone you know experiences severe academic stress, difficult life events, or feelings like anxiety or depression, I strongly encourage you to seek support. Counseling and Psychological Services (CAPS) is here to help: call 610-328-7768 to speak with a licensed counselor at anytime or visit their website at swarthmore.edu/counseling-and-psychological-services to schedule an appointment.  Consider reaching out to me, a friend, faculty or family member you trust for help getting connected to the support that can help.
+
+## Take care of yourself
+
+Do your best to maintain a healthy lifestyle this semester by wearing a mask if you don't feel well, eating a vegetable every day, exercising, avoiding excessive drug and alcohol use, getting enough sleep, and taking some time to relax. Your mental health is more important than your grade in this course. There are many helpful resources available on campus and an important part of the college experience is learning how to ask for help. If you are experiencing mental health symptoms as a result of coursework, please speak with me so we can address the problem together.
+
+# Context for the class
+
+## Prerequisites
+
+-   A C or better in Stat051 (Probability)
+-   Stat011 or the equivalent is strongly recommended
+-   Some experience with computing is recommended
+-   We're going to *use* a lot of mechanics from calculus and probability, but I don't want it to be the focus
+-   Part of HW1 is a Calc/Prob review. Give it a try to refresh your memory, use resources that you need, talk to me sooner rather than later if it's especially tough
+
+## History
+
+> Statistics seems to be a difficult subject for mathematicians, perhaps because its elusive and wide-ranging character mitigates against the traditional theorem-proof method of presentation. It may come as some comfort then that statistics is also a difficult subject for statisticians 
+
+> *Controversies in the Foundations of Statistics*, Bradley Efron 1978
+
+## Fisher vs Neyman-Pearson
+
+::: {layout-ncol=2}
+![Fisher](RA-fisher.jpeg){fig-alt="RA Fisher" fig-align="left"}
+
+![Neyman & Pearson](neyman-pearson.jpeg){fig-alt="Jerzy Neyman (left) and Egon Pearson (right)"}
+
+:::
+
+## "Classical" vs Bayesian
+
+::: {layout-ncol=2}
+![](fisher-neyman-pearson.webp){fig-alt="Portraits of Fisher, Neyman, and Pearson" fig-align="left"}
+
+![](bayes.gif){fig-alt="Portrait of Thomas Bayes" fig-align="right"}
+:::
+
+## Conclusion from the 1978 paper: {style="font-size: 80%;"}
+
+-   *The field of statistics continues to flourish despite, and partly because of, its foundational controversies*
+-   *Literally millions of statistical analyses have been performed in the past 50 yars, certainly enough to make it abundantly clear that common statistical methods give trustworthy answers when used carefuly... In a way, this is the most important belief of all... that there do exist more or less universal techniques for extracting information from noisy data, adaptable to almost every field of inquiry. In other words, statisticians believe that statistics exists as a discipline in its own right, even if they can't agree on its exact nature.*
+-   *The complexity of the problems statisticians are asked to deal with is increasing at an alarming rate. It is not unusual these days to deal with data sets of a million numbers and models with several thousand parameters... this trend is likely to exacerbate the difficulties of producing a logically consistent theory of statistics.*
+
+## This class:
+
+-   Going to cover these foundations of statistical theory
+-   We'll see formal approaches for evaluating the strengths and weaknesses of different approaches
+-   We'll also explore statistical theory through *simulation*
+-   At the end of the course, we'll see the theory behind some linear models
+
+# Course Expectations
+
+## Questions for you: 
+
+- We'll often work in small groups in class. What are your expectations for group work? 
+- What are some acceptable and not acceptable uses for online resources and LLMs in the context of this class? 
+- What do you expect from me to help you be successful in this class? 
+- What can I expect from you? 
+
+## Upcoming
+
+- HW1 (and HW0) are posted on moodle
+- Upload to gradescope by *next* Wed/Thurs 
+- By 9am on Friday, I'll post a PDF outline of notes for the next few days. If you'd like to use them, make sure to print them before class. 
