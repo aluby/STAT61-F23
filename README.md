@@ -10,3 +10,6 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 ## Homework Assignments
 - [Homework00: Review](homework/homework00)
 - [Homework01: Due 9/13](homework/homework01)
+
+## Labs and Activities
+- [Lab01: Toolkit + Probability](labs-activities/01-toolkit-probability) and [write up file](labs-activities/templates/)
