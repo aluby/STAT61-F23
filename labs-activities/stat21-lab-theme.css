@@ -1,0 +1,53 @@
+
+/* base variables */
+
+/* Edit the CSS properties in this file to create a custom
+   HTML theme. Only edit values in the right column
+   for each row; values shown are the CSS defaults.
+   To return any property to the default,
+   you may set its value to: unset
+   All rows must end with a semi-colon.                      */
+
+/* Optional: embed custom fonts here with `@import`          */
+/* This must remain at the top of this file.                 */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono');
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+body {
+    font-family: 'Open Sans';
+    font-size: 18px;
+}
+
+.title {
+  margin-top: 2.75em;
+  margin-bottom: 0.75em;
+  font-family: 'Lora';
+  font-size: 50px;
+}
+
+h1, h2, h3 {
+  font-family: 'Lora';
+}
+
+/*------------Table of Contents (TOC)----------- */
+
+
+.tocify {
+  font-size: 16px;
+}
+
+.list-group-item.active, 
+.list-group-item.active:hover{
+  color: #ffffff;
+  background-color: #003300;
+  border-color: #ccc;
+}
+p.qbox {
+  color: #003300;
+  padding: 10px;
+  border: 1px solid #003300;
+  margin-left: 25px;
+  border-radius: 5px;
+}

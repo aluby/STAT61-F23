@@ -1,0 +1,131 @@
+---
+title: "Lab01 Write-Up"
+author: "YOUR NAME HERE"
+format: 
+  pdf: 
+    fontsize: 11pt
+    geometry: margin=1in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Question 1: Run an R chunk
+
+```{r}
+#rnorm(100)
+```
+
+# Question 2: Functions and help pages
+
+```{r}
+
+```
+
+# Question 3: Text
+
+Replace this text with your own. 
+
+# Question 4: Poisson pmf
+
+```{r}
+x_range = seq(0, 10, by = 1)
+
+binomial_dataset = tibble(
+  x2 = c(x_range, x_range), 
+  y2 = c(dbinom(x_range, size = 10, prob = .6), dbinom(x_range, size = 10, prob = .1)),
+  z2 = c(rep("p=.6", 11), rep("p=.1", 11))
+)
+
+ggplot(binomial_dataset, aes(x = x2, y = y2, col = z2)) + 
+  geom_point() +
+  theme_minimal(base_size = 20) + 
+  labs(
+    x = "y",
+    y = "P(Y=y)",
+    col = "Model"
+  )
+```
+
+# Question 5: Custom pdf
+
+```{r}
+custom_pdf = function(y, theta){
+  return(1/(theta^2) * y * exp(-y/theta))
+}
+
+y_range = seq(0, 50, by = .5)
+
+custom_pdf_dataset = tibble(
+  y = c(y_range, y_range), 
+  fy = c(custom_pdf(y_range, 1), custom_pdf(y_range, 5)),
+  mod = c(rep("theta=1", length(y_range)), rep("theta=5", length(y_range)))
+)
+
+ggplot(custom_pdf_dataset, aes(x = y, y = fy, col = mod)) + 
+  geom_line() +
+  theme_minimal(base_size = 20) + 
+  labs(
+    x = "y",
+    y = "f(y)",
+    col = "Model"
+  )
+```
+
+# Question 6: Different n
+
+```{r}
+set.seed(091323)
+normal_samples = tibble(
+  x1 = rnorm(50),
+  x2 = rnorm(50),
+  x3 = rnorm(50),
+  x4 = rnorm(50),
+  x5 = rnorm(50),
+  x6 = rnorm(50),
+  x7 = rnorm(50),
+  x8 = rnorm(50)
+) %>%
+  pivot_longer(everything(), names_to = "sample", values_to = "x") 
+
+ggplot(normal_samples, aes(x = x)) + 
+  geom_histogram() + 
+  facet_wrap(vars(sample), ncol = 4) + 
+  theme_minimal()
+
+normal_samples %>%
+  group_by(sample) %>%
+  summarize(
+    mean = mean(x)
+  )
+```
+
+# Question 7: Adding median
+
+```{r}
+set.seed(091323)
+normal_samples = tibble(
+  x1 = rnorm(50),
+  x2 = rnorm(50),
+  x3 = rnorm(50),
+  x4 = rnorm(50),
+  x5 = rnorm(50),
+  x6 = rnorm(50),
+  x7 = rnorm(50),
+  x8 = rnorm(50)
+) %>%
+  pivot_longer(everything(), names_to = "sample", values_to = "x") 
+
+ggplot(normal_samples, aes(x = x)) + 
+  geom_histogram() + 
+  facet_wrap(vars(sample), ncol = 4) + 
+  theme_minimal()
+
+normal_samples %>%
+  group_by(sample) %>%
+  summarize(
+    mean = mean(x)
+  )
+```

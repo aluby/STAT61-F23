@@ -1,0 +1,267 @@
+---
+title: "Lab01: Meet the Toolkit + Probability & Graphics"
+callout-appearance: simple
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+Welcome! Today we will dive into R, RStudio, and RMarkdown documents. We've covered the basics of RStudio at the beginning of class, and the remainder of our time together is yours to complete the following tasks. 
+
+# Part 1: Setup
+
+## Option A: Downloading to your own computer (recommended) 
+
+1. Download R from [cran](https://cran.rstudio.com)
+2. Download RStudio Desktop from [https://posit.co/downloads/](https://posit.co/download/rstudio-desktop/)
+3. Open RStudio and make sure that it looks like what was projected at the beginning of class
+4. Download [quarto](https://quarto.org/docs/get-started/) 
+    - *Note:* This page has a great overview of quarto, including a ~20 minute video. Today we'll cover a lot of the same things, but if you'd like a more thorough introduction to quarto after the lab, I highly recommend the video and tutorial here. 
+
+## Option B: RStudio server
+
+1. Go to rstudio.swarthmore.edu and log in with your swat credentials
+2. If that doesn't work, let me know and I'll create an account for you
+
+# Part 2: The Quarto File 
+
+I'll be using Quarto documents extensively in this course. Quarto is a "next gen" RMarkdown. (If you're using the server, quarto is not installed and you'll be using RMarkdown instead). RMarkdown and Quarto are essentially the same, except Quarto has capabilities beyond R (eg Python, Julia, Observable). RMarkdown = R (statistical software) + Markdown (text formatting language). The output is a "notebook" style document that interweaves narrative text, code, and graphs. 
+
+There are two steps to getting a final output file: 
+
+  1. Write the document in RMarkdown
+  2. "Render" the file to an output format (usually HTML or PDF)
+  
+First, download the template `LASTNAME-Lab01.qmd` file from github. Then either (a) save it in a "Stat61" folder on your computer if you've downloaded R and RStudio (PLEASE IN THE NAME OF ALL THAT IS HOLY DO NOT LEAVE EVERYTHING IN YOUR DOWNLOADS FOLDER) or (b) upload it to the server by navigating to the "files" pane in the lower right corner and clicking the "upload" button. You'll need to rename the file extension to be `.rmd`
+
+```{r, echo = FALSE}
+knitr::include_graphics("images/upload-button.png")
+```
+
+Once you upload the file, you should see it show up in the file system within RStudio. Click on the file to open it in the "editor". Try clicking the "render" or "knit" button now to make sure everything works. You may have to hit "try again" or "allow pop up" in order for your PDF to appear. If you run into any problems please let me know now. 
+
+## R Chunks
+
+In **Q1** in your lab report, we'll run a very simple chunk of R code. `rnorm(100)` tells R to generate a random sample of size 100 from a normal distribution. Including a `#` at the beginning of a line of R code tells R *not* to run what comes next. In your Lab Report, you should see a chunk that looks like this: 
+
+```{r}
+#rnorm(100)
+```
+
+::: callout-note
+## Q1
+
+Click the green triangle "run" button in the upper right corner of the R chunk to run the code. What happens? Now, delete the `#` and try again. 
+:::
+
+## Help Pages
+
+One of the things I love about R is that there's a lot of documentation and it's easy to pull up help pages from within R when you are coding. You can pull up the help page by adding a question mark before the function that you want to look up.
+
+::: callout-note
+## Q2 
+
+Type `?rnorm` and click "run" to load the help page. Under "Arguments", you can see a description of the arguments that each function takes. Read through the arguments for `rnorm` then change the code to generate a random sample of size 100 that has mean `5`. 
+:::
+
+## Including text
+
+::: callout-note
+## Q3
+
+doesn't require using any R at all! Just answer one of the following questions in your report: 
+
+  1. Tell me about another class you are excited about taking this semester
+  2. Tell me about something neat you're doing outside of your coursework this semester
+  3. Tell me a lingering question or concern you have about Stat061
+
+Now, format your response with at least one italic and one bold word. Add *italics* with a single asterisk: `*this is in italics*`, and make text **bold** with two asterisks: `**this text is bold**`.
+:::
+
+(To see all the ways you can format text within markdown, see the [Markdown Basics](https://quarto.org/docs/authoring/markdown-basics.html) document).
+
+## Visual Editor
+
+Another option for writing Quarto/RMarkdown documents if you prefer is to use the *Visual Editor*. This may feel more natural if you are used to doing work in Google Docs or Word. To activate visual editor mode, toggle from "Source" to "Visual" or click the button indicated by orange arrow in the screenshot below: 
+
+```{r, echo = FALSE}
+knitr::include_graphics("images/visual-editor.png")
+```
+
+Try it out and see which you prefer! 
+
+# Part 2: Probability and graphics
+
+For this part, you'll explore some basics of *plotting* and *probability functions* in R. You're all coming to this class with different computing backgrounds, and some of you may breeze through this section while it may be 100% new to some of you. That's OK! Try to focus on (1) the conceptual idea of what each chunk of code is doing, and (2) how to use the probability functions. I won't ask you to write code from scratch, but I will expect you to be able to edit existing code to do something a little bit different. Please ask me if you'd like me to explain anything here in greater detail!
+
+## Density functions and plotting 
+
+Pull up the help page for the `dnorm` function and scroll down to `value`. For many of the named probability distributions, there's a corresponding `d` (density), `p` (distribution), and `r` (random sample) function. Today, we're going to focus on the `d` and `r` functions.
+
+`dnorm(x)` evaluates the normal pdf at the value x. If we're aiming to make a density plot, we need to evaluate the pdf at a reasonable range of x's. The following code (1) creates a vector called `x` that goes from -4 to 4 in increments of .1, (2) creates a vector called `y` that evaluates `dnorm` at all values of `x`, (3) creates a line plot with `x` on the x-axis and `y` on the y-axis. 
+
+```{r}
+x = seq(-4, 4, by = .1)
+y = dnorm(x)
+plot(x, y, type = "l")
+```
+
+If we want to overlay another line with a different distribution, we use the `lines` function: 
+
+```{r}
+y2 = dnorm(x, mean = -1)
+plot(x, y, type = "l")
+lines(x, y2)
+```
+
+This is great for making quick plots for ourselves, but we will want more professional looking graphs eventually. I like to use the `ggplot` package for nicer-looking graphs. You need to install/load the `tidyverse` package before using this functionality. 
+
+With `ggplot()`:
+
+- The first argument is always the dataset. 
+- Next, you provide the variables from the dataset to be assigned to `aes`thetic elements of the plot, e.g. the x and the y axes. 
+- Finally, you use another layer, separated by a `+` to specify the `geom`etric object for the plot. Since we want to scatterplot, we use `geom_point()`.
+
+For instance, if you wanted to visualize the scatterplot below using a line graph, you would replace `geom_point()` with `geom_line()`. What happens if you comment out the `theme_minimal` line and the plus sign in the line above it?
+
+```{r}
+library(tidyverse)
+
+normal_dataset = tibble(
+  x = x, 
+  y = y
+)
+
+ggplot(normal_dataset, aes(x = x, y = y)) + 
+  geom_point() +
+  theme_minimal(base_size = 20)
+```
+
+For more information on customizing ggplots, try out the [RStudio Primer](https://posit.cloud/learn/primers/3.8). 
+
+The following code is also in your lab report. Can you tell what the first 4 lines of code are creating? Try checking `?dbinom`, `?c` and `?rep`, and you can also click on `binomial_dataset` in the Environment panel to pull up a spreadsheet view of the data. You can run smaller chunks of code, like `dbinom(x_range, size = 10, prob = .6)`, in the console. 
+
+```{r}
+x_range = seq(0, 10, by = 1)
+
+binomial_dataset = tibble(
+  x2 = c(x_range, x_range), 
+  y2 = c(dbinom(x_range, size = 10, prob = .6), dbinom(x_range, size = 10, prob = .1)),
+  z2 = c(rep("p=.6", 11), rep("p=.1", 11))
+)
+
+ggplot(binomial_dataset, aes(x = x2, y = y2, col = z2)) + 
+  geom_point() +
+  theme_minimal(base_size = 20) + 
+  labs(
+    x = "y",
+    y = "P(Y=y)",
+    col = "Model"
+  )
+```
+
+::: callout-note
+## Q4
+
+Modify the code above to instead plot the Poisson pmf, and include *3* different values for $\lambda$
+:::
+
+## Defining your own density function 
+
+We've seen a few examples in class of pdf's that aren't one of the common "named distributions". For example, when we covered MLE we did an exercise where the pdf was given by: 
+
+$$f_y(y; \theta) = \frac{1}{\theta^2}y \exp^{-y/\theta}$$
+To make our own pdf, we define a *function* in R: 
+
+```{r}
+custom_pdf = function(y, theta){
+  return(1/(theta^2) * y * exp(-y/theta))
+}
+```
+
+and then we can proceed 
+
+```{r}
+y_range = seq(0, 50, by = .5)
+
+custom_pdf_dataset = tibble(
+  y = c(y_range, y_range), 
+  fy = c(custom_pdf(y_range, 1), custom_pdf(y_range, 5)),
+  mod = c(rep("theta=1", length(y_range)), rep("theta=5", length(y_range)))
+)
+
+ggplot(custom_pdf_dataset, aes(x = y, y = fy, col = mod)) + 
+  geom_line() +
+  theme_minimal(base_size = 20) + 
+  labs(
+    x = "y",
+    y = "f(y)",
+    col = "Model"
+  )
+```
+
+::: callout-note
+## Q5 
+
+Change the code above to plot the pdf for two different values of $\theta$
+:::
+
+## Sampling 
+
+The `d` functions that we've used (or created!) so far give us the *theoretical density* function for a random variable. In this class, we'll often care about the performance of an *estimator* for different *random samples*. For example, here are 8 $N(0,1)$ samples of size 50. None are perfect bell curves - some are flatter, some are more pointy, some are a little skewed, etc. 
+
+```{r}
+#| code-fold: true
+set.seed(091323)
+normal_samples = tibble(
+  x1 = rnorm(50),
+  x2 = rnorm(50),
+  x3 = rnorm(50),
+  x4 = rnorm(50),
+  x5 = rnorm(50),
+  x6 = rnorm(50),
+  x7 = rnorm(50),
+  x8 = rnorm(50)
+) %>%
+  pivot_longer(everything(), names_to = "sample", values_to = "x") 
+
+ggplot(normal_samples, aes(x = x)) + 
+  geom_histogram() + 
+  facet_wrap(vars(sample), ncol = 4) + 
+  theme_minimal()
+  
+```
+
+If we look at the mean of each of our 8 samples, we see that how "close" we are to the true value, 0, depends on the random sample that we have. 
+
+```{r}
+#| code-fold: true
+normal_samples %>%
+  group_by(sample) %>%
+  summarize(
+    mean = mean(x)
+  )
+```
+
+If you click the "code" button above, the simulaton begins with `set.seed(091323)`. This tells R to make the random samples *reproducible*. Without setting the seed, we would get different samples every time. With the same random seed, we guarantee that we'll all get the same 8 random samples. Whenever you do simulations, it's good practice to set the seed to guarantee that (a) someone can replicate your analysis, and (b) your interpretation and write-up will "match" the simulation results. 
+
+:::callout-note
+## Q6
+
+The code to conduct the above simulation is included in your lab report. Try out one value of $n$ (the size of each random sample) that is smaller than 50 and one that is larger than 50. How does this change the results?
+:::
+
+:::callout-note
+## Q7 
+
+Using the same code above as a template, conduct an investigation of whether the sample mean or median is a better estimator of the theoretical mean of the normal distribution, $\mu$. You should only need to add 1 line of code. 
+:::
