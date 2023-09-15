@@ -1,0 +1,46 @@
+---
+title: "Homework 02: Due 9/20"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+1. Define a new estimator $\hat{\theta_4}$ for the Uniform($0, \theta$) distribution as follows. Is $\hat{\theta_4}$ unbiased? You can give an intuitive justification or a mathematical one, and are welcome to use any results from class. 
+
+  $$ \hat{\theta_4} = 
+\begin{cases} 
+2\bar{X} & \text{ if max}\{X_i\} < 2\bar{X} \\
+\text{max}\{X_i\} &\text{ otherwise}
+\end{cases}$$
+
+
+2. Let $Y_1, Y_2, ... Y_n$ be a random sample of size $n$ from the pdf $f_y(y) = \frac{1}{\theta} e^{-y/\theta}, y > 0$. 
+
+   (a) Show that $\hat{\theta_1} = Y_1$, $\hat{\theta_2} = \bar{Y}$, and $\hat{\theta_3} = nY_{\text{min}}$ are all unbiased estimators for $\theta$. 
+   (c) Find the variances of $\hat{\theta_1}, \hat{\theta_2}, \hat{\theta_3}$. Comment on which estimator is most efficient. 
+
+3. Suppose $X_1, X_2, ..., X_n$ are iid from a Gamma($\alpha, \lambda$) distribution. That is, $f_x(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1}e^{-\lambda x}$. You can also use $E(X) = \frac{\alpha}{\lambda}$ and $V(X) = \frac{\alpha}{\lambda^2}$.  
+   (a) Write out the likelihood function, and show that it depends on the data values only through $\bar{X}$ and $\bar{X}_g = (\prod X_i)^{1/n}$ ($\bar{X}_g$ is the *geometric mean*). 
+   (b) When $\alpha$ and $\lambda$ are both unknown, the MLE does not have a closed form solution. Instead, find the MoM estimates $\hat{\alpha}$ and $\hat{\lambda}$. 
+   (c) Are the MoM estimates unbiased? 
+   (d) Gamma random variables are the waiting times for Poisson occurrences. In sports, goals are often assumed to follow a Poisson process, which means that the waiting time for the 1st goal can be assumed to be a Gamma random variable. For the Swarthmore women's soccer team so far this year, the first goal in $n=4$ games has occurred at $X_i = 11.01667, 3.05, 76.65, 24.1333$ minutes. Report $\hat{\alpha}$ and $\hat{\lambda}$ for these data. (Note that $\alpha=1$ implies an exponential distribution, which would be the case if goals occur as a Poisson process)
+
+
+4. TBA after Friday's class
+
+5. TBA after Friday's class

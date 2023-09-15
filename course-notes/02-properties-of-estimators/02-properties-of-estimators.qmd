@@ -1,0 +1,149 @@
+---
+title: "02: Properties of Estimators I"
+subtitle: "Larsen & Marx 5.4"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r, echo = FALSE}
+library(tidyverse)
+```
+
+We've seen two methods of estimating parameters: the MLE and the MoM. Both give very reasonable criteria to identify estimators for unknown parameters, but they do not always yield the same answer. 
+
+For example, on your homework, you showed that the MLE estimator for $\theta$ in a (continuous) Unif($0, \theta)$ distribution is $\hat{\theta} = 2\bar{Y}$. 
+
+**Example:** Find the MLE for $Y_1, Y_2, ..., Y_n \sim \text{Unif}(0, \theta)$. (Recall $f_y(y) = \frac{1}{\theta}, 0 \le y \le \theta)$)
+
+\vspace{2.5in} 
+
+Implicit in the two estimators for the same parameters is the obvious question: which one should we use? 
+
+There are actually an infinite number of estimators for any given parameter, and this requires that we have a principled way of evaluating the statistical properties associated with any given estimator. What qualities should a "good" estimator have? Is it possible to find a "best" $\hat{\theta}$? This set of notes, and the second unit of the course, is going to begin to address these questions. 
+
+**Note:** Every estimator is a function of a set of random variables (ie $\hat{\theta} = g(Y_1, Y_2, ..., Y_n))$) and is itself a random variable. 
+
+\vspace{.5in} 
+
+::: callout-note
+## Notation for $\hat{\theta}$
+\vspace{1in}
+:::
+
+# Unbiasedness
+
+Lab01 ended with the idea of *random samples*, and noting that every sample is going to give a slightly different estimate for $\theta$. Here are eight random samples of size 20 of $N(0,1)$ random variables, with the sample mean overlaid on each facet. 
+
+```{r, fig.width = 6, fig.height = 3}
+set.seed(091323)
+normal_samples = tibble(
+  x1 = rnorm(20),
+  x2 = rnorm(20),
+  x3 = rnorm(20),
+  x4 = rnorm(20),
+  x5 = rnorm(20),
+  x6 = rnorm(20),
+  x7 = rnorm(20),
+  x8 = rnorm(20)
+) %>%
+  pivot_longer(everything(), names_to = "sample", values_to = "x") %>%
+  group_by(sample) %>%
+  mutate(
+    mean = mean(x)
+  )
+
+ggplot(normal_samples, aes(x = x)) + 
+  geom_histogram(bins = 10) + 
+  geom_vline(aes(xintercept = mean), linetype = "dashed", col = "darkorange") +
+  facet_wrap(vars(sample), ncol = 4) + 
+  theme_minimal(base_size = 12) 
+
+```
+
+Ideally, we want the overestimates to "balance out" the underestimates: $\hat{\theta}$ should not systematically err in either direction. 
+
+\vspace{3in}
+
+When the mean of the estimator $\hat{\theta}$ is equal to the true parameter $\theta$, we say tat the estimator is **unbiased**. 
+
+:::callout-note
+## Definition 
+
+Let $W_1, W_2, ..., W_n$ be a random sample from $f_w(w, \theta)$. An estimator $\hat{\theta} = g(W_1, W_2, ..., W_n)$ is said to be **unbiased for ** $\theta$ if
+
+:::
+
+**Example:** is the MoM for the Unif$(0, \theta)$ distribution, $\hat{\theta}_1 = 2\bar{X}$ unbiased? 
+
+\vspace{2in}
+
+**Example:** is the MLE $\hat{\theta}_2 = \text{max}({X_i})$ unbiased? 
+
+\vspace{4in} 
+
+**Example:** Construct an estimator, $\hat{\theta}_3$ based on $\text{max}({X_i})$ that is unbiased. 
+
+\vspace{2in}
+
+# Efficiency
+
+We now have two estimators, $\hat{\theta}_1$ and $\hat{\theta}_3$, that are unbiased estimators for $\theta$. Does it matter which one we choose? 
+
+**Idea:** 
+
+\vspace{3in} 
+
+:::callout-note
+## Definition 
+
+Let $\hat{\theta}_1$ and $\hat{\theta}_2$ be two unbiased estimators for a parameter $\theta$. If $\text{Var}(\hat{\theta}_1) < \text{Var}(\hat{\theta}_2)$, we say that 
+\vspace{.5in}
+:::
+
+**Example:** Let $Y_1, Y_2, Y_3 \sim N(\mu, \sigma^2)$. Which is a more efficient estimator for $mu$: 
+
+$$\hat{\mu_1} = \frac{1}{4} Y_1 + \frac{1}{2} Y_2 + \frac{1}{4} Y_3 $$ 
+
+or 
+
+$$\hat{\mu_1} = \frac{1}{3} Y_1 + \frac{1}{3} Y_2 + \frac{1}{3} Y_3?$$ 
+\vspace{2in}
+
+**Exercise:** Which of our two unbiased estimators for the uniform distribution is more efficient? 
+
+\pagebreak
+
+# The Bias-Variance Tradeoff
+
+:::callout-note
+## Mean Square Error (MSE) 
+
+$$MSE(\hat{\theta}) = E(\hat{\theta} - \theta)^2 = V(\hat{\theta}) + \text{bias}^2$$
+:::
+*Note:* We'll come back to this, and show that it is true, later in the course
+
+**Idea:** 
+
+
