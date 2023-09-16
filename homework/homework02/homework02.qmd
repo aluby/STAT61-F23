@@ -17,6 +17,7 @@ format:
       - bottom=1in
       - heightrounded
     fontfamily: libertine
+    monofont: "Courier New"
     fontsize: 11pt
 ---
 
@@ -31,7 +32,9 @@ format:
 
 2. Let $Y_1, Y_2, ... Y_n$ be a random sample of size $n$ from the pdf $f_y(y) = \frac{1}{\theta} e^{-y/\theta}, y > 0$. 
 
-   (a) Show that $\hat{\theta_1} = Y_1$, $\hat{\theta_2} = \bar{Y}$, and $\hat{\theta_3} = nY_{\text{min}}$ are all unbiased estimators for $\theta$. 
+   (a) Show that $\hat{\theta_1} = Y_1$, $\hat{\theta_2} = \bar{Y}$, and $\hat{\theta_3} = nY_{\text{min}}$ are all unbiased estimators for $\theta$. You may use the general formula for the pdf of a minimum: $f_{Y_{min}}(y) = n (1-F_y(y))^{n-1}f_y(y)$, where $f_y$ is the pdf of $Y$ and $F_y$ is the cdf of $Y$. 
+   (b) Find an expression for the probability that $\hat{\theta_1}$ is within $0.1$ of $\theta$. (*Hint:* use the pdf of $\hat{\theta_1}$)
+   (c) What is the probability from (b) if $\theta = .5$? what if $\theta =2$?
    (c) Find the variances of $\hat{\theta_1}, \hat{\theta_2}, \hat{\theta_3}$. Comment on which estimator is most efficient. 
 
 3. Suppose $X_1, X_2, ..., X_n$ are iid from a Gamma($\alpha, \lambda$) distribution. That is, $f_x(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1}e^{-\lambda x}$. You can also use $E(X) = \frac{\alpha}{\lambda}$ and $V(X) = \frac{\alpha}{\lambda^2}$.  
@@ -41,6 +44,29 @@ format:
    (d) Gamma random variables are the waiting times for Poisson occurrences. In sports, goals are often assumed to follow a Poisson process, which means that the waiting time for the 1st goal can be assumed to be a Gamma random variable. For the Swarthmore women's soccer team so far this year, the first goal in $n=4$ games has occurred at $X_i = 11.01667, 3.05, 76.65, 24.1333$ minutes. Report $\hat{\alpha}$ and $\hat{\lambda}$ for these data. (Note that $\alpha=1$ implies an exponential distribution, which would be the case if goals occur as a Poisson process)
 
 
-4. TBA after Friday's class
+4. The following R code simulates $n=25$ draws from a Uniform(0,10) distribution 10,000 times. Here we know that $\theta=10$, but we want to investigate how our estimators behave. For each sample, we estimate (1) the MoM estimate $\hat{\theta_1}= 2\bar{X}$ , (2) the MLE $\hat{\theta_2} = X_{max}$, and (3) our $\hat{\theta_4}$ estimate from Q1. 
 
-5. TBA after Friday's class
+```{r, eval = FALSE}
+set.seed(091523) # set a random seed for reproducibility
+sim_results = tibble(   # sim_results is a data frame that 
+  MOM = rep(NA, 10000), # will store our 10,000 estimates x3
+  MLE = rep(NA, 10000),
+  Est3 = rep(NA, 10000)
+)
+
+for(ii in 1:10000){
+  x = runif(25, 0, 10) # draw 25 uniform(0,10) RV's
+  sim_results$MOM[ii] = 2 * mean(x) # compute MoM and store 
+  sim_results$MLE[ii] = max(x) # compute MLE and store 
+  sim_results$Est3[ii] = max(2*mean(x), max(x)) # compute Est3 and store 
+}
+```
+
+   (a) Construct a histogram of for estimate (e.g. one for the distribution of MoM, MLE, Est3)
+   (b) Compute the mean and variance of the MoM, MLE, and Est3 estimates. Comment on the bias and efficiency of each. Do the results surprise you given your answer to Question 1 and our previous results from class? 
+
+5. Let $f_y$ be a continuous pdf with median $M$. If $Y_1, ..., Y_n \sim f_y$, the sample median $\hat{M} = \text{Median}(Y_1, ..., Y_n)$ has an approximate $N(M, \frac{1}{4n(f_y(M))^2})$  distribution. 
+    (a) Suppose $Y_1, ..., Y_n \sim N(\mu, \sigma^2)$. Show that $\hat{M}$ has an approximate $N(\mu, \frac{\pi \sigma^2}{2n})$. 
+    (b) Find the relative efficiency of $\bar{Y}$ to $\hat{M}$. 
+    (c) Using your result from (b), show that $\bar{Y}$ achieves the same standard error as $\hat{M}$ with only 63.7% as much data
+    (d) Find the relative efficiency of $\bar{Y}$ to $\hat{M}$ if $Y_1, ..., Y_n \sim \text{Unif}(0, \theta)$. What do you conclude? 
