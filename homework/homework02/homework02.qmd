@@ -40,13 +40,14 @@ format:
 3. Suppose $X_1, X_2, ..., X_n$ are iid from a Gamma($\alpha, \lambda$) distribution. That is, $f_x(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1}e^{-\lambda x}$. You can also use $E(X) = \frac{\alpha}{\lambda}$ and $V(X) = \frac{\alpha}{\lambda^2}$.  
    (a) Write out the likelihood function, and show that it depends on the data values only through $\bar{X}$ and $\bar{X}_g = (\prod X_i)^{1/n}$ ($\bar{X}_g$ is the *geometric mean*). 
    (b) When $\alpha$ and $\lambda$ are both unknown, the MLE does not have a closed form solution. Instead, find the MoM estimates $\hat{\alpha}$ and $\hat{\lambda}$. 
-   (c) Are the MoM estimates unbiased? 
+   (c) ~~Are the MoM estimates unbiased?~~
    (d) Gamma random variables are the waiting times for Poisson occurrences. In sports, goals are often assumed to follow a Poisson process, which means that the waiting time for the 1st goal can be assumed to be a Gamma random variable. For the Swarthmore women's soccer team so far this year, the first goal in $n=4$ games has occurred at $X_i = 11.01667, 3.05, 76.65, 24.1333$ minutes. Report $\hat{\alpha}$ and $\hat{\lambda}$ for these data. (Note that $\alpha=1$ implies an exponential distribution, which would be the case if goals occur as a Poisson process)
 
 
 4. The following R code simulates $n=25$ draws from a Uniform(0,10) distribution 10,000 times. Here we know that $\theta=10$, but we want to investigate how our estimators behave. For each sample, we estimate (1) the MoM estimate $\hat{\theta_1}= 2\bar{X}$ , (2) the MLE $\hat{\theta_2} = X_{max}$, and (3) our $\hat{\theta_4}$ estimate from Q1. 
 
 ```{r, eval = FALSE}
+library(tidyverse)
 set.seed(091523) # set a random seed for reproducibility
 sim_results = tibble(   # sim_results is a data frame that 
   MOM = rep(NA, 10000), # will store our 10,000 estimates x3
@@ -62,7 +63,7 @@ for(ii in 1:10000){
 }
 ```
 
-   (a) Construct a histogram of for estimate (e.g. one for the distribution of MoM, MLE, Est3)
+   (a) Construct a histogram for each estimate (e.g. one for the distribution of MoM, one for MLE, one for Est3)
    (b) Compute the mean and variance of the MoM, MLE, and Est3 estimates. Comment on the bias and efficiency of each. Do the results surprise you given your answer to Question 1 and our previous results from class? 
 
 5. Let $f_y$ be a continuous pdf with median $M$. If $Y_1, ..., Y_n \sim f_y$, the sample median $\hat{M} = \text{Median}(Y_1, ..., Y_n)$ has an approximate $N(M, \frac{1}{4n(f_y(M))^2})$  distribution. 
