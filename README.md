@@ -17,5 +17,5 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Lab01: Toolkit + Probability](labs-activities/01-toolkit-probability) and [write up file](labs-activities/templates/)
 - [Lab02: Capture-Recapture](labs-activities/02-capture-recapture) and [write up file](labs-activities/templates/)
 
-## Quizzes
-- [Named Probability Distributions(resources/stat61_formula_sheet.pdf) 
+## Quiz 1: Wed, Sep 27
+- [Named Probability Distributions](resources/stat61_formula_sheet.pdf) 
