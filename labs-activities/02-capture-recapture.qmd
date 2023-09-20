@@ -1,0 +1,290 @@
+---
+title: "Lab02: Capture-Recapture"
+callout-appearance: simple
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    code-link: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+Welcome! Today we're going to be investigating the performance of an estimator that is *not* the MoM or MLE. This example comes from ecology. 
+
+Before we get started, install the `plotly` package if you'd like to replicate the interactivity of the graphs in this document. 
+
+```{r}
+library(tidyverse)
+library(plotly)
+```
+
+# Introduction to capture-recapture
+
+Suppose you are working with an ecologist who wants to know how many deer are in their study site (this is formally called deer abundance). This may be part of an effort to determine whether the population is on the rise or declining, perhaps in connection to a particular disease like [chronic wasting disease](https://www.usgs.gov/faqs/what-chronic-wasting-disease?qt-news_science_products=0#qt-news_science_products).
+
+A good first step would be to go out to the study site and count how many deer we see as we walk through sub-sites. Let's call this estimate $\hat{N}$ and the true population abundance $N$. Is $\hat{N}$ a good estimate of $N$? Why or why not? 
+
+
+::: callout-note
+## Q1
+
+Do you expect $\hat{N}$ to be closer or further away from $N$ if:
+
+- the animal of interest is large (like a deer) or small (like a butterfly)?
+
+- the animal of interest is relatively calm around people or skittish?
+
+- it's a clear day or it's pouring down rain?
+
+- easy to identify or looks similar to another species?
+:::
+
+If we assume we never mis-identify a species i.e. never have a false positive (which is a pretty big assumption), we are still left with the possibility that we didn't see an individual of the species, even when it was there (false negative). Therefore, our $\hat{N}$ is a lower bound on $N$.
+
+Suppose we go out the next day and do a recount, we'll call this estimate $\hat{N}_2$. 
+
+To make $\hat{N}$ and $\hat{N}_2$ comparable we need to make another pretty big assumption. We need to assume that the total abundance over the area $N$ hasn't changed within the time frame we are doing the multiple samples. This assumption is formally called "closure" (the system of interest is closed to births, deaths, and movement in and out of the region). Maybe in the span of one day, we might feel pretty comfortable with this assumption for animals that don't move quickly and/or have a relatively small home range (the space they roam). 
+
+Now we have a new lower bound on the abundance: the maximum of $\hat{N}$ and $\hat{N}_2$. (Do you see why?)
+
+::: callout-note
+## Q2 
+
+What could have happened if:
+
+- $\hat{N}_2 > \hat{N}$?
+- $\hat{N}_2 < \hat{N}$?
+- $\hat{N}_2 = \hat{N}$?
+:::
+
+We don't know if the deer we are seeing today are the same or different than the deer we saw yesterday. Likely, $\hat{N}_2$ is a combination of old and new deer. What if we had some way of telling the difference between the two?
+
+This whole field experiment motivates a commonly used technique for ecologists: **capture-recapture**. What if we tagged animals we saw on Day 1 (capture) so that we could tell that we saw them before if we see them on Day 2 (re-capture)? Note: the goal is to do this in a minimally invasive way, but it still takes more resources to do and requires us to actually capture each animal we see which is, as you can imagine, hard.
+
+Now $\hat{N}_2$ can be partitioned into old and new deer: 
+
+$\hat{N}_2 = N_{new} + N_{old}$.
+
+::: callout-note
+## Q3
+
+If $N_{old}$ is a small proportion of $\hat{N}_2$ do you expect our lower bound on $N$ to be closer or further away from $N$ than if it was a large proportion of $\hat{N}_2$? Why?
+:::
+
+If we knew how often we failed to detect a species, we could adjust our estimate for $N$ accordingly.
+
+Say we miss 1 out of every 4 deer (and therefore detect 3 out of every 4 deer) and we saw 11 deer. Then we know we have likely missed 12*(1/4) = 3 deer, so we can update our estimate to 11 + 3 = 14.
+
+But we don't know the probability of detection. What do we do when we don't know something? We plug-in an estimate for it instead. This is called the plug-in principle, and it is often used in statistics. 
+
+# What does capture-recapture data tell us about the detection probability?
+
+We're in the field trying to estimate the abundance $N$ of deer. On our first day we capture $n_1$ individuals. What proportion of the total number of individuals is $n_1$?
+
+$$p = \frac{n_1}{N}$$
+
+In the long run $p$ should be a good estimate of the probability of detection for any one individual. (Do you see why?)
+
+If we knew $p$, we could estimate $N$ as $n_1/p$.
+
+We don't know $p$, but we do have some extra information thanks to our capture-recapture sampling strategy: the number of individuals we capture on day 2, $n_2$, and the number of individuals we saw on both days, $m_2$.
+
+Assume every individual of the species has the same probability of being detected. This is another big assumption as some members of the species may be more or less visible (for example, due to different sizes) or more or less shy than others.
+
+Frederick Charles Lincoln and C.G. Johannes Petersen recognized that:
+
+$$\frac{m_2}{n_2} = \frac{n_1}{N}$$
+
+::: callout-note
+## Q4
+Explain in words why this is true.
+
+*Hint: Write out what each of these variables means in words and then think about what those two ratios mean conceptually.*
+
+:::
+
+Then, rearranging, $\hat{N}_{LP} = \frac{n_1 n_2}{m_2}$. (*Note:* LP = Lincon-Petersen estimator)
+
+## Method of Moments Estimator (MoM)
+
+Lincoln and Peterson reasoned their way to this estimator. What if we wanted to take a different approach and find the Method of Moments Estimator?
+
+Let's define some notation to help us reason a different way about this problem. We capture, tag, and release $n_1$ animals on day 1. We then capture $n_2$ animals on day 2, $m_2$ of them are tagged (and hence seen on day 1). What is the total abundance $N$? This is a combinatorics problem.
+
+The total number of ways we could have seen $n_2$ animals on day 2 if $N$ were possible is ${N \choose n_2}$.
+
+The total number of ways we could have seen $n_2$ animals in our particular way (with $m_2$ repeats and $n_2-m_2$ new animals) was to choose $m_2$ animals to see twice out of $n_1$ possible animals we've already seen once and to choose $n_2 - m_2$ new animals out of $N-n_1$ to see for the first time. 
+
+So the probability of this happening is:
+
+$$\frac{{n_1 \choose m_2}{N-n_1 \choose n_2 - m_2}}{{N \choose n_2}}$$
+
+::: callout-note 
+## Q5
+What is this distribution and what are its expectation and variance? 
+
+*Hint:* This is a named distribution that you should have seen in probability. You may need to translate between two notations, but once you have identified the distribution, your book/distribution table will be helpful in finding the expectation and variance.
+
+*Hint:* Consider an individual that you spot on the second day. It is either a new individual you did not see on day one or it is a repeat that you saw on day one. Where have we seen something that considers a finite number of elements that have two characteristics?
+:::
+
+::: callout-note
+## Q6
+Based on your answer above, what is the method of moments estimate for N?
+
+::: 
+
+## Maximum-Likelihood Estimate (MLE)
+
+What if we wanted the MLE instead?
+
+$$\frac{{n_1 \choose m_2}{N-n_1 \choose n_2 - m_2}}{{N \choose n_2}}$$
+
+We want the value of $N$ that maximizes the likelihood of this happening as our estimate. This would be a gnarly thing to maximize by hand. Let's investigate graphically.
+
+::: callout-note
+## Q7
+
+For three different scenarios, use the hover feature to approximate the maximum of the likelihood curve. Write down the parameters you used and the values of the maximum points at those values of the parameters. Compare those values to those of the other two estimators we have seen so far (LP and MoM). Note: you can calculate these by plugging in the parameters you use in the code
+
+::: 
+
+```{r}
+n_1 = 10  # tagged in first collection (n_1), between 10 and 100
+m_2 = 5   # recaptured in second collection, between 0 and 100
+n_2 = 20  # recaptured in second collection, between 10 and 100
+N <- seq(0,100, by = 1) # all possible values of N
+a <- choose(n_1, m_2)
+b <- choose(N-n_1, n_2-m_2)
+c <- choose(N, n_2)
+
+data_to_plot = tibble(N = N, 
+                      lik = (a*b)/c) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = N, y = lik)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("N") +
+   ylab("likelihood")
+ 
+ggplotly(g)
+```
+
+## Expected Value
+
+The above estimators depend on three different parameters which are hard to vary simultaneously and assess their effect on the overall estimate. Let's examine some "profiles" of $N_{LP}$ aka look at different slices of this multi-dimensional space where we fix two parameters (as well as the true abundance) and vary the other one. 
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+n_2 = 20  # number seen on day 2 (should be less than N)
+
+m_2 <- seq(0, N, by = 1) # all possible values of m_2
+est = (n_1 * n_2) / m_2
+
+data_to_plot = tibble(m2 = m_2, 
+                      est = est) # Computes likelihood for different values of N
+
+g1 <- ggplot(data_to_plot, aes(x = m_2, y = est)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Estimate of N") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+m_2 = 2  # number of recaptured seen on day 2 (should be less than n_1)
+
+n_2 <- seq(0, N, by = 1) # all possible values of n_2
+est = (n_1 * n_2) / m_2
+
+data_to_plot = tibble(n_2 = n_2, 
+                      est = est) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = n_2, y = est)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Estimate of N") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+::: callout-note
+## Q8
+
+When does this get close to the truth? Try a few combinations and note what you observe. Make sure to talk about the context of the parameters (i.e. $n_1$ is the number of animals seen on day one, not just as notation)
+:::
+
+::: callout-note
+## Q9
+
+So far we've been worried about underestimating since we will likely not detect some individuals. Try to find a situation where we overestimate the abundance by a lot. How likely is that situation to occur? Hint: consider the implied detection probability of the scenario.
+:::
+
+## Variance
+
+The variance of the $N_{LP}$ estimator again is a function of three parameters, so we will want to look at some profiles to understand when the variance is small.
+
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+n_2 = 20  # number seen on day 2 (should be less than N)
+
+m_2 <- seq(0, N, by = 1) # all possible values of m_2
+var = (n_1 * n_2)*(n_1 -m_2)*(n_2 - m_2) / ((m_2 + 1)^2*(m_2+2))
+
+data_to_plot = tibble(m2 = m_2, 
+                      var = var) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = m_2, y = var)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Variance of Estimate") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+::: callout-note
+## Q10
+
+What situations minimize the variance? Try a few combinations and note what you observe. Make sure to talk about the context of the parameters
+:::
+
+## Recap of Assumptions 
+
+- The population is closed between samples (as are markings).
+- The detection probability $p$ does not change across individuals or over time.
+- Each sample of the population is a random sample.
+
+These assumptions are likely not met in practice. On the positive side, assumptions being broken provide great opportunities for research. One can investigate questions of the form "what happens to the bias and variance of the estimator if *fill-in-the-blank* happens?". You may even be able to reason about the sign of the bias which can help you make decisions about the quality of your current estimate in the mean time.
+
+## References
+
+If you found this problem interesting, the author of this lab, [Prof. Sara Stoudt](https://sastoudt.github.io) will be giving a department colloquium next week! 
+
+This tutorial was developed by S. Stoudt but pulls materials from a variety of sources.
+
+- [Rushing Lab course materials](https://rushinglab.github.io/WILD3810/articles/Lecture2/lecture2.html#1)
+- [Ogle's capture-recapture notes](https://derekogle.com/NCNRS349/modules/MarkRecap/BKG)
+
+Original Literature:
+
+- [Lincoln](https://books.google.com/books?hl=en&lr=&id=vY3EsdnzcPcC&oi=fnd&pg=PA2&dq=%22Calculating+Waterfowl+Abundance+on+the+Basis+of+Banding+Returns%22.+United+States+Department+of+Agriculture+Circular&ots=apI-gEfeR7&sig=9kGoHEmqjVVR_-YzA1ipAh4OYLY)
+- [Chapman](https://catalog.hathitrust.org/Record/005761134)
+- [Robson and Reiger](https://www.tandfonline.com/doi/abs/10.1577/1548-8659(1964)93[215:SSIPME]2.0.CO;2)

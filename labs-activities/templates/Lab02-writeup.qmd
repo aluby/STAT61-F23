@@ -1,0 +1,154 @@
+---
+title: "Lab01 Notes"
+author: "YOUR NAME HERE"
+format: 
+  html: 
+    fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(plotly)
+```
+
+*Note:* In the header of this .qmd document, you can see that we're render to a .html format instead of a .pdf. This is so the `plotly` package will render correctly in the output. If you prefer a pdf, you can remove the `ggplotly` calls and change `html` to `pdf` above. 
+
+# Question 1
+
+Do you expect $\hat{N}$ to be closer or further away from $N$ if:
+
+- the animal of interest is large (like a deer) or small (like a butterfly)?
+
+- the animal of interest is relatively calm around people or skittish?
+
+- it's a clear day or it's pouring down rain?
+
+- easy to identify or looks similar to another species?
+
+# Question 2
+
+What could have happened if:
+
+- $\hat{N}_2 > \hat{N}$?
+- $\hat{N}_2 < \hat{N}$?
+- $\hat{N}_2 = \hat{N}$?
+
+# Question 3
+
+If $N_{old}$ is a small proportion of $\hat{N}_2$ do you expect our lower bound on $N$ to be closer or further away from $N$ than if it was a large proportion of $\hat{N}_2$? Why?
+
+# Question 4
+
+Explain in words why $\frac{m_2}{n_2} = \frac{n_1}{N}$.
+
+
+# Question 5
+
+What is this distribution and what are its expectation and variance? 
+
+# Question 6
+
+Based on your answer above, what is the method of moments estimate for N?
+
+# Question 7 
+
+For three different scenarios, use the hover feature to approximate the maximum of the likelihood curve. Write down the parameters you used and the values of the maximum points at those values of the parameters. Compare those values to those of the other two estimators we have seen so far (LP and MoM). Note: you can calculate these by plugging in the parameters you use in the code below
+
+```{r}
+n_1 = 10  # tagged in first collection (n_1), between 10 and 100
+m_2 = 5   # recaptured in second collection, between 0 and 100
+n_2 = 20  # recaptured in second collection, between 10 and 100
+N <- seq(0,100, by = 1) # all possible values of N
+a <- choose(n_1, m_2)
+b <- choose(N-n_1, n_2-m_2)
+c <- choose(N, n_2)
+
+data_to_plot = tibble(N = N, 
+                      lik = (a*b)/c) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = N, y = lik)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("N") +
+   ylab("likelihood")
+ 
+ggplotly(g)
+```
+
+# Question 8 
+
+When does $\hat{N_{LP}}$ get close to the truth? Try a few combinations and note what you observe. Make sure to talk about the context of the parameters (i.e. $n_1$ is the number of animals seen on day one, not just as notation)
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+n_2 = 20  # number seen on day 2 (should be less than N)
+
+m_2 <- seq(0, N, by = 1) # all possible values of m_2
+est = (n_1 * n_2) / m_2
+
+data_to_plot = tibble(m2 = m_2, 
+                      est = est) # Computes likelihood for different values of N
+
+g1 <- ggplot(data_to_plot, aes(x = m_2, y = est)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Estimate of N") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+m_2 = 2  # number of recaptured seen on day 2 (should be less than n_1)
+
+n_2 <- seq(0, N, by = 1) # all possible values of n_2
+est = (n_1 * n_2) / m_2
+
+data_to_plot = tibble(n_2 = n_2, 
+                      est = est) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = n_2, y = est)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Estimate of N") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+# Question 9
+
+So far we've been worried about underestimating since we will likely not detect some individuals. Try to find a situation where we overestimate the abundance by a lot. How likely is that situation to occur? Hint: consider the implied detection probability of the scenario.
+
+# Question 10 
+
+What situations minimize the variance? Try a few combinations and note what you observe. Make sure to talk about the context of the parameters
+
+```{r}
+N = 25   # true abundance, between 10 and 100
+n_1 = 5   # number seen and tagged on day 1 (should be less than N)
+n_2 = 20  # number seen on day 2 (should be less than N)
+
+m_2 <- seq(0, N, by = 1) # all possible values of m_2
+var = (n_1 * n_2)*(n_1 -m_2)*(n_2 - m_2) / ((m_2 + 1)^2*(m_2+2))
+
+data_to_plot = tibble(m2 = m_2, 
+                      var = var) # Computes likelihood for different values of N
+
+g <- ggplot(data_to_plot, aes(x = m_2, y = var)) + 
+   geom_point() + 
+   theme_minimal(base_size = 16) + 
+   xlab("Number recaptured on day 2") +
+   ylab("Variance of Estimate") + 
+   geom_hline(yintercept = N)
+ 
+ggplotly(g)
+```
+
+
