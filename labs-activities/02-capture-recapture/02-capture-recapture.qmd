@@ -19,6 +19,8 @@ Welcome! Today we're going to be investigating the performance of an estimator t
 
 Before we get started, install the `plotly` package if you'd like to replicate the interactivity of the graphs in this document. 
 
+When you finish the lab, there is a 1 question assignment on gradescope to check for completion. You will answer one of the questions from the lab. It has a 5 minute time limit, so make sure your answers are written *before* opening the gradescope assignment. 
+
 ```{r}
 library(tidyverse)
 library(plotly)
@@ -191,7 +193,7 @@ est = (n_1 * n_2) / m_2
 data_to_plot = tibble(m2 = m_2, 
                       est = est) # Computes likelihood for different values of N
 
-g1 <- ggplot(data_to_plot, aes(x = m_2, y = est)) + 
+g <- ggplot(data_to_plot, aes(x = m_2, y = est)) + 
    geom_point() + 
    theme_minimal(base_size = 16) + 
    xlab("Number recaptured on day 2") +
