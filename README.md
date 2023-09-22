@@ -7,7 +7,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes00: Welcome](course-notes/00-welcome)
 - [Notes01: Intro to Estimation](course-notes/01-intro-to-estimation)
 - [Notes02: Properties I](course-notes/02-properties-of-estimators)
-- [Notes03: Bayesian Estimation](course-notes/02-bayesian-estimation)
+- [Notes03: Bayesian Estimation](course-notes/03-bayesian-estimation)
 
 ## Homework Assignments
 - [Homework00: Review](homework/homework00) and [solutions](homework/homework00/homework00-sols.pdf)
