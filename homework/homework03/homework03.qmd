@@ -35,8 +35,27 @@ In HW1, we found the MOM and MLE estimates for each of the probability distribut
    (a) For large $n$, show that the posterior distribution of $\pi$ has approximate mean $\hat{\pi} = \frac{y}{n}$ (it also has approximate variance $\frac{\hat{\pi}(1-\hat{\pi})}{n}$. Relate this result to classical estimation. 
    (b) Show that the MLE estimator is a limit of Bayes estimators, for a certain sequence of $\alpha = \beta$ values. 
    
-6. TBA after Friday's class
+6. In class on Friday, we defined the posterior distribution for $\theta$ as: 
 
+$$ f_{\theta|X}(\theta|x) = \frac{f_x(x|\theta)f_\theta(\theta)}{\int f_x(x|\theta) f_\theta(\theta) d\theta}$$ 
+
+> which is true if we observe 1 draw from the data model and have $X \sim f_x$. 
+
+> If we have $n$ IID observations $X_1, ..., X_n$, we replace $f_x(x|\theta)$ with the *joint pdf*: 
+
+$$ f_{X^n}(x_1, ..., x_n|\theta) = \prod_{i=1}^n f_x(x_i|\theta) = L_n(\theta)$$
+
+> where $x^n$ denotes the set of $(x_1, ...., x_n)$, and $L_n(\theta)$ is the same likelihood function that is so near and dear to our hearts. 
+
+> Then, the posterior distribution is:
+
+$$f(\theta|x^n) = \frac{f_{x^n}(x^n|\theta) f_\theta(\theta)}{\int f_{x^n}(x^n|\theta)f_\theta(\theta) d\theta} = \frac{L_n(\theta)f_\theta(\theta)}{c_n} \propto L_n(\theta) f_\theta(\theta)$$
+  
+  > (a) Why can we write the joint pdf as $\prod_{i=1}^n f_x(x_i|\theta)$? 
+  > (b) What is $c_n$ and how do we know that it is a constant? 
+  > (c) Explain what the $\propto L_n f_\theta(\theta)$ means. 
+  > (d) Do you think the Bayes estimator will generally be more similar to the MLE or to the MoM? Why? 
+  
 7. Wrap up lab activity
 
 8. Review for quiz on Wednesday! 
