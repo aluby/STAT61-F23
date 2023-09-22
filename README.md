@@ -13,7 +13,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Homework00: Review](homework/homework00) and [solutions](homework/homework00/homework00-sols.pdf)
 - [Homework01: Due 9/13](homework/homework01)
 - [Homework02: Due 9/20](homework/homework02)
-- [Homework02: Due 9/27](homework/homework03) graded on *completion only*. Solutions posted here the day before the quiz.
+- [Homework03: Due 9/27](homework/homework03) graded on *completion only*. Solutions posted here the day before the quiz.
 
 ## Labs and Activities
 - [Lab01: Toolkit + Probability](labs-activities/01-toolkit-probability) and [write up file](labs-activities/templates/)
