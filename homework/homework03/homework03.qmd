@@ -1,0 +1,42 @@
+---
+title: "Homework 03: Due 9/27 (completion based)"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+In HW1, we found the MOM and MLE estimates for each of the probability distributions below.  For Q1-Q4, find (a) the posterior distribution for an iid sample of $X_1, X_2, \ldots, X_n$ and (b) the posterior mean (our Bayesian estimate).
+
+1. The parameter $\lambda$ for a Poisson distribution where $P(X = k) = \frac{\lambda^k}{k!} e^{-\lambda}$ for $k= 0, 1, 2, \ldots$ and we assume the prior distribution for $\lambda$ is Gamma$(\alpha, \beta)$. (This should be a named distribution; be sure to specify the parameters)
+
+2. The parameter $p$ in the Geometric distribution where $P(X = k) = p(1 - p)^{k-1}$ for $k=  1, 2, 3, \ldots$ and we assume the prior distribution for $p$ is Beta$(a, b)$. (This should be a named distribution; be sure to specify the parameters)
+
+3. The parameter $\alpha$ in the distribution with pdf $f(x | \alpha) = \frac{\Gamma(2\alpha)}{\Gamma(\alpha)^2}[x(1-x)]^{\alpha -1}$ where $x \in [0,1]$ and we assume the prior distribution for $\alpha$ is Unif(0,1). (You will probably not be able to solve the integral to determine the posterior mean, but write out the integral you would have to solve.)
+
+4. The parameter $\beta$ in the Pareto distribution with pdf $f(x | \beta) = \frac{\beta}{x^{\beta+1}}$ where $x > 1$ and we assume the prior distribution for $\beta$ is Gamma$(\alpha, \lambda).$ (This should be a named distribution; be sure to specify the parameters)
+
+5. For a Binomial($n, \pi$) observation $y$, consider the Bayes estimator of $\pi$ using a Beta($\alpha, \beta$) prior distribution. 
+   (a) For large $n$, show that the posterior distribution of $\pi$ has approximate mean $\hat{\pi} = \frac{y}{n}$ (it also has approximate variance $\frac{\hat{\pi}(1-\hat{\pi})}{n}$. Relate this result to classical estimation. 
+   (b) Show that the MLE estimator is a limit of Bayes estimators, for a certain sequence of $\alpha = \beta$ values. 
+   
+6. TBA after Friday's class
+
+7. Wrap up lab activity
+
+8. Review for quiz on Wednesday! 
