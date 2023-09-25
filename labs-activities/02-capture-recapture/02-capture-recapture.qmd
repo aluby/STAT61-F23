@@ -198,7 +198,8 @@ g <- ggplot(data_to_plot, aes(x = m_2, y = est)) +
    theme_minimal(base_size = 16) + 
    xlab("Number recaptured on day 2") +
    ylab("Estimate of N") + 
-   geom_hline(yintercept = N)
+   geom_hline(yintercept = N) +
+   xlim(c(0, n_1))
  
 ggplotly(g)
 ```
@@ -217,9 +218,9 @@ data_to_plot = tibble(n_2 = n_2,
 g <- ggplot(data_to_plot, aes(x = n_2, y = est)) + 
    geom_point() + 
    theme_minimal(base_size = 16) + 
-   xlab("Number recaptured on day 2") +
+   xlab("Number captured on day 2") +
    ylab("Estimate of N") + 
-   geom_hline(yintercept = N)
+   geom_hline(yintercept = N) 
  
 ggplotly(g)
 ```
@@ -257,7 +258,8 @@ g <- ggplot(data_to_plot, aes(x = m_2, y = var)) +
    theme_minimal(base_size = 16) + 
    xlab("Number recaptured on day 2") +
    ylab("Variance of Estimate") + 
-   geom_hline(yintercept = N)
+   geom_hline(yintercept = N) + 
+   xlim(c(0,n_1))
  
 ggplotly(g)
 ```
