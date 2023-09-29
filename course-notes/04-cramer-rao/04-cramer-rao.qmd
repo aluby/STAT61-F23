@@ -1,0 +1,100 @@
+---
+title: "04: Cramer-Rao Lower Bound"
+subtitle: "Larsen & Marx 5.5"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r, echo = FALSE}
+library(tidyverse)
+```
+
+# Minimum-Variance Unbiased Estimators 
+
+Given two unbiased estimators for the parameters $\theta$, $\hat{\theta}_1$ and $\hat{\theta}_2$, we've already established which is "better": the one with smaller variance. But what if there is a $\hat{\theta}_3$ that has smaller variance than both of them? How can we know if one exists? 
+
+The **Cramer-Rao Lower Bound** tells us exactly that. It gives a theoretical limit below which an unbiased estimator cannot fall. If the variance of an estimator $\hat{\theta}$ is equal to that bound, we know that $\hat{\theta}$ is *optimal* in a sense: no other unbiased estimator can estimate $\theta$ with greater precision. 
+
+
+::: callout-note
+## Fisher Information
+The Fisher Information is a way of measuring the amount of information that a random variable $X$ carries about the unknown parameter $\theta$. 
+
+$$ I(\theta) =  E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2] = [- E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta})]$$
+
+:::
+
+**Example:** Find the Fisher information for $X$, where $X \sim \text{Bernoulli}(\pi)$
+
+\vspace{3in}
+
+::: callout-note
+## Cramer-Rao Lower Bound
+
+Let $Y_1, ...., Y_n \sim f_y(y; \theta)$, where $f_y(y; \theta)$ is a continuous pdf with continuous first and second derivative (i.e. "smooth enough"). Also suppose the set of values where $f_y(y; \theta) \ne 0$ does not depend on $\theta$. 
+
+Let $\hat{\theta} = h(Y_1, ..., Y_n)$ be any unbiased estimator of $\theta$. Then, 
+
+$$Var(\hat{\theta}) \ge [n E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2]^{-1} = [-n E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta})]^{-1} = \frac{1}{nI(\theta)}$$
+
+:::
+
+**Example:** Let $X_1, ..., X_n$ be $n$ Bernoulli trials with probability of succeess $\pi$. Let $\hat{\pi} = \frac{\sum X_i}{n}$. How does $Var(\hat\pi)$ compare with the Cramer-Rao lower bound?
+
+\vspace{3in}
+
+**Example:** Let $Y_1, .., Y_n \sim f_y$, where $f_y = \frac{2y}{\theta^2}$ for $0 \le y \le \theta$. Compare the Cramer-Rao lower bound with the variance of the unbiased estimator $\frac{3}{2} \bar{Y}$. Discuss. 
+
+\vspace{5in}
+
+::: callout-note
+## Minimum-variance unbiased estimator (aka "best" unbiased estimator)
+
+Let $\Theta$ denote the set of all estimators that are unbiased for the paramter $\theta$ in the continuous pdf $f_y(y; \theta)$. We say $\hat{\theta^*}$ is the MVUE if $\hat{\theta^*} \in \Theta$ and 
+
+\vspace{1in}
+:::
+
+::: callout-note
+## Efficient estimator
+
+Let $Y_1, ..., Y_n \sim f_y(y; \theta)$. Let $\hat{\theta}$ be an unbiased estimator for $\theta$. 
+
+1. $\hat{\theta}$ is said to be **efficient** if: 
+
+\vspace{.25in}
+
+2. The **efficiency** of $\hat{\theta}$ is: 
+
+\vspace{.25in}
+:::
+
+**Note:**
+
+\vspace{1in}
+
+
+
+

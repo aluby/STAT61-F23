@@ -1,0 +1,46 @@
+---
+title: "Homework 04: Due 10/4"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+1. Let $X_1, ..., X_n \sim Pois(\lambda)$ and let $\hat{\lambda} = \bar{X}$ be an estimator for $\lambda$ (recall this is the MLE). 
+
+>  (a) Find the Fisher Information for $X_i$
+>  (b) Find the Cramer-Rao Lower Bound
+>  (c) Find the variance of $\hat{\lambda}$ and show that it is an efficient estimator.
+
+2. Prove the equivalence of $$E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2] = E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta})$$ used in Cramer-Rao. *Hint:* The "trick" in this proof is to differentiate $\int f_y(y) dy = 1$ with respect to $\theta$, and deduce that $\int \frac{\partial \ln f_y}{\partial \theta} f_y dy = 1$. 
+
+3. When $Y$ has a positively skewed distribution over the positive real line, statisticians often treat $\ln Y$ as having a $N(\mu, \sigma^2)$ distribution. Then $Y$ has the *log-normal distribution* which has pdf for $y > 0$: 
+
+$$ f(y; \mu, \sigma) = \frac{1}{y\sigma\sqrt{2\pi}} e^{\frac{-[\ln y - \mu]^2}{2\sigma^2}}$$
+
+>  (a) For $n$ independent observations, find the MLE for $\mu$ and $\sigma^2$.
+>  (b) Find the approximate variance of $\hat{\mu}_{MLE}$
+>  (c) Using the invariance property of the MLE, find the MLE for the mean and variance of this distribution, which are $E(Y) = e^{\mu + \sigma^2/2}$ and $V(Y) = (e^{\sigma^2} - 1) E(Y)^2$. 
+
+4. TBA after Friday's class
+
+5. TBA after Friday's class
+
