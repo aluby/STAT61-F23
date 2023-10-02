@@ -40,7 +40,15 @@ $$ f(y; \mu, \sigma) = \frac{1}{y\sigma\sqrt{2\pi}} e^{\frac{-[\ln y - \mu]^2}{2
 >  (b) Find the approximate variance of $\hat{\mu}_{MLE}$
 >  (c) Using the invariance property of the MLE, find the MLE for the mean and variance of this distribution, which are $E(Y) = e^{\mu + \sigma^2/2}$ and $V(Y) = (e^{\sigma^2} - 1) E(Y)^2$. 
 
-4. TBA after Friday's class
+4. If $2n+1$ random observations are drawn from a continuous and symmetric pdf with mean $\mu$ and if $f_Y(\mu; \mu) \ne 0$, then the *sample median* $\tilde{\mu}_n = Y_{n+1}$ is unbiased for $\mu$, and $V(\tilde{\mu}_n) = \frac{1}{8n[f_y(\mu, \mu)]^2}$. Show that $\tilde{\mu}_n$ is consistent for $\mu$. 
 
-5. TBA after Friday's class
+5.  Let $X_1, ..., X_n \sim N(\mu, \sigma^2)$. There are two different commonly-used estimators for $\sigma^2$: 
+
+$$\hat\sigma^2 = \frac{1}{n} \sum (X_i - \bar{X})^2 \text{ and } s^2 = \frac{1}{n-1} \sum (X_i - \bar{X})^2$$.
+
+> We showed $\hat\sigma^2$ is the MLE in Notes01, and $s^2$ is commonly referred to as the "sample variance". When we use `var(x)` in R, $s^2$ is the output. 
+
+> (a) Show that the MLE $\hat{\sigma}^2$ is biased, and explain why $s_n^2$ corrects that bias. 
+> (b) Show that $s_n^2$ is a consistent estimator for $\sigma^2$. (*Hint:* Use Chebyshev's inequality. You may also find it useful that $Z_n = \frac{(\sum X_i - \bar{X})^2}{\sigma^2} \sim \chi^2_{n-1}$.) 
+> (b) Use Jensen's inequality to show that $s_n$ is biased for estimating $\sigma$. 
 

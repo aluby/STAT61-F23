@@ -1,0 +1,163 @@
+---
+title: "05: Consistency and Invariance"
+subtitle: "Larsen & Marx 5.7"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r, echo = FALSE}
+library(tidyverse)
+```
+
+# Fisher Information Follow Up 
+
+$I(\theta) =  E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2] = [- E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta^2})]$
+
+```{r}
+#| fig-width: 3
+#| fig-height: 2
+tibble(
+  x = seq(-5,5, by = .01),
+  y = log(dnorm(x))
+) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  theme_minimal(base_size = 12) + 
+  labs(x = "x",
+       y = expression(ln(f[x])))
+```
+
+# Consistent Estimators 
+
+When we've considered bias and efficiency, we've mostly assumed that our data has a fixed sample size. This makes sense in the context of historical statistics: data was time-consuming and expensive to gather, and so experiments were very rigorously designed with a lot of consideration for sample sizes. For any given dataset, we're generally working with a fixed sample size. As data has become easier and cheaper to gather, the *asymptotic* behavior of estimators has also become an important consideration. We may find, for example, that an estimator has a desired behavior *in the limit* that it fails to have for any fixed sample size. 
+
+**Example:** Recall the MLE for a Unif$(0, \theta)$ distribution is $\hat{\theta} = X_{\max}$. In Notes02, we showed that $E(X_{\max}) = \frac{n}{n+1} \theta$. 
+
+\vspace{2in}
+
+::: callout-note
+## Consistency
+
+As estimator $\hat{\theta}_n = h(W_1, ..., W_n)$ is said to be *consistent* if it converges in probability to to $\theta$ -- that is, for all $\epsilon > 0$: 
+
+\vspace{1in}
+
+:::
+
+**Note:** To solve certain kinds of problems, it can be helpful to think of this definition in an epsilon/delta way: $\hat{\theta}_n$ is consistent if for all $\epsilon > 0$ and $\delta > 0$, there exists $n(\epsilon, \delta)$ such that: 
+
+\vspace{1in}
+
+**Example:** Is the MLE for a Unif$(0, \theta)$ distribution consistent? 
+
+\vspace{2.5in}
+
+
+There are a number of useful *inequalities* in probability theory that make proving consistency easier. I'm going to give a quick overview of some of these inequalities here, but they can also be found in [Blitzstein & Hwang](https://drive.google.com/file/d/1VmkAAGOYCTORq1wxSQqy255qLJjTNvBI/edit) Ch 10.1. The proofs are extremely short and sweet, and I highly recommend reading this subsection of the book if you didn't cover it in Stat51. 
+
+::: callout-note
+## Cauchy-Schwarz inequality
+
+For any random variables $X$ and $Y$ with finite variances, 
+
+\vspace{1in}
+:::
+
+**Example:** 
+
+\vspace{.5in}
+
+::: callout-note
+## Jensen's Inequality
+
+Let $W$ be a random variable, and let $g$ be a convex function and $h$ be a concave function: 
+
+\vspace{.5in}
+
+:::
+
+**Example:** 
+\vspace{.5in}
+
+::: callout-note
+## Markov's Inequality
+
+For any random variable $W$ and any constant $a$, 
+
+\vspace{.5in}
+:::
+
+::: callout-note
+## Chebyshev's inequality
+
+Let $W$ be any random variable with mean $\mu$ and variance $\sigma^2$. For any $\epsilon > 0$, 
+
+\vspace{.5in}
+:::
+
+::: callout-note
+## Chernoff's inequality
+
+Let $W$ be any random variable and constants $a$ and $t$, 
+
+\vspace{.5in}
+:::
+
+
+**Example:** Let $X_1, ..., X_n$ be a random sample from a discrete pdf $p_x(k; \mu)$, where $E(X) = \mu$ and $V(X) = \sigma^2 < \infty$. Let $\hat{\mu}_n = \frac{1}{n} \sum X_i$. Is $\hat{\mu}$ a consistent estimator for $\mu$? 
+
+\vspace{4in}
+
+*Note:* 
+\vspace{1in}
+
+**Example:** Let $X_1,...,X_n \sim \text{Unif}(0, \theta)$. Recall $\hat{\theta}_{MoM} = 2\bar{X}$, and $E(\hat{\theta}_{MoM}) = \theta$ and $V(\hat{\theta}_{MoM}) = \frac{\theta^2}{3n}$ (Notes02). Is $\hat{\theta}_{MoM}$ consistent for $\theta$? 
+
+\vspace{2in}
+
+# Invariant Estimators 
+
+We're not going to go as in-depth with this property right now, but we'll come back to it over the next few weeks. Hopefully it is intuitive why it is desirable. 
+
+::: callout-note
+## Invariance Property of consistent estimators 
+
+Any continuous function of a consistent estimator is consistent. 
+
+\vspace{1in}
+
+:::
+
+::: callout-note
+## Invariance Property of MLE's
+
+Let $W_1, ..., W_n$ be a random sample from some distribution $f_w(\theta)$, and let $\hat{\theta} = h(W_1, ..., W_n)$ be the maximum likelihood estimator for $\theta$. Suppose we want to find the estimator for $g(\theta)$, where $g$ is any function. 
+
+\vspace{.5in}
+
+:::
+
+
+
