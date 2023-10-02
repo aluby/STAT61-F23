@@ -30,7 +30,7 @@ library(tidyverse)
 >  (b) Find the Cramer-Rao Lower Bound
 >  (c) Find the variance of $\hat{\lambda}$ and show that it is an efficient estimator.
 
-2. Prove the equivalence of $$E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2] = E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta})$$ used in Cramer-Rao. *Hint:* The "trick" in this proof is to differentiate $\int f_y(y) dy = 1$ with respect to $\theta$, and deduce that $\int \frac{\partial \ln f_y}{\partial \theta} f_y dy = 1$. 
+2. Prove the equivalence of $$E[(\frac{\partial \ln f_y(y; \theta)}{\partial \theta})^2] = -E(\frac{\partial^2 \ln f_y(y; \theta)}{\partial \theta})$$ used in Cramer-Rao. *Hint:* Start with the second form and work towards the first form. A "trick" in this proof is to differentiate $\int f_y(y) dy = 1$ with respect to $\theta$, and deduce that $\int \frac{\partial \ln f_y}{\partial \theta} f_y dy = 1$. Then differentiate again. 
 
 3. When $Y$ has a positively skewed distribution over the positive real line, statisticians often treat $\ln Y$ as having a $N(\mu, \sigma^2)$ distribution. Then $Y$ has the *log-normal distribution* which has pdf for $y > 0$: 
 
