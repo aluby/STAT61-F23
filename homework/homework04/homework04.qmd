@@ -49,6 +49,6 @@ $$\hat\sigma^2 = \frac{1}{n} \sum (X_i - \bar{X})^2 \text{ and } s^2 = \frac{1}{
 > We showed $\hat\sigma^2$ is the MLE in Notes01, and $s^2$ is commonly referred to as the "sample variance". When we use `var(x)` in R, $s^2$ is the output. 
 
 > (a) Show that the MLE $\hat{\sigma}^2$ is biased, and explain why $s_n^2$ corrects that bias. 
-> (b) Show that $s_n^2$ is a consistent estimator for $\sigma^2$. (*Hint:* Use Chebyshev's inequality. You may also find it useful that $Z_n = \frac{(\sum X_i - \bar{X})^2}{\sigma^2} \sim \chi^2_{n-1}$.) 
+> (b) Show that $s_n^2$ is a consistent estimator for $\sigma^2$. (*Hint:* Use Chebyshev's inequality. You may also find it useful that $Z_n = \frac{\sum (X_i - \bar{X})^2}{\sigma^2} \sim \chi^2_{n-1}$.) 
 > (b) Use Jensen's inequality to show that $s_n$ is biased for estimating $\sigma$. 
 
