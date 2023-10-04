@@ -1,0 +1,127 @@
+---
+title: "06: Sufficiency"
+subtitle: "Larsen & Marx 5.6"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+# Sufficient Estimators
+
+So far, we've seen a few desirable properties for estimators: that they should be unbiased, that they should have minimum variance, and that they should converge to the parameter value with unlimited data. All of these properties are easy to motivate: they impose conditions on the probabilistic behavior of $\hat{\theta}$ that "make good sense". The next property we're going to introduce is not so intuitive, but has really important theoretical implications. 
+
+Assume we draw $X_1, .., X_n \sim f_x$. Imagine two statisticians: 
+
+\vspace{2in}
+
+Whether or not an estimator is sufficient refers to the amount of "information" it contains about the unknown parameter. Estimates are calculated using values obtained from random samples (drawn from either $p_x$ or $f_x$). If everything that we can possibly know from the data about $\theta$ is encapsulated in the estimate $\hat{\theta}$, then the corresponding estimator $\hat{\theta}$ is said to be sufficient. 
+
+**Example of an estimator that is not sufficient:** Let $Y_1, .., Y_n \sim f_y$, where $f_y = \frac{2y}{\theta^2}$ for $0 \le y \le \theta$. The MoM estimator for this distribution is $\hat{\theta}_{MoM} = \frac{3}{2} \bar{Y}$. Consider two random samples of size 3: $\{3, 4, 5\}$ and $\{1, 3, 8\}$. 
+
+\vspace{3in}
+
+::: callout-note 
+## Sufficiency
+
+Let $W_1, ..., W_n$ be a random sample from $f_w(w; \theta)$. The estimator $\hat{\theta} = h(W_1, ...., W_n)$ is said to be *sufficient* for $\theta$ if $P(W_1, ...., W_n | \hat{\theta} = t)$ does not depend on $\theta$. 
+:::
+
+::: callout-note 
+## Factorization Criterion
+
+Let $W_1, ..., W_n$ be a random sample from $f_w(w; \theta)$. The estimator $\hat{\theta} = h(W_1, ...., W_n)$ is sufficient for $\theta$ if if and only if the likelihood function, $L(\theta)$, factors into the product of the pdf for $\hat{\theta}$ and a function of the sample that does not involve $\theta$: 
+
+\vspace{1in}
+:::
+
+**Example:** Let $X_1, ..., X_n \sim Pois(\lambda)$. Show that $\hat{\lambda} = \sum X_i$ is a sufficient statistic for $\lambda$. 
+
+\vspace{3.5in}
+
+::: callout-note 
+## Factorization Criterion Round 2
+
+Let $W_1, ..., W_n$ be a random sample from $f_w(w; \theta)$. The estimator $\hat{\theta} = h(W_1, ...., W_n)$ is sufficient for $\theta$ if if and only if the likelihood function, $L(\theta)$, factors into: 
+
+\vspace{1in}
+:::
+
+**Example:** Let $X_1, ..., X_n \sim Pois(\lambda)$. Show that $\hat{\lambda} = \sum X_i$ is a sufficient statistic for $\lambda$. 
+
+\vspace{4in}
+
+**Proof:** 
+
+\vspace{4.5in}
+
+**Example:** Suppose $Y_1, ..., Y_n$ are drawn from $f_y(y;\theta) = \frac{2y}{\theta^2}$ where $0 \le y \le \theta$. The MLE for $\theta$ is $\hat{\theta} = Y_{max}$. Is $Y_{max}$ sufficient for $\theta$? 
+
+\vspace{4in}
+
+**More notation:** 
+
+\vspace{1.5in}
+
+# Jointly Sufficient Statistics
+
+When a parameter $\boldsymbol\theta$ is multidimensional, sufficient statistics will typically need to be multidimensional as well. Sometimes, no one-dimensional statistic is sufficient even when $\theta$ is one-dimensional. In either case, we need to extend the concept of sufficient statistic to deal with cases in which more than one statistic is needed in order to be sufficient.
+
+::: callout-note
+## Jointly Sufficient Statistics
+
+Suppose that for each $\theta$ and each possible value of $(t_1, ..., t_k)$ of $(T_1, ..., T_k)$, where each $T_i = h_i(X_1, ..., X_n)$, the conditional joint distribution of $(X_1, ..., X_n)$ given $(T_1, ..., T_k) = (t_1, ..., t_k)$ does not depend on $\theta$. Then $(T_1, ..., T_k)$ are called *jointly sufficient statistics* for $\theta$
+:::
+
+
+::: callout-note 
+## Factorization Theorem for Jointly Sufficient Statistics
+
+Let $r_1, ..., r_k$ be functions. The statistics $T_i = r_i(X_1, ..., X_n)$ are jointly sufficient for $\boldsymbol{\theta}$ if and only if the joint pdf $f(x_1, ..., x_n|\boldsymbol\theta)$ can be factored into: 
+
+\vspace{1in}
+:::
+
+**Example:** Jointly sufficient statistics for the parameters of a normal distribution 
+
+\pagebreak
+
+# Rao-Blackwell Theorem
+
+::: callout-note 
+## Mean Squared Error
+
+\vspace{1in}
+:::
+
+The following theorem says that if we want an estimator with small MSE we can confine our search to estimators which are functions of sufficient statistics. 
+
+::: callout-note 
+## Rao-Blackwell Theorem 
+
+Let $\hat{\theta}$ be an estimator of $\theta$ with $E(\hat\theta^2) < \infty$. Suppose that $T$ is a sufficient estimator of $\theta$, and let $\theta^* = E(\hat{\theta} | T)$. Then, for all $\theta$, 
+
+\vspace{1in}
+:::
+
+**Example:** Let $X_1, ..., X_n \sim Pois(\lambda)$. We know that $\hat{\lambda} = \sum X_i$ is a sufficient statistic for $\lambda$. Let's "Rao-Blackwellize" the unbiased (but bad) estimator $\tilde\lambda = X_1$: 
