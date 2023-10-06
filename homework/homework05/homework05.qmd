@@ -1,0 +1,49 @@
+---
+title: "Homework 05: Due 10/11"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+1. Let $X_1, X_2, X_3$ be drawn from a Bernoulli($p$) distribution. 
+
+   (a) Show that $\hat{p}_1 = \sum X_i$ is sufficient for $p$. 
+   (b) Show that $\hat{p}_2 = X_1 + 2X_2 + 3X_3$ is *not* sufficient for $p$. 
+  
+2. Suppose $X_1, X_2, ..., X_n$ are iid from a Gamma($\alpha, \lambda$) distribution. That is, $f_x(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1}e^{-\lambda x}$. In Homework 02, you showed that the likelihood function for a Gamma distribution can be written such that it depends on the data values only through $\bar{X}$ and $\bar{X}_g = (\prod X_i)^{1/n}$. The work that you did will be helpful for this problem.
+   (a) If $\alpha$ is known, show that the arithmetic mean $T_1 = \frac{1}{n} \sum X_i$ is sufficient for $\lambda$. 
+   (b) If $\lambda$ is known, show that the geometric mean $T_2 = \bar{X}_g = (\prod X_i)^{1/n}$ is sufficient for $\alpha$. 
+   (c) If both $\lambda$ and $\alpha$ are unknown, show that $T_1$ and $T_2$ are jointly sufficient for $\alpha$ and $\lambda$. 
+  
+3. Suppose $X_1, ..., X_n$ are a random sample from a Poisson($\lambda$) distribution. Let $T = \sum X_i$ and recall that we showed $T$ is sufficient for $\lambda$ in class. Suppose we instead want to find an estimator for $\theta = P(X_i = 0)$. 
+   (a) Show that $\theta = e^{-\lambda}$
+   (b) Show that $\hat\theta = \mathbb{1}\{X_1 = 0\}$ is unbiased for $\theta$. 
+   (c) Use the Rao-Blackwell theorem to derive the new estimator $\theta^* = E(\theta | T=t)$ and show it is equal to $(\frac{n-1}{n})^t$. 
+   (d) Explain why $\theta^*$ is a "better" estimator than $\hat\theta$.
+
+4. For each of the following families of distributions, show that it is an exponential family and deduce a sufficient statistic for the parameter: 
+
+   (a) The family of negative binomial distributions for which the value of $r$ is known and the value of $p$ is unknown. 
+   (b) The family of beta distributions for which the value of $\alpha$ is unknown and the value of $\beta$ is known
+   (c) The family of beta distributions for which the value of $\alpha$ is known and the value of $\beta$ is unknown
+   (d) The family of Pareto distributions, where 
+$$f_y(y; \theta) = \frac{\theta}{(1+\theta)^{\theta + 1}}, \text{ } 0 \le y \le \infty; 0 \le \theta \le \infty$$
