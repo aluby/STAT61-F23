@@ -37,7 +37,7 @@ library(tidyverse)
 3. Suppose $X_1, ..., X_n$ are a random sample from a Poisson($\lambda$) distribution. Let $T = \sum X_i$ and recall that we showed $T$ is sufficient for $\lambda$ in class. Suppose we instead want to find an estimator for $\theta = P(X_i = 0)$. 
    (a) Show that $\theta = e^{-\lambda}$
    (b) Show that $\hat\theta = \mathbb{1}\{X_1 = 0\}$ is unbiased for $\theta$. 
-   (c) Use the Rao-Blackwell theorem to derive the new estimator $\theta^* = E(\theta | T=t)$ and show it is equal to $(\frac{n-1}{n})^t$. 
+   (c) Use the Rao-Blackwell theorem to derive the new estimator $\theta^* = E(\hat\theta | T=t)$ and show it is equal to $(\frac{n-1}{n})^t$. 
    (d) Explain why $\theta^*$ is a "better" estimator than $\hat\theta$.
 
 4. For each of the following families of distributions, show that it is an exponential family and deduce a sufficient statistic for the parameter: 
