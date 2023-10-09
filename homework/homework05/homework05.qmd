@@ -46,4 +46,4 @@ library(tidyverse)
    (b) The family of beta distributions for which the value of $\alpha$ is unknown and the value of $\beta$ is known
    (c) The family of beta distributions for which the value of $\alpha$ is known and the value of $\beta$ is unknown
    (d) The family of Pareto distributions, where 
-$$f_y(y; \theta) = \frac{\theta}{(1+\theta)^{\theta + 1}}, \text{ } 0 \le y \le \infty; 0 \le \theta \le \infty$$
+$$f_y(y; \theta) = \frac{\theta}{y^{\theta + 1}}, \text{ } 1 < y \le \infty; 0 \le \theta \le \infty$$
