@@ -1,0 +1,95 @@
+---
+title: "07: Exponential Families"
+subtitle: "Rice 8.8.1"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+# Exponential Families 
+
+Many "nice" distributions that we've spent a lot of time with are members of the **exponential family**. 
+
+::: callout-note
+## Exponential Family
+
+One-parameter members of the exponential family have density functions of the form: 
+
+\vspace{2in}
+:::
+
+Writing densities in this form requires a bit of work. 
+
+**Example:** Poisson distribution
+
+\vspace{3in}
+
+\pagebreak
+BUT, the payoff is that once we write the pdf in *exponential form*, we can immediately identify a sufficient statistic:
+
+\vspace{2in}
+
+We also have the following results: 
+
+::: callout-note
+## Sufficiency and the MLE
+
+\vspace{.75in}
+:::
+
+\vspace{1.5in}
+
+::: callout-note
+## Mean and Variance of Exponential Families
+
+\vspace{1.5in}
+:::
+
+::: callout-note
+## Conjugate priors
+
+\vspace{.75in}
+:::
+
+\pagebreak
+
+**Example:** Poisson distribution
+
+\vspace{3.5in}
+
+::: callout-note
+## k-parameter exponential family
+
+\vspace{1in}
+
+:::
+
+**Example:** $X_1, ..., X_n \sim N(\mu, \sigma^2)$
+
+\vspace{4in}
+
+## More distributions
+
+
+
