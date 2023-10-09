@@ -29,6 +29,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes04: Cramer-Rao Lower Bound](course-notes/04-cramer-rao)
 - [Notes05: Consistency and Invariance](course-notes/05-consistency-invariance)
 - [Notes06: Sufficiency](course-notes/06-sufficiency-rao-blackwell)
+- [Notes07: Exponential Families](course-notes/07-exponential-families)
 
 ## Homework Assignments
 - [Homework04: Due 10/4](homework/homework04)
