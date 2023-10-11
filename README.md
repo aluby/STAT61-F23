@@ -36,5 +36,6 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Homework05: Due 10/11](homework/homework05)
 
 ## Labs and Activities
+- [Lab03: Comparing Distributions](labs-activities/03-distributions)
 
 ## Quiz 2: Wed, Oct 25
