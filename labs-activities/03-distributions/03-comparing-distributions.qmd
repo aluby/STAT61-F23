@@ -307,6 +307,14 @@ ggplot(poisson_conjugate_dataset, aes(x = x, y = y, col = label)) +
 ```
 
 
+::: callout-note
+## Question
+
+Choose another prior/likelihood/posterior that we've seen in class or on homework and recreate the simulation and graph from above. 
+
+:::
+
+
 # References
 
 - Intro to qqplots section c/o [UVA StatLab](https://library.virginia.edu/data/articles/understanding-q-q-plots) (adapted for ggplot)
