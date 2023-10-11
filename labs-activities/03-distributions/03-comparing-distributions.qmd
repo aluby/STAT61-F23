@@ -1,0 +1,313 @@
+---
+title: "Lab03: Comparing Distributions"
+callout-appearance: simple
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    code-link: true
+    fig-width: 6
+    fig-height: 4
+    fig-align: center
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+Today, we're going to return to some simulation ideas from Lab01 and combine them with a few theoretical results we've been working through over the past couple of weeks. 
+
+Remember, if you'd like to pull this nice html document up in your browser, *download* the file from github and then open it. When you're done, please choose any of the 3 subsections under "Returning to some ideas we've seen recently" and submit a short write-up on gradescope. 
+
+```{r}
+library(tidyverse)
+library(patchwork)
+```
+
+# Quantile-Quantile Plots
+
+First, we're going to see a new way of examining the distribution of a variable. In Lab01, we talked about how to plot the pdf/pmf for a particular distribution, but it can be hard to gauge whether a variable plausibly follows a given distribution. Particularly in the tails, it's sometimes hard to visually distinguish differences in distributions between histograms or density plots. 
+
+The QQ plot, or quantile-quantile plot, is a graphical tool to help us assess if a set of data plausibly came from some theoretical distribution such as a normal or exponential. For example, if we run a statistical analysis that assumes our residuals are normally distributed, we can use a normal QQ plot to check that assumption. It's just a visual check, not an air-tight proof, so it is somewhat subjective. But it allows us to see at-a-glance if our assumption is plausible, and if not, how the assumption is violated and what data points contribute to the violation. We can also use it to confirm our theoretical results: if we show that the distribution of an estimator is a named distribution, we can simulate that estimator a bunch of times and visually check if it's consistent with the distribution that we found. 
+
+A QQ plot is a scatterplot created by plotting two sets of quantiles against one another. If both sets of quantiles came from the same distribution, we should see the points forming a line that's roughly straight. Here's an example of a normal QQ plot when both sets of quantiles truly come from normal distributions.
+
+```{r, echo = FALSE}
+# Create a tibble with a variable called "x" that contains 100 N(0,1) draws
+simulated_data = tibble(
+  x = rnorm(100)
+)
+
+ggplot(simulated_data, aes(sample = x)) + # Make a ggplot of simulated_data and use "x" as the sample
+  geom_qq() + # Add qq points
+  geom_qq_line() + # Add qq line
+  theme_minimal()
+```
+
+Now what are "quantiles"? These are often referred to as "percentiles." These are points in your data below which a certain proportion of your data fall. For example, imagine the standard normal distribution with a mean of 0. The 0.5 quantile, or 50th percentile, is 0. Half the data lie below 0. That's the median, as well as the peak of the hump in the curve. The 0.95 quantile, or 95th percentile, is about 1.64. 95 percent of the data lie below 1.64. The following R code generates the quantiles for a standard normal distribution from 0.01 to 0.99 by increments of 0.01:
+
+
+```{r}
+qnorm(seq(0.01,0.99,0.01))
+```
+
+We can also randomly generate data from a standard normal distribution and then find the quantiles. Here we generate a random sample of size 200 and find the quantiles for 0.01 to 0.99 using the `quantile()` function:
+
+```{r}
+quantile(rnorm(200),probs = seq(0.01,0.99,0.01))
+```
+
+So we see that quantiles are basically just your data sorted in ascending order, with various data points labelled as being the point below which a certain proportion of the data fall. However it's worth noting there are many ways to calculate quantiles. In fact, the `quantile()` function in R offers 9 different quantile algorithms! See `help(quantile)` for more information.
+
+QQ plots take your sample data, sort it in ascending order, and then plot them versus quantiles calculated from a theoretical distribution. The number of quantiles is selected to match the size of your sample data. While normal QQ plots are the ones most often used in practice due to so many statistical methods assuming normality, QQ plots can actually be created for any distribution.
+
+In R, we can use `ggplot` to construct qqplots. For example, consider the trees data set that comes with R. It provides measurements of the girth, height, and volume of timber in 31 felled black cherry trees. One of the variables is Height. Can we assume our sample of heights comes from a population that is normally distributed?
+
+```{r}
+ggplot(trees, aes(sample = Height)) + 
+  geom_qq() + 
+  geom_qq_line() + 
+  theme_minimal()
+```
+
+That appears to be a fairly safe assumption. The points seem to fall about a straight line. Notice the x-axis plots the theoretical quantiles. Those are the quantiles from the standard normal distribution with mean 0 and standard deviation 1.
+
+## Non-normal distributions
+
+The `geom_qq` function allows you to create a QQ plot for any distribution. Let's look at the randu data that come with R. It's a data frame that contains 3 columns of random numbers on the interval (0,1). 
+
+```{r}
+head(randu)
+```
+
+
+Random numbers should be uniformly distributed. Therefore we can check this assumption by creating a QQ plot of the sorted random numbers versus quantiles from a theoretical uniform (0,1) distribution. Here we create a QQ plot for the first column of numbers, called `x`, but we tell ggplot to use the `q`uantiles of the `unif`orm distribution (`qunif`) instead of the normal distribution: 
+
+```{r}
+ggplot(randu, aes(sample = x)) + 
+  geom_qq(distribution = qunif) + 
+  geom_qq_line(distribution = qunif) + 
+  theme_minimal()
+```
+
+
+What about when points don't fall on a straight line? What can we infer about our data? To help us answer this, let's generate data from one distribution and plot against the quantiles of another. Here, we generate 50 samples from a $Exp(4)$ distribution (which is right-skewed) and plot it against the theoretical uniform distribution, which is symmetric. 
+
+```{r}
+simulated_data = tibble(
+  x = rexp(50, rate = 2)
+)
+
+ggplot(simulated_data, aes(sample = x)) + 
+  geom_qq(distribution = qunif) + 
+  geom_qq_line(distribution = qunif) + 
+  theme_minimal()
+```
+
+Notice the points form a curve instead of a straight line. Normal QQ plots that look like this usually mean your sample data are skewed.
+
+Next we plot a distribution with "heavy tails" versus a normal distribution:
+
+```{r}
+simulated_data = tibble(
+  x = rcauchy(50)
+)
+
+ggplot(simulated_data, aes(sample = x)) + 
+  geom_qq(distribution = qnorm) + 
+  geom_qq_line(distribution = qnorm) + 
+  theme_minimal()
+```
+
+Notice the points fall along a line in the middle of the graph, but curve off in the extremities. Normal QQ plots that exhibit this behavior usually mean your data have more extreme values than would be expected if they truly came from a normal distribution.
+
+## Sample Size 
+
+::: callout-note
+## Question
+
+- How does the sample size impact the results? Try out a few different values of $n$ in the code below (be sure to run the code chunk multiple times to get a sense of the randomness)
+- What do you notice about the very ends of the lines? 
+:::
+
+
+```{r}
+simulated_data = tibble(
+  x = rnorm(100, 4, 3)
+)
+
+ggplot(simulated_data, aes(sample = x)) + 
+  geom_qq(distribution = qnorm) + 
+  geom_qq_line(distribution = qnorm) + 
+  theme_minimal()
+```
+
+
+## Different Parameters
+
+Next, let's look at how different parameters impact the qqplot. Here, we draw 100 samples from a $N(4,3)$ distribution and plot them against the theoretical standard normal distribution. 
+
+```{r}
+simulated_data = tibble(
+  x = rnorm(100, 4, 3)
+)
+
+ggplot(simulated_data, aes(sample = x)) + 
+  geom_qq(distribution = qnorm) + 
+  geom_qq_line(distribution = qnorm) + 
+  theme_minimal()
+```
+
+::: callout-note
+## Question
+
+Play around with a few different values of the mean and standard deviation Does it change the shape of the points at all? (Be sure to run a couple of different times so you get a sense for the randomness) How do the x and y axes change? 
+:::
+
+We can also pass on parameters to the *theoretical* distribution that we're using. Below, we tell `geom_qq` and `geom_qq_line` to use `mean = 4` and `sd = 3` for the `d`istribution `param`eters. 
+
+```{r}
+simulated_data = tibble(
+  x = rnorm(100, 4, 3)
+)
+
+ggplot(simulated_data, aes(sample = x)) + 
+  geom_qq(distribution = qnorm, dparams = list(mean = 4, sd = 3)) + 
+  geom_qq_line(distribution = qnorm, dparams = list(mean = 4, sd = 3)) + 
+  theme_minimal()
+```
+
+::: callout-note
+## Question
+
+Play around with a few different values of the mean and standard deviation within `geom_qq` and `geom_qq_line`. Does it change the shape of the points at all? (Be sure to run a couple of different times so you get a sense for the randomness) How do the x and y axes change? What happens if you change `geom_qq` but not `geom_qq_line`?
+:::
+
+# Returning to some ideas we've seen recently
+
+## $\chi^2$ distribution within the sample variance 
+
+In Homework04, you showed that the sample variance $s^2 = \frac{1}{n} \sum (X_i - \bar{X})^2$ is a consistent estimator for $\sigma^2$ if $X\sim N(\mu, \sigma^2)$. The hint for this problem said that $Z_n = \frac{\sum (X_i - \bar{X})^2}{\sigma^2} \sim \chi^2_{n-1}$. 
+
+The code below simulates a $N(2,3)$ sample of size 25, computes $\bar{X}$ and $Z_n$, and repeats 1000 times. 
+
+::: callout-note
+## Question
+
+Construct two QQplots: one that confirms the CLT for $\bar{X}$ and one that confirms that $Z_n \sim \chi^2_{n-1}$. 
+
+:::
+
+```{r}
+mu = 2
+sigma2 = 3
+simulation_results = tibble(
+  xbar = rep(NA, 1000),
+  z_n = rep(NA, 1000)
+)
+
+for(ii in 1:1000){
+  x = rnorm(25, mean = mu, sd = sqrt(sigma2))
+  simulation_results$xbar[ii] = mean(x)
+  simulation_results$z_n[ii] = sum((x - mean(x))^2)/sigma2
+}
+```
+
+::: callout-note
+## Question
+
+In this problem, we said that $X$ had to be a normal distribution. Does $Z_n \sim \chi^2_{n-1}$ even if $X$ is not normal? Copy your code chunk from above and try out a different distribution. 
+:::
+
+## Consistency
+
+Recall that an estimator is consistent if it converges in probability to the true value of the parameter. In other words, as the sample size increases, the estimator becomes arbitrarily close to the parameter. 
+
+In homework04, we (you) showed that the sample median, $\hat M$, is consistent for $\mu$ in symmetric distributions (provided the distribution is not centered at zero). 
+
+The following chunk of code simulates 4 samples 1000 times: a sample of size 10, a sample of size 50, a sample of size 100, and a sample of size 1000 from a $N(2,3)$ distribution. For each of the 4 samples, it calculates and saves the sample median. The commented code (after `#`) creates density plots for each of the distributions of the median. *Before uncommenting the graphing code*, what do you expect to see? 
+
+```{r}
+mu = 2
+sigma2 = 3
+simulation_results = tibble(
+  median_10 = rep(NA, 1000),
+  median_50 = rep(NA, 1000),
+  median_100 = rep(NA, 1000),
+  median_1000 = rep(NA, 1000),
+)
+
+for(ii in 1:1000){
+  x_10 = rnorm(10, mean = mu, sd = sqrt(sigma2))
+  x_50 = rnorm(50, mean = mu, sd = sqrt(sigma2))
+  x_100 = rnorm(100, mean = mu, sd = sqrt(sigma2))
+  x_1000 = rnorm(1000, mean = mu, sd = sqrt(sigma2))
+  simulation_results$median_10[ii] = median(x_10)
+  simulation_results$median_50[ii] = median(x_50)
+  simulation_results$median_100[ii] = median(x_100)
+  simulation_results$median_1000[ii] = median(x_1000)
+}
+
+# simulation_results %>%
+#  pivot_longer(everything(), values_to = "median") %>%
+#  ggplot(., aes(x = median, col = name)) +
+#  geom_density() + 
+#  theme_minimal()
+```
+
+::: callout-note
+## Question 
+
+- Try out the code with another symmetric distribution and then try an asymmetric distribution. What happens? 
+- How would the graph look different if we had an estimator that was *asymptotically unbiased* but **not** consistent?
+- How would you be able to tell if this convergence was happening in a QQ plot?
+:::
+
+## Conjugate priors
+
+In homework 3, we showed that the conjugate prior for a $Pois(\lambda)$ distribution with $\lambda \sim Gamma(\alpha, \beta)$ is $Gamma(\alpha + \sum X_i, 1/\beta + n)$. 
+
+The chunk of code below sets an $\alpha$ and $\beta$, and then draws a $\lambda$ from the prior distribution. It then simulates a Poisson sample of size 30 using that lambda. 
+
+```{r}
+alpha = 2
+beta = 1
+lambda = rgamma(1, shape = alpha, rate = beta)
+x = rpois(30, lambda = lambda)
+```
+
+The chunk of code below comes from lab 1 and plots the theoretical pdf for the gamma distribution. Right now, it plots the prior distribution twice when it should plot the posterior distribution in addition to the prior. 
+
+::: callout-note
+## Question
+
+Update the second copy of `dgamma(...)` so that it plots the correct posterior distribution based on the sample of $x$ above. 
+:::
+
+```{r}
+x_range = seq(0, 5, by = .1)
+
+poisson_conjugate_dataset = tibble(
+  x = c(x_range, x_range), 
+  y = c(dgamma(x_range, shape = alpha, rate = beta), dgamma(x_range, shape = alpha, rate = beta)),
+  label = c(rep("Prior", length(x_range)), rep("Posterior", length(x_range)))
+)
+
+ggplot(poisson_conjugate_dataset, aes(x = x, y = y, col = label)) + 
+  geom_line() +
+  theme_minimal(base_size = 20) + 
+  labs(
+    x = "y",
+    y = "f(y)",
+    col = "Model"
+  )
+```
+
+
+# References
+
+- Intro to qqplots section c/o [UVA StatLab](https://library.virginia.edu/data/articles/understanding-q-q-plots) (adapted for ggplot)
+
