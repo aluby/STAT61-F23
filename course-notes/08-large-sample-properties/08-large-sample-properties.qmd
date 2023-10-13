@@ -1,0 +1,135 @@
+---
+title: "08: Large Sample Properties"
+subtitle: "Rice 5.3, 8.5.2 "
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+# Sampling Distribution of a Statistic 
+
+::: callout-note
+## Convergence in distribution
+
+Let $X_1, ..., X_n$ be a sequence of random variables with CDFs $F_1, ..., F_n$ and let $X$ be a random variable with CDF $F$. We say $X_n$ converges in distribution to $F$ if: 
+
+\vspace{1in}
+
+:::
+
+::: callout-note
+## Sampling distribution of a statistic 
+
+Let $X_1, ..., X_n$ be a random sample with pdf $f_x(\theta)$. Let $T = h(X_1, ..., X_n, \theta)$. Then, the distribution of $T$ (given $\theta$) is called the *sampling distribution* of $T$. 
+:::
+
+**Example:** 
+
+\vspace{2in}
+
+**Example:** 
+
+\vspace{2in}
+
+# Central Limit Theorem
+
+::: callout-note
+## Central Limit Theorem 
+
+For a large number $n$ of iid observations $Y_i \sim f_y$, with mean $\mu$ and variance $\sigma^2$, the sampling distribution of $\bar{Y}$ is approximately: 
+
+\vspace{1in}
+
+:::
+
+::: callout-note
+## Central Limit Theorem  II
+
+For a large number $n$ of iid observations $Y_i \sim f_y$, with mean $\mu$ and variance $\sigma^2$, then for each fixed $x$: 
+
+\vspace{1in}
+
+:::
+
+# Delta Method 
+
+::: callout-note
+## Delta Method
+
+Let $Y_1, Y_2, ...$ be a sequence of random variables, and let $F^*$ be a continuous c.d.f. Let $\theta$ be a real number, and let $a_1, a_2,...$ be a sequence of positive numbers that increase to $\infty$. Suppose that $a_n(Y_n − \theta )$ converges in distribution to $F^*$. Let $\alpha$ be a function with continuous derivative such that $\alpha'(\theta) \ne 0$. Then,
+
+\vspace{1in}
+
+:::
+
+
+\vspace{3in}
+
+**Example:** Variance-stabilizing transformation
+
+\vspace{4in}
+
+# Large-Sample Properties of the MLE
+
+1. MLE estimators are *sufficient*
+
+1. MLE estimators are *invariant*
+
+1. MLE estimators are *asymptotically unbiased*. 
+
+1. Under appropriate smoothness conditions of $f_x$, the MLE from an iid sample is *consistent.*
+
+1. MLE estimators are *asymptotically efficient*: for large $n$, other estimators do not have smaller variance
+
+1. Under smoothness conditions of $f_x$, the MLE has a *normal sampling distribution* for large samples
+
+::: callout-note
+## Sampling distribution of the MLE
+
+Let $\hat{\theta} = h(Y)$ be the MLE for $\theta$, where $Y \sim f_y(\theta)$. 
+
+\vspace{1in}
+
+:::
+\vspace{3in}
+
+
+**Example:**
+
+\vspace{3in}
+
+# Large-Sample Properties of the Bayes Estimator 
+
+The large-sample properties of the MLE generally extend to the Bayes estimator: 
+
+1. Bayes estimators are asymptotically unbiased
+
+2. Bayes estimators are asymptotically efficient
+
+3. Bayes estimators are consistent
+
+4. Bayes estimators are sufficient
+
+5. Bayes estimators have normal sampling distributions for large $n$ 
+
