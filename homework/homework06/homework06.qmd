@@ -1,0 +1,49 @@
+---
+title: "Homework 06: Due 10/25 (completion based)"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+1. Let's explore (through a few examples) the *efficiency* property of large-sample MLEs. Recall that the large-sample normal approximation for the MLE is $\hat{\theta}_{MLE} \sim N(\theta, \frac{1}{nI(\theta)})$. 
+   (a) Explain why the normal approximation for $\hat{\theta}_{MLE}$ implies that the MLE for large samples is efficient. 
+   (a) Confirm the normal sample approximation for the MLE of the binomial distribution. (There's an example in Notes04 that may be helpful). 
+   (b) In Homework01, you showed that the MLE for $p$ in the *geometric distribution* is $\frac{1}{\bar{X}}$. Find the normal approximation of $\hat{p}_{MLE}$. Why is it useful to use the normal approximation instead of finding $V(\hat{p}_{MLE})$   directly in this case? 
+   (c) Also in Homework01, you showed that the MLE for $\beta$ in the Pareto pdf $f_x = \frac{\beta}{x^{\beta + 1}}$ is $\hat{\beta}_{MLE} = \frac{n}{\sum \ln x_i}$. Find the approximate variance of $\hat{\beta}_{MLE}$. 
+
+2. Suppose we have an unbiased estimator $\hat{\theta}$. Explain how the Rao-Blackwell theorem, taken together with the Cramer-Rao Lower Bound, implies that an estimator must be *sufficient* before it can be *efficient*. 
+
+::: callout-note
+## Delta Method (again)
+
+A less general, but perhaps more useful, version of the delta method is: 
+
+Suppose that $\frac{\sqrt{n}(Y_n - \mu)}{\sigma} \to_d N(0,1)$ and suppose that $g$ is a differentiable function with $g'(\mu) \ne 0$. Then, 
+
+$$ \frac{\sqrt{n}(g(Y_n) - g(\mu))}{|g'(\mu)| \sigma} \to_d N(0,1).$$
+Stated in another way, if $Y_n \approx N(\mu, \frac{\sigma^2}{n})$ then $g(Y_n) \approx N(g(\mu), (g'(\mu))^2 \frac{\sigma^2}{n})$.
+:::
+
+3. Suppose that $X_1, ..., X_n \sim N(0, \sigma^2)$. 
+
+   (a) Determine the asymptotic distribution of the statistic $T = \frac{1}{\frac{1}{n} \sum X_i^2}$. 
+   (b) Find a variance stabilizing transformation for the statistic $T^{-1} = \frac{1}{n} \sum X_i^2$. 
+
+
+
