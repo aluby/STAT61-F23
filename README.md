@@ -39,7 +39,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 
 ## Labs and Activities
 - [Lab03: Comparing Distributions](labs-activities/03-distributions)
-- [Quiz02 Review](04-quiz02-review)
+- [Quiz02 Review](labs-activities/04-quiz02-review)
 
 ## Quiz 2: Wed, Oct 25
-- [Formula Sheet](resources/stat61_formula_sheet-quiz02.pdf) 
+- [Formula Sheet](resources/stat61_formula_sheet-quiz2.pdf) 
