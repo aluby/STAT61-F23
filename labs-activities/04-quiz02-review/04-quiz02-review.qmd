@@ -21,6 +21,8 @@ format:
     fontsize: 11pt
 ---
 
+These problems are *not* an exhaustive review of every possible topic for the quiz, but are a sample of what possible quiz questions for this material could look like. The quiz will be far shorter than this review. If you feel confident about the material on this review, the homework, lab activities, and examples from class, you're in great shape for the quiz. 
+
 1. Suppose that $X_1, ..., X_n \sim Poisson(\theta)$. 
 
    (a) Find *two* method of moments estimators
