@@ -1,0 +1,52 @@
+---
+title: "Quiz02 Review"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+1. Suppose that $X_1, ..., X_n \sim Poisson(\theta)$. 
+
+   (a) Find *two* method of moments estimators
+   (b) Find the MLE of $\theta$
+   (c) Find $I(\theta)$ 
+   (d) Is $\bar{X}$ the MVUE of $\theta$? How can you tell? 
+  
+2. Suppose $X_1, ..., X_n \sim Gamma(\alpha, \frac{1}{2})$. 
+   (a) Find a sufficient statistic for $\alpha$. 
+   (b) Show that a method of moments estimator for $\alpha$ is $\hat\alpha_{MoM} = 2\bar{X}$
+   (c) The sum of Gamma random variables with the same rate parameter is also a Gamma Random variable. That is, $\sum X_i \sim Gamma(n \alpha, \frac{1}{2})$. Compute the exact mean and variance of $\hat\alpha_{MoM}$. 
+   (d) Now, find the asymptotic variance of $\hat\alpha_{MoM}$
+   (e) Find the MSE of $\hat\alpha_{MoM}$
+   (f) Let $\hat{\alpha}_{MVUE}$ be the minimum-variance unbiased estimator of $\alpha$. Is MSE($\hat{\alpha}_{MoM}$) $<, \le, =, \ge, >$ MSE($\hat{\alpha}_{MVUE}$). Explain how you can tell. 
+  
+3. Suppose $X_1, ..., X_n$ are iid from $f_x(x) = \lambda^2 x^{-3} e^{-\lambda/x}$ for $x>0, \lambda >0$. 
+   (a) Write out the likelihood function
+   (b) Show that $T(X) = \sum X_i^{-1}$ is a sufficient statistic for $\lambda$. 
+   (c) Find the MLE $\hat\lambda_{MLE}$
+   (d) What is the asymptotic distribution of $\hat\lambda_{MLE}$
+   (e) Now, let $\theta = \log \lambda$. Find the MLE for $\theta$. 
+
+4. **True or False:** If the statement is true, provide a brief explanation why. If the statement is false, cite a counterexample or explain how the statement could be corrected to make it true. 
+
+   (a) The MLE is always unbiased 
+   (b) It follows from the law of large numbers that if the sample size $n$ is large enough, the sample mean $\bar{X}$ is equal to the population mean $\mu$. 
+   (c) Let $X_1, ..., X_n \sim f_x(\theta)$. By the law of large numbers, the sample mean $\bar{X}$ is consistent for $\theta$. 
+   (d) Let $X_1, ..., X_n$ be a random sample from a population with mean $\theta$ and variance $\sigma^2$. Suppose that $I(\theta) = \frac{1}{\sigma^2}$. $\bar{X}$ is the MVUE. 
+   (e) If $\hat\theta$ meets the Cramer-Rao Lower Bound, it is an efficient estimator. 
