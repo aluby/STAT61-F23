@@ -42,4 +42,4 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Quiz02 Review](labs-activities/04-quiz02-review) and [solutions](labs-activities/04-quiz02-review)
 
 ## Quiz 2: Wed, Oct 25
-- [Formula Sheet](resources/stat61_formula_sheet-quiz2.pdf) 
+- [Formula Sheet](resources/stat61_formula_sheet-2.pdf) 
