@@ -35,7 +35,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 ## Homework Assignments
 - [Homework04: Due 10/4](homework/homework04)
 - [Homework05: Due 10/11](homework/homework05)
-- [Homework06: Due 10/25](homework/homework06) graded on *completion only*. [Solutions]((homework/homework06)) posted here the day before the quiz.
+- [Homework06: Due 10/25](homework/homework06) graded on *completion only*. [Solutions](homework/homework06) posted here the day before the quiz.
 
 ## Labs and Activities
 - [Lab03: Comparing Distributions](labs-activities/03-distributions)
