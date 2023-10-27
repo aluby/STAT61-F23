@@ -1,0 +1,164 @@
+---
+title: "09: Uncertainty Intervals "
+subtitle: "Larsen & Marx 5.3, 5.9 "
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+theme_set(theme_minimal(base_size = 12))
+```
+
+Up until this point, our focus has been on *point estimation*: if we have a parameter, what's the single "best guess" for that parameter, and how do we evaluate how good of a guess it is? 
+
+Consider two estimators A and B that both have large-sample normal sampling distributions. 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 2.5
+tibble(
+  t1 = seq(-2, 2, by = .01),
+  A = dnorm(t1, sd = .5),
+  B = dnorm(t1, sd = .2)
+) %>%
+  pivot_longer(A:B) %>%
+  ggplot(aes(x = t1, y = value, col = name)) + 
+  geom_line() + 
+  labs(
+    x = "x",
+    y = expression(f[x](x)),
+    col = "Estimator"
+  )
+
+```
+
+# Confidence Intervals 
+
+Since we know the *shape* and *parameters* of the *sampling distribution*, we know that: 
+
+\vspace{2in}
+
+By inverting the terms in the probability statement, this is equivalent to: 
+
+\vspace{2in}
+
+**Example:** Among a random sample of 100 recent college graduates, the average monthly student loan payment was \$287, with a standard deviation of \$56.33. Construct a 95% confidence interval for $\mu$, the average monthly student loan payment among the population. 
+
+\vspace{3in}
+
+**Caution:** What can we conclude? 
+
+(a) 95% of recent college grads have monthly student loan payments in this range
+(b) There is a .95 probability that $\bar{X}$ falls in this range
+(c) 95% of samples with $n=100$ would fall in this range
+(d) There is a .95 probability that $\mu$ falls within this range 
+(e) 95% of samples with $n=100$ would give an interval that contains $\mu$ 
+
+**Example:** Below are the CI's from 100 samples where each $X_i \sim N(300, 60)$. 
+
+```{r}
+set.seed(1950)
+replicate(100, rnorm(100, 300, 60)) %>%
+  as_tibble() %>%
+  summarize_all(list(mean = mean, sd = sd)) %>%
+  pivot_longer(everything()) %>%
+  separate(name, into = c("sample", "summary")) %>%
+  pivot_wider(names_from = summary, values_from = value) %>%
+  ggplot(aes(y = sample, 
+             x = mean, 
+             xmin = mean - 2*(sd/sqrt(100)), 
+             xmax = mean + 2*(sd/sqrt(100)))) + 
+  geom_linerange() +
+  gghighlight::gghighlight(mean - 2*(sd/sqrt(100)) > 300 | mean + 2*(sd/sqrt(100)) < 300) +
+  labs(
+    x = "95% CI"
+  ) + 
+  theme(axis.text.y = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank()) +
+  xlim(c(250, 350))
+```
+
+**Example:** Find a 90% confidence interval for $\mu$. 
+
+\vspace{4in}
+
+**Example:** Suppose we want to precisely estimate $\mu$ such that our confidence interval is no wider than $15. 
+
+\vspace{4in}
+
+**Example:** For a Pew Research survey of a representative sample of $n=2500$ adults, $X=1300$ said that they played video games. Let $\theta$ be the true proportion of adults who play video games. Give (a) the *exact* sampling distribution of $X$, (b) the approximate sampling distributions for $X$ and $X/n$. Use your answer from (b) to set up 95% CI's for $X$ and $X/n$. 
+
+\vspace{4in}
+
+A *conservative* CI for $X/n$: 
+
+\vspace{3in}
+
+\pagebreak
+
+# Bayesian Intervals 
+
+In the Bayesian estimation framework, uncertainty intervals are no longer based on long-term *coverage* but are instead based on *uncertainty in the posterior*. 
+
+Recall from Notes03 that if $X_1, ..., X_n \sim \text{Bernoulli}(p)$ and $p \sim \text{Beta}(\alpha, \beta)$, then $p | \sum X \sim \text{Beta}(\sum X_i + \alpha, n - \sum X_i + \beta)$.
+
+**Example:** Using the Pew Research sample above, what is the resulting posterior distribution $p|\sum X_i$? Assume a uniform prior distribution: $p\sim Beta(1, 1)$. How could we construct a 95% posterior probability interval? 
+
+\vspace{4in}
+
+Recall from Notes03 that if $X_1, ..., X_n \sim N(\theta, \sigma^2)$ ($\sigma^2$ known) and $\theta \sim N(a, b^2)$, then $\theta | X \sim N(\frac{b^2 \sum X_i + \sigma^2a}{nb^2 + \sigma^2}, \frac{\sigma^2 b^2}{nb^2 + \sigma^2})$.
+
+**Example:** From our student loan payment example, $\sum X_i = \$ 287, n = 100$ and we'll assume $\sigma^2 = 60^2 = 3600$. Let's also assume a "flat" prior: $\theta \sim N(250, 100^2)$. What's the resulting posterior distribution? What's a 95% posterior probability interval? 
+
+\vspace{4in}
+
+# Z Tables 
+
+![](normal-table-1.png)
+
+![](normal-table-2.png)
+
+# Alternative to a z-table 
+
+```{r}
+#| echo: true
+#| 
+dnorm(-1)
+pnorm(-1)
+qnorm(.1586)
+```
+
+
+```{r}
+#| echo: true
+#| 
+qnorm(.005)
+qnorm(.025)
+qnorm(.05)
+qnorm(.0975)
+qnorm(.095)
+```
