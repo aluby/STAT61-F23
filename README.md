@@ -4,7 +4,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 # Week 7-11: Inference
 
 ## Notes 
-- [Notes09: Uncertainty Intervals](course-notes/09-uncertainty-intervals)
+- [Notes09: Confidence Intervals](course-notes/09-confidence-intervals)
 
 ## Homework Assignments
 - [Homework07: Due 11/1](homework/homework05)
