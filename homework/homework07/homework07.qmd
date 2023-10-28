@@ -1,0 +1,49 @@
+---
+title: "Homework 06: Due 11/1"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+*Note:* You should be able to start 1, 2, and 3a whenever. We'll cover 3b-c and 4 on Monday. 
+
+1. What confidence level would be associated with each of the following intervals? You can assume that $\sigma$ is known. 
+   (a) $(\bar{Y} - 1.64 \frac{\sigma}{\sqrt{n}}, \bar{Y} + 2.33 \frac{\sigma}{\sqrt{n}})$
+   (b) $(-\infty, \bar{Y} + \frac{\sigma}{\sqrt{n}} )$
+   (c) $(\bar{Y} - 1.96 \frac{\sigma}{\sqrt{n}}, \bar{Y})$
+  
+  
+2. In a simple random sample of 1500 voters, 53% said they planned to vote for a particular proposition, and 47% said they planned to vote against it. The estimated margin of victory for the proposition is thus 6%. 
+   (a) Find the sampling distribution for the margin of victory
+   (b) Find a 95% confidence interval for the margin of victory. What do you conclude? 
+  
+The following problems refers to a study of human temperatures. For $n=64$ female subjects, the average temperature was $\bar{X} = 98.36$ with a sample standard deviation of $s = 0.68$. There were 24 women with temperatures of $98.6$ or higher. Assume this is a representative sample and we can invoke the CLT. 
+
+3. For each of the following, find 95% and 99% confidence intervals for $\mu$. 
+   (a) First, assume that the population standard deviation is known to be $\sigma = .7$
+   (b) Now, place a prior distribution on $\mu$ where $\mu \sim N(98.6, 0.2^2)$. Find 95% and 99% posterior intervals for $\mu$. 
+   (c) Provide a real-world conclusion about the intervals in (a) and (b). 
+  
+4. Define $\theta$ to be the proportion of people with temperatures of 98.6 or higher. 
+   (a) Find 95% and 99% confidence intervals for $\theta$ using the conservative formula. 
+   (b) Now find the CI's using the large-sample formula
+   (c) Now find 95% and 99% Bayesian posterior intervals assuming a uniform prior distribution (recall this is equivalent to a Beta(1,1) distribution). 
+   (d) Based on prior work, a collaborator strongly believes that the population proportion $\theta$ is close to $0.5$. Choose a prior distribution for $\theta$ to capture this believe and recalculate the posterior intervals (you can use a [distribution explorer](https://distribution-explorer.github.io/continuous/beta.html) to see different shapes of Beta distributions). How do they change from (c)?
+
+
