@@ -46,4 +46,4 @@ The following problems refers to a study of human temperatures. For $n=64$ femal
    (c) Now find 95% and 99% Bayesian posterior intervals assuming a uniform prior distribution (recall this is equivalent to a Beta(1,1) distribution). 
    (d) Based on prior work, a collaborator strongly believes that the population proportion $\theta$ is close to $0.5$. Choose a prior distribution for $\theta$ to capture this believe and recalculate the posterior intervals (you can use a [distribution explorer](https://distribution-explorer.github.io/continuous/beta.html) to see different shapes of Beta distributions). How do they change from (c)?
 
-
+5. Please fill out the anonymous [mid-semester check-in](https://docs.google.com/forms/d/e/1FAIpQLScA2tn-0DV-VJLCMZnvo98JrsAfUjf7QP0CPUXonn6jVTtbJw/viewform?usp=sf_link) form. 
