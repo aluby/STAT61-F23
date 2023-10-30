@@ -1,0 +1,23 @@
+---
+title: "Ideas for final project"
+format: html
+---
+
+*Note:* I will continue to update this list as we go. If more than 3 groups propose the same project, I will ask you to coordinate to make sure your projects are different enough from one another. 
+
+# Potential Topics 
+
+1. Proof of Invariance of MLE
+2. Expectation-Maximization (E-M) algorithm 
+3. Gibb's Sampling
+4. Jeffrey's Prior 
+5. Prove Cramer-Rao 
+6. Zero-Inflated Poisson Distribution
+7. Cauchy distribution 
+8. Conjugate Priors for Exponential Family
+9. Confidence intervals for QQplots
+10. Bayesian Estimation for $L_1$ loss function
+11. Bayesian Highest Posterior Density Intervals 
+
+You are also welcome to propose your own topic! I encourage you to talk with me before submitting a proposal to make sure that it is appropriate for the class. 
+

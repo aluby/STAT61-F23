@@ -1,0 +1,50 @@
+---
+title: "Project Proposal: Due 11/29"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+The final project is going to be an independent investigation into a topic related to class. This can be topics from the textbook we didn't get a chance to cover or more advanced topics that are related to things we talked about in class. You can work on your own or with a partner. The parameters for the project are pretty broad, but you should anticipate putting in roughly 2 homework assignments worth of work into it. 
+
+Your final project should include: 
+
+  (a) An introduction to the topic, brief history, and how it fits into the material that we learned in this course.
+  
+  (b) At least one of: 
+   - A detailed, step-by-step proof. It is OK to reference existing proofs, but yours should include more explanation. 
+   - An illustration using simulation 
+   - An example using real data. 
+  
+Note that not all topics will be appropriate for all 3 options. I anticipate most A's on the project to include two of the above, or go "above and beyond" in other ways. If you choose to use an application or simulation, your project should still engage deeply with the theoretical aspects of the topic. (E.g. It's not enough to compute a confidence interval for a given question, but you could explore different ways to compute confidence intervals and how your conclusions would change.)
+
+Your project proposal, due after Thanksgiving break, should include the following: 
+
+ 1. Whether it will be an individual or partner project
+ 2. The topic that you're going to dive into (see `topic-ideas.qmd` for some examples)
+ 3. The format your project will take (e.g. paper, poster, slides, video, interactive document, etc.)
+ 4. At least 3 sources you plan to reference, one of which is *not* a textbook. To get started, I recommend our textbook (Larsen & Marx), *Mathematical Statistics & Data Analysis* by Rice, or *Probability and Statistics* by DeGroot and Schervish. I'm also happy to recommend sources once you have a rough idea of the topic you'd like to pursue. 
+ 
+ 
+
+
+
+
+
+
