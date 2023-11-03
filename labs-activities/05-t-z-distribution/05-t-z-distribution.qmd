@@ -1,0 +1,227 @@
+---
+title: "Lab05: T and Z Distributions"
+callout-appearance: simple
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    code-link: true
+    fig-width: 6
+    fig-height: 4
+    fig-align: center
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(patchwork)
+```
+
+Today we're going to be doing a deep dive into the normal distribution and the t-distribution. There is a fill-in-the-blank gradescope assignment that is due with the homework on 11/8 (plus grace period). I will ask you to fill in answers or upload a graph for every question indicated on the lab. Remember if you'd like the .html file to display nicely on your computer, you need to either download it from github and open it using a browser OR run the .qmd file in your RStudio session.  
+
+Recall that the central limit theorem tells us that $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$, and this is what allows us to build confidence intervals using the z-scores from the standard normal distribution. 
+
+However, in practice, researchers won't typically *know* anything about $\sigma$ other than what's captured in the $Y_i$'s. Up until this point, we've plugged in the sample standard deviation $s = \sqrt{\frac{1}{n-1} \sum (X_i - \bar{X})^2)}$ for $\sigma$ and assumed that we're OK. Are there probabilistic differences between $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$ and $\frac{\bar{X} - \mu}{s/\sqrt{n}}$? *Spoiler alert:* there are, but for large samples, the difference becomes negligible. 
+
+## Student's t distribution
+
+[William Sealy Gosset](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwiJ5Nip0KeCAxWHGjQIHU99AKsQFnoECCEQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FWilliam_Sealy_Gosset&usg=AOvVaw38D0kTs6sShPwJsXFzpjcv&opi=89978449) was a statistician who was working as the Head Experimental Brewer of Guinness Brewery. When he was running experimental studies, it typically meant he was changing something about the brewing process, and batches were both long and expensive to brew. 
+
+!["Lovely day for a Guinness" ad with a Toucan.](guinness-ad.jpeg)
+
+When the objective of the study was to draw an inference about $\mu$, Gosset was often working with sample sizes of 4 or 5, and realized that $\frac{\bar{X} - \mu}{s/\sqrt{n}}$ behaved differently than the standard normal distribution in an important way. 
+
+The code below (1) simulates 500 $N(10,3^2)$ samples of size 4, (2) calculates $\bar{X}$ and $s$ for each sample, (3) plots histograms of $\frac{\bar{X} - 10}{3/\sqrt{4}}$ and $\frac{\bar{X} - 10}{s/\sqrt{4}}$ and overlays a $N(0,1)$ pdf on each. 
+
+```{r}
+set.seed(110323)
+simulation_results = tibble(
+  xbar = rep(NA, 500), 
+  s = rep(NA, 500)
+)
+
+for(ii in 1:500){
+  x = rnorm(4, mean = 10, sd = 3)
+  simulation_results$xbar[ii] = mean(x)
+  simulation_results$s[ii] = sd(x)
+}
+
+p1 = ggplot(simulation_results, aes(x = (xbar - 10)/(3/sqrt(4)))) + 
+  geom_histogram(aes(y = after_stat(density)), col = "white") +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = 0, sd = 1), 
+    col = 'darkorange'
+  ) + 
+  theme_minimal(base_size = 12) + 
+  xlim(c(-5,5))
+
+p2 = ggplot(simulation_results, aes(x = (xbar - 10)/(s/sqrt(4)))) + 
+  geom_histogram(aes(y = after_stat(density)), col = "white") +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = 0, sd = 1), 
+    col = 'darkorange'
+  ) + 
+  theme_minimal(base_size = 12) + 
+  xlim(c(-5,5))
+
+p1/p2
+```
+
+::: callout-note
+## Question 1
+
+How can you tell from the graphs above that the $N(0,1)$ distribution is not quite right? 
+:::
+
+Gossett published a paper in 1908 titled ["The Probable Error of a Mean"](Student-ProbableErrorMean-1908.pdf) where he derived a formula for the PDF of $\frac{\bar{X} - \mu}{s/\sqrt{n}}$. My favorite part of the paper is: 
+
+![](gosset-paper-screenshot.png)
+
+Since Guinness wanted to keep any company information confidential, they prevented any employees from publishing any papers, so Gossett published under the name "Student" (they were ahead of the curve in recognizing the value of careful statistics!). Fourteen years after its publication, he sent it to R.A. Fisher. Fisher then presented a rigorous mathematical derivation of the pdf that Gossett developed and arbitrarily chose the letter $t$ for $\frac{\bar{X} - \mu}{s/\sqrt{n}}$. So, we now refer to the distribution as "Student's T Distribution". 
+
+## Deriving the t-distribution
+
+Deriving the distribution of $t = \frac{\bar{X} - \mu}{s/\sqrt{n}}$ is far more complicated than deriving the distribution of $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$, since $t$ is a *ratio* of two random variables ($\bar{X}$ and $s$). This derivation has a number of steps: 
+
+(1) Show that $\sum_{i=1}^m Z_j^2 \sim \text{Gamma}(\frac{m}{2}, 2)$, where $Z_j \sim N(0,1)$. This distribution is important enough that it gets its own name, the chi-square distribution with $m$ degrees of freedom
+(2) Rewrite $t$ as a ratio of two chi-square random variables
+(3) Show that $s^2$ and $\bar{Y}$ are independent
+(4) Combining (2) and (3) allows for the definition of a *new* distribution, the F distribution. 
+(5) Show that $T_n^2 = \frac{Z^2}{U/n}$ has an $F_{1, n}$ distribution, and use that to derive the PDF of $T_n$. 
+(6) Show that $T_{n-1} = \frac{\bar{X} - \mu}{s/\sqrt{n}}$ has a t distribution with n-1 degrees of freedom. 
+
+The textbook walks through this derivation mathematically (which I encourage you to read through especially if you'd like a refresher on showing that two random variables share the same distributional form!) but we're going to walk through it using simulation and graphs. 
+
+### Step 1: Chi-Square Distribution
+
+::: callout-note
+## Question 2
+
+The code chunk below simulates 500 $\sum_{i=1}^{20} Z_j^2$ random variables and creates a qqplot that compares it to a theoretical $\chi^2$ distribution. Create another qqplot that instead compares it to a theoretical Gamma($\frac{m}{2}, 2$) distribution and show that it is equivalent. 
+
+*Note:* The parameterization of the gamma distribution on our formula sheet has $\alpha$ = `shape` and $\beta$ = `scale`. 
+:::
+
+```{r}
+chisq = tibble(
+  sum_zj2 = rep(NA, 500)
+)
+
+for(ii in 1:500){
+  chisq$sum_zj2[ii] = sum(rnorm(20)^2)
+}
+
+ggplot(chisq, aes(sample = sum_zj2)) + 
+  geom_qq(distribution = qchisq, dparams = list(df = 20)) + 
+  geom_qq_line(distribution = qchisq, dparams = list(df = 20)) + 
+  theme_minimal()
+```
+
+### Step 3: $s^2$ and $\bar{Y}$ are independent. 
+
+::: callout-note
+## Question 3
+
+Use the `simulation_results` dataset that we created above and create a plot that supports the claim that $s^2$ and $\bar{Y}$ are independent. 
+:::
+
+```{r}
+simulation_results
+```
+
+### Step 4: Explore the F distribution
+
+The F distribution is defined as $F = \frac{V/m}{U/n}$ where $V \sim \chi^2_m$ and $U \sim \chi^2_n$. Just like the other distributions we've seen, R has built-in functions for the PDF, CDF, quantile function, and random sampling. Pull up `?rf` for more details. 
+
+Below is the PDF of a $F_{\text{df1}=1, \text{df2}=1}$ distribution. 
+
+```{r}
+tibble(
+  x = seq(0, 10, by = .1)
+) %>%
+  ggplot(aes(x = x)) + 
+  stat_function(
+    fun = df, 
+    args = list(df1 = 1, df2 = 1), 
+    col = 'darkorange'
+  ) + 
+  theme_minimal(base_size = 12)
+```
+
+::: callout-note
+## Question 4
+
+How does the shape of the distribution change as df$_1$ changes? as df$_2$ changes? 
+:::
+
+### Step 5: $T_n^2 = \frac{Z^2}{U/n}$ has an $F_{1, n}$ Distribution
+
+The code below: 
+
+1. Simulates 500 $Z \sim N(0,1)$ random variables 
+2. Simulates 500 $U sim \chi^2_5$ random variables
+3. Creates a new variable, $T_n^2 = \frac{Z^2}{U/5}$. 
+
+```{r}
+# Simulate 500 N(0,1) random variables 
+z = rnorm(500)
+# Simulate 500 chi-square random variables with df = 5 
+u = rchisq(500, df = 5)
+# Create the variable tn2 = z^2/(u/5)
+tn2 = z^2/(u/5)
+```
+
+::: callout-note
+## Question 5
+
+Using the results above, justify $T_5^2 \sim F_{1, 5}$ through a qqplot. 
+:::
+
+
+::: callout-note
+## Question 6
+
+If we instead simulated 1000 Z's and U's, and each U had df = 10, what distribution would $T_n^2$ follow?
+:::
+
+### Step 6: $T_{n-1} = \frac{\bar{X} - \mu}{s/\sqrt{n}}$
+
+Now, let's return to the `simulation_results` dataset from the beginning of the lab and see how the T and Z distributions compare. 
+
+::: callout-note
+## Question 7
+
+Using the code below, justify $\frac{\bar{X} - \mu}{s/\sqrt{n}} \sim T_{n-1}$ by changing one of the `stat_function` calls to use a t distribution with an appropriate df parameter. 
+:::
+
+```{r}
+ggplot(simulation_results, aes(x = (xbar - 10)/(s/sqrt(4)))) + 
+  geom_histogram(aes(y = after_stat(density)), col = "white") +
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = 0, sd = 1), 
+    col = 'darkorange'
+  ) + 
+  stat_function(
+    fun = dnorm, 
+    args = list(mean = 0, sd = 1), 
+    col = 'darkgreen'
+  ) + 
+  theme_minimal(base_size = 12) 
+```
+
+## Comparing the normal and t distribution 
+
+::: callout-note
+## Question 8
+
+Using any R-based method, find a sample size $n$ where the $t$ and $z$ distribution become "close enough" to give roughly the same confidence intervals. *Note:* There's no one right answer here! 
+:::
