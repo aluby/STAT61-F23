@@ -1,0 +1,39 @@
+---
+title: "Homework 08: Due 11/8"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+1. Evaluate the integral $\int_0^\infty \frac{1}{1+x^2} dx$ using the t distribution. 
+
+2. Recall in HW7 we dealt with the following setup: 
+
+>For $n=64$ female subjects, the average temperature was $\bar{X} = 98.36$ with a sample standard deviation of $s = 0.68$. There were 24 women with temperatures of $98.6$ or higher. Assume this is a representative sample and we can invoke the CLT. 
+
+>Now, find a 95% and 99% $\mu$ using $s$, and compare your answers to HW7 which used $\sigma$. 
+
+3. A *Cauchy* random variable is a t-distributed random variable with $df = 1$. 
+
+   (a) Let $Y \sim \text{Cauchy}$. From the definition of a t-distribution, show that $Y$ can be expressed as a ratio of two independent standard normal variables. 
+   (b) Simulate $n = 1, 10, 100, 1000, 10000, 100000, 1000000$ Cauchy random variables (use `?rcauchy` for tips) and find the sample mean for each. Does the sample mean seem to be converging as the law of large numbers predicts? 
+   (c) Run `summary()` on your $n=1000000$ sample. Do the median and quantiles seem to be converging to the expected values? 
+
+4. TBA 
+
