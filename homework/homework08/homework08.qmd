@@ -35,5 +35,11 @@ format:
    (b) Simulate $n = 1, 10, 100, 1000, 10000, 100000, 1000000$ Cauchy random variables (use `?rcauchy` for tips) and find the sample mean for each. Does the sample mean seem to be converging as the law of large numbers predicts? 
    (c) Run `summary()` on your $n=1000000$ sample. Do the median and quantiles seem to be converging to the expected values? 
 
-4. TBA 
+4. When our data represents the outcome of $n$ Bernoulli trials, we often want to test $H_0: p = p_0$. Any such procedure is called a *binomial hypothesis test* because the appropriate test statistic is the sum of the observed trials, which we know follows a binomial distribution. In these cases, we have two options for setting up an appropriate test statistic and critical region: (1) use the binomial distribution directly, or (2) use the large-sample normal approximation for binomial data. 
+
+> Efforts to find a genetic explanation for why certain people are right-handed and others left-handed have been largely unsuccessful. Reliable data are difficult to find because of environmental factors that also influence a child’s “handedness.” To avoid that complication, researchers often study the analogous problem of “pawedness” in animals, where both genotypes and the environment can be partially controlled. In one such experiment, mice were put into a cage having a feeding tube that was equally accessible from the right or the left. Each mouse was then carefully watched over a number of feedings. If it used its right paw more than half the time to activate the tube, it was defined to be “right-pawed.” Prior studies of this sort showed that 67% of mice belonging to strain A/J are right-pawed. A similar protocol was followed on a sample of thirty-five mice belonging to strain A/HeJ. Of those thirty-five, a total of eighteen were eventually classified as right-pawed. Test whether the proportion of right-pawed mice found in the A/HeJ sample was significantly different from what was known about the A/J strain. Use a two-sided alternative and let 0.05 be the probability associated with the critical region.
+
+  > (a) Find the critical region using the binomial distribution directly.
+  > (b) Find the critical region using the large-sample approximation. 
+  > (c) What do you conclude about the original hypothesis test? 
 
