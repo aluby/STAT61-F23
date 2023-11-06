@@ -5,6 +5,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 
 ## Notes 
 - [Notes09: Confidence Intervals](course-notes/09-confidence-intervals)
+- [Notes10: Hypothesis Tests](course-notes/10-hypothesis-tests)
 
 ## Homework Assignments
 - [Homework07: Due 11/1](homework/homework07)
