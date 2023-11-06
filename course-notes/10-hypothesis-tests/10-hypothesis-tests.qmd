@@ -1,0 +1,159 @@
+---
+title: "10: Hypothesis Testing"
+subtitle: "Larsen & Marx 6.1-6.4"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+```
+
+So far, we've treated *inference* as either *point estimation* or *interval estimation*. In some experimental settings, however, we don't want to draw a numerical conclusion but rather evaluate two competing theories. For instance, we may wish to know whether a candidate for political office is likely to win or lose; whether a new vaccine is effective or ineffective; or whether a policy intervention improves or does not improve quality of life for citizens. 
+
+The process of dichotomizing possible conclusions from an experiment and using probability theory to choose one over the other is called *hypothesis testing*. We have two competing hypotheses: 
+
+  1. 
+
+\vspace{.25in}
+  
+  2. 
+  
+\vspace{.25in}
+
+::: callout-note
+## Parameter Space
+
+\vspace{.75in}
+
+:::
+
+  
+::: callout-note
+## Simple and Composite Hypotheses
+
+\vspace{.75in}
+
+:::
+
+## Decision Rule 
+
+**Example:** A high school was chosen to participate in the evaluation of a new geometry and algebra curriculum. In the recent past, the school's students were considered "typical", receiving scores on standardized tests that were very close to the nationwide average. In the year of the study, 86 sophomores were randomly selected to participate in a special set of classes that interated geometry and algebra. Those students averaged 502 on the SAT-I math exam; the nationwide average was 494 with a standard deviation of 124. Did the curriculum improve scores? 
+
+\vspace{4in}
+
+**Decision Rule:** 
+
+\vspace{1in}
+
+**What if?**
+
+\vspace{2in}
+
+**Mapping to Z-scores:** 
+
+\vspace{2in}
+
+::: callout-note
+## Test statistic
+
+\vspace{1in}
+
+:::
+
+::: callout-note
+## Critical Region
+
+\vspace{1in}
+
+:::
+
+::: callout-note
+## Critical Value
+
+\vspace{1in}
+
+:::
+
+
+## One-sided vs Two-sided Alternatives
+
+\vspace{.5in}
+
+```{r}
+#| fig-height: 2
+#| fig-width: 10
+#| 
+p1 = tibble(
+  x = seq(-4, 4, by = .01)
+) %>%
+  ggplot(aes(x = x, y = dnorm(x))) + 
+  geom_line() + 
+  labs(
+    x = "x",
+    y = expression(f[x](x)),
+    col = "Estimator"
+  )
+
+p1 + p1 + p1
+```
+
+\vspace{.5in}
+
+## P-Values
+
+There are two ways to quantify the amount of evidence against $H_0$ in a given dataset. The first involves defining a *level of significance* ($\alpha$), identifying a corresponding *critical region*, and reject $H_0$ if the *test statistic* falls within the critical region. Another strategy is to calculate the p-value: 
+
+::: callout-note
+## P-value
+
+\vspace{1in}
+
+:::
+
+**Example:** 
+
+\vspace{2in}
+
+## Non-normal data 
+
+Up to this point, we've assumed that we're working with the normal distribution and setting up a hypothesis test for a mean. Decision rules for other probability distributions are rooted in the same basic principles. 
+
+In general, to test $H_0: \theta = \theta_0$, where $\theta$ is an unknown parameter in $f_x(x; \theta)$, we define the decision rule in terms of $\hat{\theta}$, a sufficient statistic for $\theta$. We want to set up the decision rule such that the probability of rejection if the null hypothesis is true is equal to $\alpha$. 
+
+**Example:** Four measurements ($k_1, ..., k_4$) are taken of a Poisson random variable $X$ (so $p_x(k;\lambda) = \frac{e^{-\lambda}\lambda^k}{k!}$ and we wish to test $H_0: \lambda = 0.8$ against $H_1: \lambda > 0.8$. 
+
+\vspace{.5in}
+
+```{r}
+tibble(
+  K = 0:15,
+  `P(X = K)` = dpois(K, lambda = 3.2),
+) %>%
+  knitr::kable(digits = 3, booktabs = TRUE)  %>% 
+  kableExtra::kable_paper(position = "left", latex_options = "striped")
+```
