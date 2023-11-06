@@ -64,11 +64,11 @@ The process of dichotomizing possible conclusions from an experiment and using p
 
 **Example:** A high school was chosen to participate in the evaluation of a new geometry and algebra curriculum. In the recent past, the school's students were considered "typical", receiving scores on standardized tests that were very close to the nationwide average. In the year of the study, 86 sophomores were randomly selected to participate in a special set of classes that interated geometry and algebra. Those students averaged 502 on the SAT-I math exam; the nationwide average was 494 with a standard deviation of 124. Did the curriculum improve scores? 
 
-\vspace{4in}
+\vspace{3in}
 
 **Decision Rule:** 
 
-\vspace{1in}
+\vspace{2in}
 
 **What if?**
 
@@ -78,25 +78,27 @@ The process of dichotomizing possible conclusions from an experiment and using p
 
 \vspace{2in}
 
+**Setting a significance level:** 
+
+\vspace{2in}
+
 ::: callout-note
 ## Test statistic
 
 \vspace{1in}
+::: 
 
-:::
 
 ::: callout-note
 ## Critical Region
 
 \vspace{1in}
-
 :::
 
 ::: callout-note
 ## Critical Value
 
 \vspace{1in}
-
 :::
 
 
