@@ -7,7 +7,8 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes09: Confidence Intervals](course-notes/09-confidence-intervals)
 
 ## Homework Assignments
-- [Homework07: Due 11/1](homework/homework05)
+- [Homework07: Due 11/1](homework/homework07)
+- [Homework08: Due 11/8](homework/homework08)
 
 ## Labs and Activities
 - [Lab05: Z and T distributions](labs-activities/05-t-z-distribution)
