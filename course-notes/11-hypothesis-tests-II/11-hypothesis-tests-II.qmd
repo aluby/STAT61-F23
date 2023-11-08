@@ -1,0 +1,145 @@
+---
+title: "11: Hypothesis Testing II"
+subtitle: "Larsen & Marx 6.4, 6.5"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+```
+
+Last time, we laid the groundwork for a more theoretical treatment of hypothesis testing. Today, we're going to continue that thread by talking about *power functions* and *testing errors* in a more theoretical framework. We'll end by introducing the *likelihood ratio test*, a method for deriving hypothesis test procedures. 
+
+# Power Function
+
+In order to generalize hypothesis testing procedures, it is useful to define the *power function* of a test (sometimes called a *power curve*).
+
+::: callout-note
+## Power Function
+
+Let $\delta$ be a test procedure and denote $\pi(\theta|\delta)$ as the power function of the test. If $\delta$ is defined in terms of $T$ and rejection region $R$, then:
+
+\vspace{.5in}
+:::
+
+*Note:*
+
+\vspace{1in}
+
+**Example:** Math curriculum example from last time: In the year of the study, 86 sophomores were randomly selected to participate in a special set of classes that integrated geometry and algebra. Those students averaged 502 on the SAT-I math exam; the nationwide average was 494 with a standard deviation of 124. Find the power function $\pi(\theta|\delta)$ for the test $\delta$ defined last time.
+
+```{r}
+#| fig-width: 3
+#| fig-height: 1.5
+#| 
+expand_grid(
+  mu = seq(425, 600, by = 1),
+  c = c(1, 2, 3)
+) %>%
+  mutate(
+    power = 1-pnorm(c + (494-mu)/(124/sqrt(86)))
+  ) %>%
+  ggplot(aes(x = mu, y = power, linetype = as.factor(c))) +
+  geom_line() + 
+  labs(
+    linetype = "c", 
+    y = expression(pi(mu~delta)),
+    x = expression(mu)
+  )
+```
+
+# Types of Errors
+
+In any hypothesis test procedure, there are two ways we can be wrong: we can (1) conclude $H_0$ is true when $H_1$ is actually true, or we can (2) conclude $H_0$ is false when $H_0$ is actually true. 
+
+|                       | $H_0$ True   | $H_1$ True    |
+|-----------------------|--------------|---------------|
+| Reject $H_0$          | Type I Error | Correct       |
+| Fail to reject $H_0$  | Correct      | Type II Error |
+
+ - If $\theta \in \Omega_0$:
+ - If $\theta \in \Omega_1$: 
+
+\vspace{1in}
+
+*Solution:* 
+
+\vspace{1in}
+
+::: callout-note
+## Level-$\alpha_0$ Test
+
+A test that satisfies the above is called a *level $\alpha_0$ test* and we say it has *significance level $\alpha_0$*. In addition, the *size* $\alpha(\delta)$ of a test is defined as: 
+
+\vspace{.5in}
+
+A test is a level $\alpha_0$ test if and only if its size is at most $\alpha_0$. If $H_0$ is simple, $\alpha(\delta) = \pi(\theta | \delta)$.
+:::
+
+
+
+
+**Example:** Suppose that a random sample $X_1, ..., X_n$ is taken from the uniform distribution on the interval $[0, \theta]$, where $\theta$ is unknown but positive, and suppose we wish to test the following hypotheses. Find the power function and size of the test. 
+
+$H_0: 3 \le \theta \le 4$
+
+$H_1: \theta < 3 \text{ or } \theta > 4$
+\vspace{4in}
+
+# Likelihood Ratio Test
+
+Many of the most popular hypothesis tests used in practice have the same conceptual heritage - a fundamental notion known as the *Generalized likelihood ratio* or GLR. 
+
+**Example:** Suppose $X_1, ..., X_n \sim Unif(0, \theta)$ and we wish to test $H_0: \theta = \theta_0$ against $H_1: \theta < \theta_0$. 
+
+\vspace{4in}
+
+::: callout-note
+## Generalized likelihood ratio
+
+Let $y_1, ..., y_n$ be iid from $f_y(y; \theta)$. The generalized likelihood ratio is defined as: 
+\vspace{.5in}
+
+:::
+
+::: callout-note
+## Generalized likelihood ratio test 
+
+A generalized likelihood ratio test (GLRT) is one that rejects $H_0$ when 
+\vspace{.5in}
+
+:::
+
+Let $f_\Lambda$ denote the PDF of the GLR under $H_0$. If we knew what the pdf was, we could find $\lambda^*$ and $\delta$ by solving: 
+
+\vspace{.5in}
+
+Generally, however, we can't find $f_\Lambda$. Instead, we find a quantity $W$ that we *do* know the distribution of, and show that $\Lambda$ is a monotone function of $W$. Then, a test based on $W$ is equivalent to one based on $\Lambda$. 
+
+**Back to example:** 
+
