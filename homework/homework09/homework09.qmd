@@ -1,0 +1,36 @@
+---
+title: "Homework 09: Due 11/15"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+1. Suppose we observe $X_1, ..., X_n \sim \text{Bernoulli}(p)$ and we wish to test the hypothesis $H_0: p = p_0$ against $H_1: p \ne p_0$. 
+    (a) What is the sampling distribution of $\hat{p}$? 
+    (b) What is the sampling distribution of $\hat{p}$ under $H_0$? 
+    (c) Show that the acceptance region (the set of test statistics where we fail to reject $H_0$) corresponds to a $(1-\alpha)$ confidence interval for $\hat{p}$. 
+2. Let $Y_1, ..., Y_n \sim N(\mu, 1)$. (*Note:* since $\sigma$ is known, you should not need the t-distribution)
+    (a) Derive the form of the GLRT for testing $H_0: \mu = \mu_0$ versus $H_1: \mu \ne \mu_0$. 
+    (b) Now, find the GLRT if $H_1: \mu = \mu_1$. How does the rejection region depend on $\mu_1$?
+3. Let $X_1, ..., X_n \sim \text{Exp}(\theta)$. Suppose that we wish to test $H_0: \theta \ge \theta_0$ against $H_1: \theta < \theta_0$. Let $X = \sum X_i$ and let $\delta_c$ be the test that rejects $H_0$ if $X \ge c$. 
+    (a) Find $\pi(\theta | \delta_c)$ and argue that it is a decreasing function of $\theta$. 
+    (b) Find $c$ such that $\delta_c$ has size $\alpha_0$
+    (c) Let $\theta_0 = 2, n=1,$ and $\alpha_0 = 0.1$. Find the precise form of $\delta_c$ and sketch its power function. 
+4. TBA (will likely include R)
+5. TBA (will include R)
