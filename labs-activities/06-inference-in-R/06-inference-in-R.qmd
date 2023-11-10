@@ -1,0 +1,116 @@
+---
+title: "Lab06: Inference in R"
+callout-appearance: simple
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    code-link: true
+    fig-width: 6
+    fig-height: 4
+    fig-align: center
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(patchwork)
+```
+
+So far, we've mostly worked "by hand" to derive forms for confidence intervals and hypothesis tests, and used R to compute p-values or z/t-scores. Today, we're going to see some of R's built-in functionality for computing these things. There are *many* different packages in R to do inference, but we're going to focus on the functions that are included in base-R. 
+
+*Note:* There are a few code chunks that require specific datasets in this file. The `.qmd` file will **not** render correctly until you've downloaded the datasets and saved them in the same file folder. 
+
+# Z-test for proportions
+
+Recall the following example from Notes09: 
+
+**Example:** For a Pew Research survey of a representative sample of $n=2500$ adults, $X=1300$ said that they played video games. Let $\theta$ be the true proportion of adults who play video games. 
+
+In class, we found a 95% confidence interval for $\hat{p}$ was [.5004, .53958]. Now, we'll see how to do this in R (two ways). 
+
+## Data is sample statistic
+
+The first way that we can pass our data into R is using the sample statistic $\hat{p}$, which in this case is 1300/2500. The test/interval that we want to compute is for a `prop`ortion, and so the command is `prop.test`. Pull up `?prop.test` to see the arguments that the function takes. 
+
+```{r}
+prop.test(x = 1300, n = 2500, alternative = "two.sided", conf.level = .95)
+```
+
+::: callout-note
+## Question 1
+
+By default, this command uses $H_0: p = 0.5$. Suppose instead we wanted to test the null hypothesis $H_0: p = .51$. Change the code above to do so. 
+:::
+
+## Data is a vector of successes/failures
+
+Generally, when doing statistical analyses, we are not given the sample statistics to begin with but are given the entire set of data. The .csv file for this dataset is in the github repo. In order to run the code below, download `video_games.csv` and save it in the same location as the `.qmd` file that you are working with. This code reads the .csv file into R, saves it as `video_games`, and then prints the first 6 rows. 
+
+```{r}
+video_games = read_csv("video_games.csv")
+head(video_games)
+```
+
+`prop.test` requires that we tell it the number of successes ($x$) and the total number of trials ($n$). Run the code below and verify that it gives the expected result: 
+
+```{r}
+prop.test(x = sum(video_games$label == "Yes"), n = nrow(video_games) , alternative = "two.sided", conf.level = .95)
+```
+
+::: callout-note
+## Question 2
+
+Now, use the `x` variable in `video_games` instead of the `label` variable to run the `prop.test` code.
+:::
+
+# T-test for means
+
+Our running example here is also from Notes9:
+
+**Example:** Among a random sample of 100 recent college graduates, the average monthly student loan payment was \$287.8, with a standard deviation of \$51.93. Construct a 95% confidence interval for $\mu$, the average monthly student loan payment among the population.  (*Note:* the sample statistics are slightly different than in Notes09 to match up with the data I simulated below)
+
+As you saw in the lab from last week, it's better to use the t-distribution instead of the normal distribution when we are plugging in the sample standard deviation for the population standard deviation (especially for small samples). The command in R for running this test is `t.test`
+
+## Data is a list of observations
+
+The built-in `t.test` function does not allow you to plug in the sample statistics directly, so you *must* give it the full dataset. 
+
+To load the dataset, follow the same instructions as above to download `student_loans` from github and save it in the same file folder as this `.qmd` file. 
+
+```{r}
+student_loans = read_csv("student_loans.csv")
+head(student_loans)
+```
+
+There are a few different ways that you can tell R to run this t-test. The first is called the `formula` syntax, and is very similar to how we run linear regression models. (I generally prefer this syntax). 
+
+```{r}
+t.test(payment ~ 1, data = student_loans, alternative = "two.sided", mu = 300)
+```
+
+The second is to tell R exactly what the vector of payments is (e.g. `student_loans$payment`) rather than use `data = student_loans` as above. 
+
+```{r}
+t.test(student_loans$payment, alternative = "two.sided", mu = 300)
+```
+
+::: callout-note
+## Question 3
+
+In class, we built a 90% confidence interval instead of a 95% confidence interval. Edit the code above to construct a 90% confidence interval instead. 
+:::
+
+::: callout-note
+## Question 4
+
+Choose your favorite `prop.test` or `t.test` command from above, and run a one-sided test instead. (*Hint:* pull up the documentation to see possible values for `alternative`.)
+:::
+
+
