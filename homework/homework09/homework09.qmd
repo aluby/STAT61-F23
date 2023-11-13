@@ -32,5 +32,7 @@ format:
     (a) Find $\pi(\theta | \delta_c)$ and argue that it is a decreasing function of $\theta$. 
     (b) Find $c$ such that $\delta_c$ has size $\alpha_0$
     (c) Let $\theta_0 = 2, n=1,$ and $\alpha_0 = 0.1$. Find the precise form of $\delta_c$ and sketch its power function. 
-4. TBA (will likely include R)
-5. TBA (will include R)
+4. The CLT tells us that, if our sample size is large enough, the sample means should be approximately normally distributed. In Lab05, we also showed that if our sample size was large enough, we could use the t-distribution instead of the normal distribution. However, in Lab05 we were drawing our samples from a normal population model, while the CLT should hold for *any* population model. 
+    (a) Using the web app at https://gallery.shinyapps.io/CLT_mean/, convince yourself that the CLT holds for normal, uniform, and skewed population data. 
+    (b) Using skewed population data, try different "levels" of skew and see how that impacts the sampling distribution of $\bar{X}$ for different sample sizes. 
+    (c) The app above generates an actual population distribution, and so is able to use $\sigma$ instead of $s$ for the SE of $\bar{X}$. Using the app, find a given level of skew and sample size of at least 5 that seems to *not* work super well for the CLT when the number of samples is large. Then, run your own simulation that generates the sampling distribution using $s$ instead of $\sigma$. Create a histogram and overlay the appropriate theoretical $t$ distribution. What do you conclude? *Note:* For the right-skewed data in the app, Low skew comes from a `log-normal(meanlog = 0, sdlog = .25)` distribution, medium skew is from a `log-normal(meanlog = 0, sdlog = .5)` distribution, and high skew comes from a `log-normal(meanlog = 0, sdlog = 1)` distribution.
