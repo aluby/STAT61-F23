@@ -3142,6 +3142,12 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
   <ul class="collapse">
   <li><a href="#data-is-a-list-of-observations" id="toc-data-is-a-list-of-observations" class="nav-link" data-scroll-target="#data-is-a-list-of-observations">Data is a list of observations</a></li>
   </ul></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test">Two-sample t-test</a>
+  <ul class="collapse">
+  <li><a href="#two-sample-syntax" id="toc-two-sample-syntax" class="nav-link" data-scroll-target="#two-sample-syntax">Two sample syntax</a></li>
+  <li><a href="#formula-syntax" id="toc-formula-syntax" class="nav-link" data-scroll-target="#formula-syntax">Formula syntax</a></li>
+  </ul></li>
+  <li><a href="#two-sample-proportion-test" id="toc-two-sample-proportion-test" class="nav-link" data-scroll-target="#two-sample-proportion-test">Two-sample proportion test</a></li>
   </ul>
 </nav>
 </div>
@@ -3345,6 +3351,120 @@ Question 4
 </div>
 </div>
 </section>
+</section>
+<section id="two-sample-t-test" class="level1">
+<h1>Two-sample t-test</h1>
+<p>We can use the same <code>prop.test</code> command to run a two-sample t-test. We’re going to see two different ways to tell R to run a two-sample t-test, depending on how our data is given to us.</p>
+<section id="two-sample-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="two-sample-syntax">Two sample syntax</h2>
+<p>Sometimes, we’re given grouped data as two different samples. Below represents two samples of the same species of plant grown under different conditions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sample1 <span class="ot">=</span>  <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">19</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sample2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">14</span>, <span class="dv">14</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and we can tell R to run a two sample t-test using <code>x = sample1</code> and <code>y = sample2</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> sample1, <span class="at">y =</span> sample2, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  sample1 and sample2
+t = -2.5505, df = 20.488, p-value = 0.01884
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -5.6012568 -0.5654098
+sample estimates:
+mean of x mean of y 
+ 11.66667  14.75000 </code></pre>
+</div>
+</div>
+</section>
+<section id="formula-syntax" class="level2">
+<h2 class="anchored" data-anchor-id="formula-syntax">Formula syntax</h2>
+<p>Often, our data lives in a “rectangle” data frame/tibble and looks more like the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plant_data <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fu">c</span>(sample1, sample2),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;sample1&quot;</span>, <span class="fu">length</span>(sample1)), <span class="fu">rep</span>(<span class="st">&quot;sample2&quot;</span>, <span class="fu">length</span>(sample2)))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(plant_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  height sample 
+   &lt;dbl&gt; &lt;chr&gt;  
+1      8 sample1
+2      8 sample1
+3      9 sample1
+4      9 sample1
+5      9 sample1
+6     11 sample1</code></pre>
+</div>
+</div>
+<p>It is a bit of a pain to subset such a dataset to use the <code>x=</code> and <code>y=</code> syntax in <code>t.test</code>. Instead, we can use the same formula syntax that we saw above. This means we put <code>quant_variable ~ group_variable</code> within <code>t.test</code>, along with <code>data = dataset_name</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(height <span class="sc">~</span> sample, <span class="at">data =</span> plant_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  height by sample
+t = -2.5505, df = 20.488, p-value = 0.01884
+alternative hypothesis: true difference in means between group sample1 and group sample2 is not equal to 0
+95 percent confidence interval:
+ -5.6012568 -0.5654098
+sample estimates:
+mean in group sample1 mean in group sample2 
+             11.66667              14.75000 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The two-sample t-test above uses Welch’s approximation to the degrees of freedom that we talked about in class. Pull up the help file and change the code to instead assume the two population variances are equal.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="two-sample-proportion-test" class="level1">
+<h1>Two-sample proportion test</h1>
+<p>To run a two-sample proportion test, we change the arguments for <code>x</code> and <code>n</code> to instead be vectors (using <code>c()</code>) representing each sample. For example, suppose the survey from the first example was run a second time and 1396 out of 2600 participants responded that they played video games. We wish to test whether <span class="math inline">\(H_0: p_1 = p_2\)</span> against <span class="math inline">\(H_1: p_1 \ne p_2\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1300</span>, <span class="dv">1396</span>), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">2500</span>, <span class="dv">2600</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    2-sample test for equality of proportions with continuity correction
+
+data:  c(1300, 1396) out of c(2500, 2600)
+X-squared = 1.3977, df = 1, p-value = 0.2371
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.04471772  0.01087157
+sample estimates:
+   prop 1    prop 2 
+0.5200000 0.5369231 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you do a proportion test “by hand”, you may obtain slightly different results than using <code>prop.test</code>. This is because <code>prop.test</code> performs a <em>continuity correction</em> by default. Pull up the help page and tell R to <strong>not</strong> use the continuity correction.</p>
+</div>
+</div>
 </section>
 
 </main>

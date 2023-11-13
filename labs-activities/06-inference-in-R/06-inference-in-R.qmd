@@ -113,4 +113,58 @@ In class, we built a 90% confidence interval instead of a 95% confidence interva
 Choose your favorite `prop.test` or `t.test` command from above, and run a one-sided test instead. (*Hint:* pull up the documentation to see possible values for `alternative`.)
 :::
 
+# Two-sample t-test
 
+We can use the same `prop.test` command to run a two-sample t-test. We're going to see two different ways to tell R to run a two-sample t-test, depending on how our data is given to us. 
+
+## Two sample syntax
+
+Sometimes, we're given grouped data as two different samples. Below represents two samples of the same species of plant grown under different conditions: 
+
+```{r}
+sample1 =  c(8, 8, 9, 9, 9, 11, 12, 13, 13, 14, 15, 19)
+sample2 = c(11, 12, 13, 13, 14, 14, 14, 15, 16, 18, 18, 19)
+```
+
+and we can tell R to run a two sample t-test using `x = sample1` and `y = sample2`.
+
+```{r}
+t.test(x = sample1, y = sample2, alternative = "two.sided")
+```
+
+## Formula syntax
+
+Often, our data lives in a "rectangle" data frame/tibble and looks more like the following: 
+
+```{r}
+plant_data = tibble(
+  height = c(sample1, sample2),
+  sample = c(rep("sample1", length(sample1)), rep("sample2", length(sample2)))
+)
+head(plant_data)
+```
+
+It is a bit of a pain to subset such a dataset to use the `x=` and `y=` syntax in `t.test`. Instead, we can use the same formula syntax that we saw above. This means we put `quant_variable ~ group_variable` within `t.test`, along with `data = dataset_name`. 
+
+```{r}
+t.test(height ~ sample, data = plant_data)
+```
+
+::: callout-note
+## Question 5
+
+The two-sample t-test above uses Welch's approximation to the degrees of freedom that we talked about in class. Pull up the help file and change the code to instead assume the two population variances are equal.
+:::
+
+# Two-sample proportion test
+
+To run a two-sample proportion test, we change the arguments for `x` and `n` to instead be vectors (using `c()`) representing each sample. For example, suppose the survey from the first example was run a second time and 1396 out of 2600 participants responded that they played video games. We wish to test whether $H_0: p_1 = p_2$ against $H_1: p_1 \ne p_2$. 
+
+```{r}
+prop.test(x = c(1300, 1396), n = c(2500, 2600))
+```
+::: callout-note
+## Question 6
+
+If you do a proportion test "by hand", you may obtain slightly different results than using `prop.test`. This is because `prop.test` performs a *continuity correction* by default. Pull up the help page and tell R to **not** use the continuity correction.
+:::
