@@ -7,10 +7,12 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes09: Confidence Intervals](course-notes/09-confidence-intervals)
 - [Notes10: Hypothesis Tests](course-notes/10-hypothesis-tests)
 - [Notes11: Hypothesis Tests II](course-notes/11-hypothesis-tests-II)
+- [Notes12: Two-Sample Inference](course-notes/12-two-sample-inference)
 
 ## Homework Assignments
 - [Homework07: Due 11/1](homework/homework07)
 - [Homework08: Due 11/8](homework/homework08)
+- [Homework09: Due 11/15](homework/homework09)
 
 ## Labs and Activities
 - [Lab05: Z and T distributions](labs-activities/05-t-z-distribution)
