@@ -8,6 +8,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes10: Hypothesis Tests](course-notes/10-hypothesis-tests)
 - [Notes11: Hypothesis Tests II](course-notes/11-hypothesis-tests-II)
 - [Notes12: Two-Sample Inference](course-notes/12-two-sample-inference)
+- [Notes13: Goodness of Fit Tests](course-notes/13-chi-square-tests)
 
 ## Homework Assignments
 - [Homework07: Due 11/1](homework/homework07)
