@@ -1,0 +1,69 @@
+---
+title: "Homework 10: Due 11/20 (Completion)"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+```
+
+1.  Suppose you observe $X_1, ..., X_{10} \sim \text{Exp}(\theta)$ and plan to test $H_0: \theta = \theta_0$ against $H_1: \theta = \theta_1$.
+
+
+    (a) Write out the GLRT test statistic (you do *not* need to find an associated probability distribution) and explain why we would reject for large values of $\bar{X}$ when $\theta_1 < \theta_0$ and for small values if $\theta_1 > \theta_0$.
+    (b) Suppose we use the test statistic $\bar{X}$. Note that $\bar{X} \sim Gamma(n, \frac{\theta}{n})$. Suppose $\theta_0 = 1$ and $\theta_1 = .5$. Find a $\alpha=.05$ rejection region for the test statistic $\bar{X}$.
+    (c) The distribution of $W = 2n\theta\bar{X}$ is Gamma(n, 1/2), which is equivalent to a $\chi^2_{2n}$ random variable. Find a general formula for an $\alpha = .05$ rejection region using this representation. Give the rejection region in terms of $\bar{X}$ (that may depend on $\theta_0$).
+    (d) For the test in (c), suppose we observe $\bar{X} = 2.17$. What values of $\theta_0$ would *not* be rejected at $\alpha = .05$?
+
+
+2.  A study reported in the 2011 Journal of Clinical Sleep Medicine found that the rate of teenage auto accidents was much higher in one Virginia city than in a neighboring community where school started about an hour and a quarter later. The table below reports the 2007 and 2008 teen accident rates per 1000 drivers in Virginia Beach, where public high school started at 7:20pm, and in Chesapeake, where school started at 8:45am. It also gives the average for each of the two sets of n = 2 numbers.
+
+|            | Virginia Beach | Chesapeake |
+|------------|----------------|------------|
+| 2007       | 71.2           | 55.6       |
+| 2008       | 65.8           | 46.6       |
+|------------|----------------|------------|
+| Average    | 68.5           | 51.1       |
+
+
+  > (a) First, define parameters and run a *two-sample* test for the average accident rate over the two years. Justify your choice of $H_1$. 
+   (b) Since we have two years of data, we could also treat these data as $n=2$ *matched pairs* (matching on year), where each data point represents the difference between the accident rate in the early-start town compared to the late-start town. Compute these differences and carry out a *one-sample t-test* using the differences. How does your conclusion compare to the conclusion in (a)? 
+   (c) Would a significant result in (a) or (b) provide good evidence that starting high school later *causes* a lower rate of accidents? Explain. 
+
+3. Frisby and Clatworthy (1975) studied the times that it takes subjects to fuse random-dot stereograms. Random- dot stereograms are pairs of images that appear at first to be random dots. After a subject looks at the pair of images from the proper distance and her eyes cross just the right amount, a recognizable object appears from the fusion of the two images. The experimenters were concerned with the extent to which prior information about the recognizable object affected the time it took to fuse the images. One group of 43 subjects was not shown a picture of the object before being asked to fuse the images. Their average time was $\bar{X}_1 = 8.560$ and $s_1^2 = 2745.7$. The second group of 35 subjects was shown a picture of the object, and their sample statistics were $\bar{X}_2 = 5.551$ and $s_2^2 = 783.9$. The null hypothesis is that the mean time of the first group is no larger than the mean mean time of the second group, while the alternative hypothesis is that the first group takes longer. 
+
+   (a) Test the hypotheses at $\alpha_0 = .01$, assuming that the population variances are equal for the two groups. 
+    (b) Now, test the same hypotheses assuming the population variances are not equal. 
+
+4. The 41 numbers below represent the average sulfur dioxide contents over the period 1969-1971 (micrograms/cubic meter) among 41 US cities. 
+   (a) Test the null hypothesis that these data come from a normal distribution
+    (b) Test the null hypothesis that these data come from a log-normal distribution 
+  
+```{r}
+sulfur_dioxide = tibble(
+  city = 1:41, 
+  average = c(10, 13, 12, 17, 56, 36, 29, 14, 10, 24, 110, 28, 17, 8, 30, 9, 47, 25, 29, 14, 56, 14, 11, 46, 11, 23, 65, 26, 69, 61, 94, 10, 18, 9, 10, 28, 31, 26, 29, 31, 16)
+)
+
+head(sulfur_dioxide)
+```
