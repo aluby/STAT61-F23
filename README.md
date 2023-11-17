@@ -20,6 +20,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Lab05: Z and T distributions](labs-activities/05-t-z-distribution)
   
 ## Quiz 3: Mon, Nov 20
+- [Formula Sheet](resources/stat61_formula_sheet-3.pdf) 
 
 # Week 4-7: Properties of Estimators 
 
