@@ -14,6 +14,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Homework07: Due 11/1](homework/homework07)
 - [Homework08: Due 11/8](homework/homework08)
 - [Homework09: Due 11/15](homework/homework09)
+- [Homework10: Due 11/20](homework/homework10) graded on *completion only*. [Solutions](homework/homework10) posted here the day before the quiz.
 
 ## Labs and Activities
 - [Lab05: Z and T distributions](labs-activities/05-t-z-distribution)
