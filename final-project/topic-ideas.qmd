@@ -21,6 +21,7 @@ format: html
 12. There are a number of heuristics for when we can use large-sample approximations (e.g. using the normal distribution instead of the T distribution, using the normal distribution instead of the binomial distribution, etc.). Show why these heuristics came to be and explore if/when they fail. 
 13. Choose a named distribution that we've worked with in class, and research the two-dimensional version of that distribution. This should include deriving the PDF, CDF, expected value, variance, MGF, etc.; how to do inference for the parameter(s); and an example of why the distribution is useful. 
 14. Research and provide a proof for the *Neyman-Pearson* Lemma, which states that the GLRT is at least as powerful as any other test with the same or smaller $\alpha$. 
+15. Research and provide a proof for *Wilks; Theorem*, which states that if $\lambda$ is the GLRT statistic, $-2 \ln \lambda$ is an approximate $\chi^2$ random variable. (Taylor expansion alert!!) 
 
 You are also welcome to propose your own topic! I encourage you to talk with me before submitting a proposal to make sure that it is appropriate for the class. 
 
