@@ -29,7 +29,7 @@ theme_set(theme_minimal(base_size = 12))
 ```
 
 Today, we're going to return to the idea of using *simulation* to
-approximate sampling distributions.
+approximate sampling distributions. You'll turn in questions 4-8 on gradescope. 
 
 Up until this point, we've generally followed the framework below when
 doing simulation:
@@ -95,18 +95,21 @@ $$
 $$\vdots$$
 
 $$
-X_1^{*(B)}, X_2^{*(B)}, ... X_n^{*(B)}
+X_1^{*(B)}, X_2^{*(B)}, ... X_n^{*(B)}.
 $$
+
+Next, we compute the sample statistic for each bootstrap sample and call them $M_n^{*(1)}, M_n^{*(2)}, ..., M_n^{*(B)}$. We treat this set of $M_n^*$'s as the *sampling distribution*, which we can use to compute standard errors, confidence intervals, hypothesis tests, etc. 
 
 # Example where we know the solution
 
 Let's start with an example that we know how to work with. Let
-$X_1, ..., X_{25} \sim Exp(5)$.
+$X_1, ..., X_{25} \sim \text{Exp}(5)$. First, we generate this sample (`orig_x`) and will pretend that this is the only data that we have access to. 
 
 ```{r}
 set.seed(112223)
 
 orig_x = rexp(25, rate = 5) 
+
 ggplot(tibble(orig_x = orig_x), aes(x = orig_x)) + 
   geom_histogram(col = "white")
 ```
@@ -148,22 +151,22 @@ answer from (1)?
 
 ## Bootstrap sampling distribution
 
-Now, we'll do a *bootstrap* sampling procedure. Rather than drawing 500
+In the simulation above, we *assumed* something about the population and were able to sample a bunch of possible samples. Now, we'll do a *bootstrap* sampling procedure. Rather than drawing 500
 samples of size 25 from the theoretical Exp(5) distribution, we
 *re-sample* from our original dataset using
 `sample(orig_x, size = 25, replace = TRUE)`. Try running this line of
 code a few times to get a sense for what it does.
 
 ```{r}
-simulation_results = tibble(
+boot_results = tibble(
   xbar = rep(NA, 500), 
   s = rep(NA, 500)
 )
 
 for(ii in 1:500){
   x = sample(orig_x, size = 25, replace = TRUE)
-  simulation_results$xbar[ii] = mean(x)
-  simulation_results$s[ii] = sd(x)
+  boot_results$xbar[ii] = mean(x)
+  boot_results$s[ii] = sd(x)
 }
 ```
 
@@ -180,32 +183,44 @@ compare to your answer from (1) and (2)?
 Where the bootstrap comes in especially handy is when we truly only have
 one sample. Let's load in some real data:
 
+```{r}
+gss_email = read_csv("https://raw.githubusercontent.com/aluby/STAT61-F23/main/labs-activities/07-bootstrap/gss_email.csv") 
+```
+
+This dataset comes from the 2016 [General Social Survey](https://gss.norc.org). One of the questions that was asked was "How much time do you spend on email weekly?" The answer, in hours, is given in the `email_hours` variable. The code below computes the mean and median of this variable. 
+
+```{r}
+gss_email %>%
+  summarize(
+    mean_email = mean(email_hours), 
+    median_email = median(email_hours)
+  )
+```
+
 ::: callout-note
 ## Question 4
 
-Create a histogram of the variable of interest. Compute the mean and the
-median. Which seems like it's a better estimate for the average X?
+Create a histogram of the `email_hours` variable. Does the mean or median seem like a better estimate for the average person?
 :::
 
 ::: callout-note
 ## Question 5
 
 We've seen a version of the CLT for medians that looks something like:
-XX. Why might we be uncomfortable using that formula in this setting?
+$\tilde{X} \sim N(\tilde{\mu}, \frac{1}{f_X(\tilde{\mu})}$, where $\tilde{X}$ is the sample median and $\tilde{\mu}$ is the population median. Why might we be uncomfortable using that formula in this setting? (*Hint:* What would we need to know about the population?)
 :::
 
 Our goal is to build a confidence interval for the *median* of this
-population distribution. Edit the code so that we instead compute and
-store the *median* of each bootstrap sample.
+population distribution. The code below simulates 500 bootstrap samples of the `email_hours` variable and stores the median of each bootstrap sample in the `boot_median` dataset. 
 
 ```{r}
-simulation_results_median = tibble(
+boot_median = tibble(
   median = rep(NA, 500)
 )
 
 for(ii in 1:500){
-  x = sample(orig_x, size = 25, replace = TRUE)
-  simulation_results_median$median[ii] = mean(x)
+  x = sample(gss_email$email_hours, replace = TRUE)
+  boot_median$median[ii] = median(x)
 }
 ```
 
@@ -213,14 +228,13 @@ for(ii in 1:500){
 ## Question 6
 
 Make a histogram of the bootstrap sampling distribution for the median,
-and compute the mean and variance of this distribution.
+and compute the mean and standard deviation of this distribution. (Remember to use the `boot_median` data instead of, e.g., `simulation_results`!)
 :::
 
 ::: callout-note
 ## Question 7
 
-We've seen a "CLT for medians" in previous course material, which
-suggests that the median may be approximately normal. Compute a
+The "CLT for medians" says the median may be approximately normal. Compute a
 confidence interval for $\tilde{X}$, the population median, using the
 *observed* mean and standard deviation of the sampling distribution with
 theoretical quantiles from the normal distribution. (e.g. similar in
@@ -232,7 +246,7 @@ form to $\bar{X} \pm z_{\alpha/2} \frac{s}{\sqrt{n}}$.
 
 Compute a bootstrap confidence interval for $\tilde{X}$, the population
 median, using the *observed* 2.5 and 97.5 bootstrap percentiles.
-(*Hint:* Try `?quantile`) How does this interval compare to 7?
+(*Hint:* Try `?quantile`) How does this interval compare to 7? 
 :::
 
 # Why does it work?
@@ -330,5 +344,5 @@ project idea to dive into!)
 
 # Sources
 
--   [Yen Chi Chen's lecture
-    notes](https://faculty.washington.edu/yenchic/19A_stat535/Lec10_bootstrap.pdf)
+-  [Yen Chi Chen's lecture notes](https://faculty.washington.edu/yenchic/19A_stat535/Lec10_bootstrap.pdf)
+- [Maria Tackett's course lab](https://www2.stat.duke.edu/courses/Fall19/sta199.001/labs/lab-08-bootstrap.html)
