@@ -29,7 +29,7 @@ theme_set(theme_minimal(base_size = 12))
 ```
 
 Today, we're going to return to the idea of using *simulation* to
-approximate sampling distributions. You'll turn in questions 4-8 on gradescope. 
+approximate sampling distributions. You'll turn in a **rendered document** for this lab. (It may be easiest to render to .html, open in a browser, and then print to PDF). 
 
 Up until this point, we've generally followed the framework below when
 doing simulation:
@@ -262,7 +262,7 @@ $\{X \le x_0\}$. If we observe a sample of $X_1, ...., X_n \sim F_x$, a
 natural estimator for this probability is the observed proportion of
 observations where $\{X_i \le x_0\}$. So we could use:
 
-$$\hat{F}_n(x_0) = \frac{\text{number of } X_i \le x_0}{\text{total number of observations}} = \frac{\sum_{i=1}^n \mathbb{I}(X_i \le x_0)}{n} = \frac{1}{n} \mathbb{I}(X_i \le x_0)$$
+$$\hat{F}_n(x_0) = \frac{\text{number of } X_i \le x_0}{\text{total number of observations}} = \frac{\sum_{i=1}^n \mathbb{I}(X_i \le x_0)}{n} = \frac{1}{n} \sum \mathbb{I}(X_i \le x_0)$$
 as an estimator for $F_x$. This estimator is called the *empirical CDF*,
 or *ECDF*.
 
@@ -272,7 +272,8 @@ As the sample size gets bigger, the ECDF gets closer and closer to the
 true CDF.
 
 ```{r}
-#| fig-height: 2
+#| fig-height: 3
+#| fig-width: 7
 #| echo: false
 
 ecdf_10 = ecdf(rnorm(10))
