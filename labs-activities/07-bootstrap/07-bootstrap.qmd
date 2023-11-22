@@ -1,0 +1,334 @@
+---
+title: "Lab07: Introduction to the Bootstrap"
+callout-appearance: simple
+from: markdown+emoji
+format: 
+  html: 
+    theme: flatly
+    embed-resources: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    code-link: true
+    fig-width: 6
+    fig-height: 4
+    fig-align: center
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(patchwork)
+theme_set(theme_minimal(base_size = 12))
+```
+
+Today, we're going to return to the idea of using *simulation* to
+approximate sampling distributions.
+
+Up until this point, we've generally followed the framework below when
+doing simulation:
+
+1.  Make assumptions about the *population parameters*
+
+2.  Generate a large number of *samples* from that *population*
+
+3.  Compute a *sample statistic* for each sample
+
+4.  Investigate the distribution of the sample statistics (*sampling
+    distribution*).
+
+This has worked well for our class, since we've been interested in the
+behavior of particular estimation or test procedures under known
+conditions. In the "real world", however, we don't want to have to
+assume anything about the population parameters in order to generate an
+approximate sampling distribution for a statistic. It turns out, there
+*is* a way we can do so! This is known as **bootstrap sampling**.
+
+# The bootstrap
+
+The name "bootstrap" comes from the phrase "pull yourself up by your
+bootstraps", which generally means to succeed or elevate without any
+outside help. (Side note: the original phrase was originally used to
+describe something totally ludicrous, but at some point in the early
+20th century it shifted to mean something attainable). While the origin
+of the name may have issues, it is fitting for how bootstrap sampling
+works: we can generate a sampling distribution using *only the sample
+that we actually observed*.
+
+![](bootstrap-image.jpeg)
+
+What this means is that we start with our original sample, and generate
+a bunch of new samples by sampling *with replacement* from our original
+sample. This is depicted visually below:
+
+![Visual representation of re-sampling with replacement using colored
+balls. Source:
+http://dx.doi.org/10.1016/B978-0-12-809633-8.20474-3](bootstrap-example.png)
+
+In math, assume we observe the data points $X_1, X_2, …, X_n$. Let $M_n$
+be some sample statistic that we are interested in generating a sampling
+distribution for. First, we *sample with replacement* from our $n$ data
+points, leading to a new set of observations
+$X_1^{*(1)}, X_2^{*(1)}, ... X_n^{*(1)}$ (the \* means that each
+observation is a resampled data point, and $(1)$ means that these
+observations make up the 1st bootstrap sample). Then, we do the same
+thing to generate $X_1^{*(2)}, X_2^{*(2)}, ... X_n^{*(2)}$. If we keep
+repeating this process, we end up with $B$ bootstrap samples:
+
+$$
+X_1^{*(1)}, X_2^{*(1)}, ... X_n^{*(1)}
+$$
+
+$$
+X_1^{*(2)}, X_2^{*(2)}, ... X_n^{*(2)}
+$$
+$$
+X_1^{*(3)}, X_2^{*(3)}, ... X_n^{*(3)}
+$$
+
+$$\vdots$$
+
+$$
+X_1^{*(B)}, X_2^{*(B)}, ... X_n^{*(B)}
+$$
+
+# Example where we know the solution
+
+Let's start with an example that we know how to work with. Let
+$X_1, ..., X_{25} \sim Exp(5)$.
+
+```{r}
+set.seed(112223)
+
+orig_x = rexp(25, rate = 5) 
+ggplot(tibble(orig_x = orig_x), aes(x = orig_x)) + 
+  geom_histogram(col = "white")
+```
+
+## Theoretical Sampling Distribution
+
+::: callout-note
+## Question 1
+
+What is the *theoretical sampling distribution* of $\bar{X}$?
+:::
+
+## Simulated sampling distribution using population information
+
+The code below runs a simulation that we've essentially seen before,
+where 500 samples of size 25 are drawn from an Exp(5) distribution. For
+each sample, we store the sample mean and sample standard deviation.
+
+```{r}
+simulation_results = tibble(
+  xbar = rep(NA, 500), 
+  s = rep(NA, 500)
+)
+
+for(ii in 1:500){
+  x = rexp(25, rate = 5)
+  simulation_results$xbar[ii] = mean(x)
+  simulation_results$s[ii] = sd(x)
+}
+```
+
+::: callout-note
+## Question 2
+
+Create a histogram of $\bar{X}$ and compute the mean and variance of the
+sampling distribution using the simulation. How does it compare to your
+answer from (1)?
+:::
+
+## Bootstrap sampling distribution
+
+Now, we'll do a *bootstrap* sampling procedure. Rather than drawing 500
+samples of size 25 from the theoretical Exp(5) distribution, we
+*re-sample* from our original dataset using
+`sample(orig_x, size = 25, replace = TRUE)`. Try running this line of
+code a few times to get a sense for what it does.
+
+```{r}
+simulation_results = tibble(
+  xbar = rep(NA, 500), 
+  s = rep(NA, 500)
+)
+
+for(ii in 1:500){
+  x = sample(orig_x, size = 25, replace = TRUE)
+  simulation_results$xbar[ii] = mean(x)
+  simulation_results$s[ii] = sd(x)
+}
+```
+
+::: callout-note
+## Question 3
+
+Create a histogram of $\bar{X}_{boot}$ and compute the mean and variance
+of the sampling distribution using the bootstrap simulation How does it
+compare to your answer from (1) and (2)?
+:::
+
+# Example where we *don't* know the solution.
+
+Where the bootstrap comes in especially handy is when we truly only have
+one sample. Let's load in some real data:
+
+::: callout-note
+## Question 4
+
+Create a histogram of the variable of interest. Compute the mean and the
+median. Which seems like it's a better estimate for the average X?
+:::
+
+::: callout-note
+## Question 5
+
+We've seen a version of the CLT for medians that looks something like:
+XX. Why might we be uncomfortable using that formula in this setting?
+:::
+
+Our goal is to build a confidence interval for the *median* of this
+population distribution. Edit the code so that we instead compute and
+store the *median* of each bootstrap sample.
+
+```{r}
+simulation_results_median = tibble(
+  median = rep(NA, 500)
+)
+
+for(ii in 1:500){
+  x = sample(orig_x, size = 25, replace = TRUE)
+  simulation_results_median$median[ii] = mean(x)
+}
+```
+
+::: callout-note
+## Question 6
+
+Make a histogram of the bootstrap sampling distribution for the median,
+and compute the mean and variance of this distribution.
+:::
+
+::: callout-note
+## Question 7
+
+We've seen a "CLT for medians" in previous course material, which
+suggests that the median may be approximately normal. Compute a
+confidence interval for $\tilde{X}$, the population median, using the
+*observed* mean and standard deviation of the sampling distribution with
+theoretical quantiles from the normal distribution. (e.g. similar in
+form to $\bar{X} \pm z_{\alpha/2} \frac{s}{\sqrt{n}}$.
+:::
+
+::: callout-note
+## Question 8
+
+Compute a bootstrap confidence interval for $\tilde{X}$, the population
+median, using the *observed* 2.5 and 97.5 bootstrap percentiles.
+(*Hint:* Try `?quantile`) How does this interval compare to 7?
+:::
+
+# Why does it work?
+
+This is a *brief* introduction to the theory of why the bootstrap works.
+It's all built upon an estimate for the CDF of the population
+probability distribution that we care about.
+
+First, recall the definition of the CDF: $$ F_x(x_0) = P(X \le x_0)$$
+
+In other words, $F_x(x_0)$ is the probability of the event
+$\{X \le x_0\}$. If we observe a sample of $X_1, ...., X_n \sim F_x$, a
+natural estimator for this probability is the observed proportion of
+observations where $\{X_i \le x_0\}$. So we could use:
+
+$$\hat{F}_n(x_0) = \frac{\text{number of } X_i \le x_0}{\text{total number of observations}} = \frac{\sum_{i=1}^n \mathbb{I}(X_i \le x_0)}{n} = \frac{1}{n} \mathbb{I}(X_i \le x_0)$$
+as an estimator for $F_x$. This estimator is called the *empirical CDF*,
+or *ECDF*.
+
+The plots below show the theoretical CDF for the N(0,1) distribution in
+orange, with the ECDF based on samples of size n=10, n=100, and n=1000.
+As the sample size gets bigger, the ECDF gets closer and closer to the
+true CDF.
+
+```{r}
+#| fig-height: 2
+#| echo: false
+
+ecdf_10 = ecdf(rnorm(10))
+ecdf_100 = ecdf(rnorm(100))
+ecdf_1000 = ecdf(rnorm(1000))
+
+p1 =   tibble(
+    x = seq(-3, 3, by = .1),
+    y = ecdf_10(x)
+  ) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  stat_function(
+    fun = pnorm, 
+    col = 'darkorange'
+  ) + 
+  labs(
+    x = "x",
+    y = expression(F[x]),
+    title = "n = 10"
+  )
+
+p2 =   tibble(
+    x = seq(-3, 3, by = .1),
+    y = ecdf_100(x)
+  ) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  stat_function(
+    fun = pnorm, 
+    col = 'darkorange'
+  ) + 
+  labs(
+    x = "x",
+    y = expression(F[x]),
+    title = "n = 100"
+  )
+  
+p3 =   tibble(
+    x = seq(-3, 3, by = .1),
+    y = ecdf_1000(x)
+  ) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  stat_function(
+    fun = pnorm, 
+    col = 'darkorange'
+  ) + 
+  labs(
+    x = "x",
+    y = expression(F[x]),
+    title = "n = 1000"
+  )
+
+p1 + p2 + p3
+```
+
+It can be shown that $\hat{F}_n(x)$ is an **unbiased** and
+**consistent** (among other things) estimator for $F_x$. The reason why
+bootstrap estimation works is that each bootstrap sample is an IID
+sample from $\hat{F}_n$. When $n$ is large, $\hat{F}_n$ is very close to
+$F$ and so any statistic that is based on $\hat{F}_n$ is very similar to
+the same statistic based on $F$! So re-sampling from our original
+sample, at least when $n$ is fairly large, results in a sampling
+distribution that is very similar to the theoretical sampling
+distribution, *even if we don't know what the theoretical sampling
+distribution is* :exploding_head:. (*Note:* this could be a great
+project idea to dive into!)
+
+# Sources
+
+-   [Yen Chi Chen's lecture
+    notes](https://faculty.washington.edu/yenchic/19A_stat535/Lec10_bootstrap.pdf)
