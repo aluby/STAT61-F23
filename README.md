@@ -1,6 +1,18 @@
 # STAT61-F23
 Course notes and homework assignments (typically in both .qmd and .pdf format) for Stat061 in Fall 2023
 
+# Week 12-14: Inference
+
+## Notes 
+- [Notes14: Least Squares](course-notes/14-least-squares)
+
+## Homework Assignments
+
+## Labs and Activities
+  
+## Final Exam: Sunday Dec 17
+
+  
 # Week 7-11: Inference
 
 ## Notes 
