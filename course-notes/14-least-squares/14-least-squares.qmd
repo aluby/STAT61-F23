@@ -34,7 +34,7 @@ library(modelr)
 theme_set(theme_minimal(base_size = 12))
 ```
 
-Up to this point, we have largely concerned ourselves with **univariate settings**. That is, we observe one sample, $X_1, ..., X_n$, and wish to draw a conclusion about some parameter or estimator. This setting is actually quite restrictive: we rarely are interested in solely one random variable. Most research questions are instead interested in studying how various components of a complex system are related to one another: how is cancer incidence related to diet, genetics, pollution, or behaviors? How do salaries for new grads vary depending on degree, internship experience, industry, gender, or race?
+Up to this point, we have largely concerned ourselves with **univariate settings**. That is, we observe one sample, $X_1, ..., X_n$, and wish to draw a conclusion about some parameter or estimator. This setting is actually quite restrictive: we rarely are interested in solely one random variable. Most research questions are instead interested in how various components of a complex system are related to one another: how is cancer incidence related to diet, genetics, pollution, or behaviors? How do salaries for new grads vary depending on degree, internship experience, industry, gender, or race?
 
 In order to answer these types of questions, we have to extend our statistical toolbox to include *multivariate* samples. This week, we're going to focus on building up the theory for analyzing the relationship between two variables. Rather than assuming we have a sample of $x_1, x_2, ..., x_n$, we're going to assume we have a bivariate sample $(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)$.
 
