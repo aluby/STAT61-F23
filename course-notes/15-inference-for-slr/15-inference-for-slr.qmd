@@ -1,0 +1,111 @@
+---
+title: "15: Inference for SLR"
+subtitle: "Larsen & Marx 11.3"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(modelr)
+theme_set(theme_minimal(base_size = 12))
+```
+
+# Properties of MLEs for Simple Linear Regression
+
+1. $\hat{\beta}_0$ and $\hat{\beta}_1$ are normal RV's
+2. $\hat{\beta}_0$ and $\hat{\beta}_1$ are unbiased
+3. $V(\hat{\beta}_1) = \frac{\sigma^2}{\sum (x_i - \bar{X})^2}$
+4. $V(\hat{\beta}_0) = \frac{\sigma^2 \sum x_i^2}{n\sum (x_i - \bar{X})^2} = \sigma^2 [\frac{1}{n} + \frac{\bar{x}^2}{\sum (x_i - \bar{x})^2}]$
+5. $\hat{\beta_1}$, $\bar{Y}$ and $\hat\sigma^2$ are mutually independent
+6. $\frac{n \hat\sigma^2}{\sigma^2} \sim \chi^2_{n-2}$
+7. $S^2 = \frac{n}{n-2} \hat \sigma^2$ is an unbiased estimator for $\sigma^2$
+
+**Proof**: ($\hat{\beta_1}$ is a normal RV)
+
+\vspace{3in}
+
+
+**Proof**: ($V(\hat{\beta_1})$)
+
+\vspace{3in}
+
+# Inference for Simple Linear Regression
+
+## Inference for $\beta_1$
+
+::: callout-note
+## Test statistic for $\beta_1$
+
+Let $(x_1, Y_1), (x_2, Y_2), ..., (x_n, Y_n)$ be a set of points satisfying $E(Y|X=x) = \beta_0 + \beta_1 x$ and let $S^2 = \frac{1}{n-2} \sum (Y_i - (\hat\beta_0 + \hat\beta_1 x_i))^2$. Then, 
+
+$T = \frac{\hat\beta_1 - \beta_1}{S/\sqrt{\sum (x_i - \bar{x})^2}}$
+:::
+
+**Proof:** 
+
+\vspace{3in}
+
+*Note:* Hypothesis tests based on $T$ are GLRTs! 
+
+## Inference for $\sigma^2$
+
+\vspace{4in}
+
+## Inference for $E(Y|x)$
+
+\vspace{4in}
+
+```{r}
+gentoo_lm = lm(flipper_length_mm ~ body_mass_g, data = palmerpenguins::penguins %>% filter(species == "Gentoo") )
+
+gentoo_conf = broom::augment(gentoo_lm, interval = "confidence")
+gentoo_prediction = broom::augment(gentoo_lm, interval = "prediction")
+
+palmerpenguins::penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_ribbon(data = gentoo_conf, aes(ymin = .lower, ymax = .upper), 
+              alpha = .2, fill = "darkblue")
+```
+
+## Inference for new $Y_i$'s
+
+\vspace{4in}
+
+```{r}
+palmerpenguins::penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_ribbon(data = gentoo_conf, aes(ymin = .lower, ymax = .upper), 
+              alpha = .2, fill = "darkblue") +
+  geom_ribbon(data = gentoo_prediction, aes(ymin = .lower, ymax = .upper), 
+              alpha = .2, fill = "darkorange")
+```
