@@ -1,0 +1,81 @@
+---
+title: "Homework 11"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+```
+
+1. In some regression situations, it is appropriate to assume that the relationship being approximated should pass through the origin. If so, the resulting equation has the form $y = bx$. 
+    (a) Use the least squares criterion to find the formula for the slope in this case. 
+    (b) Luxury suites, many costing more than \$100,000 to rent, have become big-budget status symbols in new sports arenas. The `arena_data` table below (data also created in .qmd document) gives the number of luxury suites and their projected revenues (in millions of USD) for nine US sports facilities. Explain why a no-intercept model may be appropriate for this setting, and find the equation for the least squares line $y = bx$.
+    
+```{r}
+#| echo: false
+
+arena_data = tibble(
+  Arena = c("Palace (Detroit)",
+  "Orlando Arena",
+  "Bradley Center (Milwaukee)",
+   "America West (Phoenix) ",
+    "Charlotte Coliseum",
+     "Target Center (Minneapolis)",
+    "Salt Lake City Arena",
+    "Miami Arena",
+    "ARCO Arena (Sacramento)"),
+   Suites = c(180, 26, 68,88, 12 ,67, 56, 18, 30),
+  Projected_Revenue = c(11.0, 1.4, 3.0, 6.0, 0.9, 4.0,3.5, 1.4, 2.7)
+  )
+
+arena_data %>%
+  knitr::kable()
+```
+
+2. Show that the MLEs for $\beta_0$ and $\beta_1$ are unbiased
+
+3. Using the simple linear regression estimates for $\hat{\beta}_0$ and $\hat{\beta_1}$, show each of the following:
+   (a) The least squares line must pass through the point $(\bar{x}, \bar{y}$)
+   (b) $\sum (y_i - \hat{y}_i) = 0$ 
+   (c) $\sum (\hat{y_i} - \bar{y})^2 = \hat{\beta}_1^2 \sum (x_i - \bar{x})^2$
+
+4. A simple exponential decay model says that the concentration $C_{(t)}$ of a pesticide (for example) remaining after time $t$ is $C_{(t)} = C_0 e^{-\gamma t}$ for $t>0$, where $C_0$ is the initial concentration and $\gamma$ is a constant that determines the rate of decay. 
+   (a) Show that this model can be transformed into a linear model for $Y = \ln(C_{(t)})$ on $t$.
+   (b) Using the terms in the original exponential decay model, what are the slope and intercept for the linear model in (a)? 
+   (c) If you have data on concentrations at $n$ different times $t_i$, you could estimate $\gamma$ by fitting a simple linear regression of $Y_i$ on $t_i$. This implicitly assumes an error term, $\epsilon_i$, that is approximately normally distributed. Write out the implied model for $C_{(t)}$ and describes how error enters the model. What is the distribution of the error term in the model for $C_{(t)}$?
+
+5. Each year, the [Scottish Hill Runners Association](https://www.scottishhillrunners.uk) publishes a list of hill races in Scotland for the year. The code below reads in the results for 68 races and includes `distance`: the distance of the course in km; `climb`: the elevation of the course in km; `timeM`: the record time to complete the course (for registrants in the men's category); and `timeW`: the record time to complete the course (for registrants in the women's category). Your submitted work for this problem should include both (1) a nicely formatted output that is easy for the grading team to read, and (2) your code to support your answers. 
+
+```{r}
+races = tibble(read.table("http://stat4ds.rwth-aachen.de/data/ScotsRaces.dat", 
+                   header = TRUE))
+races
+```
+
+  (a) Make a scatterplot of `timeW` against `distance`. Does a linear model appear to be appropriate? 
+  (b) Fit the least-squares regression and check the residual plots. Do you have any concerns about the fit of the model? If so, rectify it before moving to part (c). 
+  (c) Find 90% intervals for: 
+      i. The slope of the regression line 
+      ii. The average winning time for a 60km race
+      iii. The predicted winning time for a 60km race
