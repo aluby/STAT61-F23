@@ -1,0 +1,109 @@
+---
+title: "15.1: SLR Code Supplement"
+subtitle: ""
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: true
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(patchwork)
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+This .qmd document provides some example code for fitting linear regression models and doing corresponding inference in R. As is often the case, there are *many* different ways that you can do this correctly. I've chosen one approach that prioritizes code readability. You are welcome to take different approaches in your homework, but you should fully understand how everything works before submitting. 
+
+First, create the `gentoo` dataset, which contains only the `gentoo` penguins from the `palmerpenguins` data: 
+
+```{r}
+gentoo = palmerpenguins::penguins %>% 
+  filter(species == "Gentoo")
+```
+
+Next, it's best practice to create a scatterplot of the relationship you're interested in *before* fitting the model: 
+
+```{r}
+ggplot(gentoo, aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point()
+```
+
+Looks pretty good! There are no huge red flags about fitting a linear model. Next, we use `lm()` to fit the `l`inear `m`odel, using the "formula" syntax (which we've seen before in `t.test()`). First, we create `gentoo_lm` and then we print out the summary: 
+
+```{r}
+gentoo_lm = lm(flipper_length_mm ~ body_mass_g, data = gentoo)
+gentoo_lm
+```
+
+This gives us the $\hat{\beta}_0$ and $\hat{\beta}_1$ estimates. Let's say we want to run a t-test for $\beta_1$ - how would we get the relevant quantities? There's actually a *lot* more information stored in the `gentoo_lm` R object (run `names(gentoo_lm)` to see what they are), and we can print a nice summary table with `summary()`: 
+
+```{r}
+summary(gentoo_lm)
+```
+The coefficients table gives us $\hat{\beta}_0$ and $\hat{\beta}_1$, their corresponding standard errors, the resulting t-test statistic assuming $\beta_0 =0$ and $\beta_1 = 0$, and the p-value for the hypothesis test. The Residual standard error also gives us an estimate for $s_\epsilon$, the unbiased estimator for $\sigma^2$. 
+
+Before moving on, let's check our residual plots. I like to do this via `broom::augment()` (you may need to download the `broom` package). The idea is we augment the existing `lm()` model to find the fitted values and residuals for each data point. This is also the command we will use to get confidence and prediction intervals for $\hat{y}$. This creates a new dataset called `gentoo_aug` that contains the x and y values, the predictions (`.fitted`) and residuals (.resid). It also gives a variety of other quantities that we may or may not talk about in this class. 
+
+```{r}
+gentoo_aug = broom::augment(gentoo_lm)
+gentoo_aug
+```
+
+We can then use our new augmented dataset to make residual plots. Which assumptions do each of these residual plots tell us about? 
+
+```{r}
+p1 = ggplot(gentoo_aug, aes(x = .fitted, y = .resid)) +
+  geom_point()
+
+p2 = ggplot(gentoo_aug, aes(sample = .resid)) +
+  geom_qq() + 
+  geom_qq_line()
+
+p1 + p2
+```
+
+We can also use `augment` to create confidence and prediction intervals for $\hat{y}$. The code below (1) creates two augmented datasets, one with confidence intervals for each prediction and one for prediction intervals for each prediction, and (2) makes a scatterplot with each set of intervals overlaid. 
+
+```{r}
+gentoo_conf = broom::augment(gentoo_lm, interval = "confidence")
+gentoo_prediction = broom::augment(gentoo_lm, interval = "prediction")
+
+palmerpenguins::penguins %>%
+  filter(species == "Gentoo") %>%
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_ribbon(data = gentoo_conf, aes(ymin = .lower, ymax = .upper), 
+              alpha = .2, fill = "darkblue") + 
+  geom_ribbon(data = gentoo_prediction, aes(ymin = .lower, ymax = .upper), 
+              alpha = .2, fill = "darkorange")
+```
+
+If we want to find the intervals for a specific point, we could either look through the augmented dataset, or tell R we want to find the intervals for new data. The code below tells R to create a confidence interval for a new penguin with body mass 7000g. (Note that it doesn't have a .resid column -- why?) 
+
+```{r}
+broom::augment(gentoo_lm, 
+               interval = "confidence", 
+               newdata = tibble(body_mass_g = c(7000)))
+```
