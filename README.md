@@ -8,6 +8,8 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 - [Notes15: Inference for Simple Linear Regression](course-notes/15-inference-for-slr)
 
 ## Homework Assignments
+- [Homework11: Due 12/6](homework/homework11)
+- [Homework12: Due 12/13](homework/homework12)
 
 ## Labs and Activities
   
