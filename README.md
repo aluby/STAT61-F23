@@ -6,6 +6,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 ## Notes 
 - [Notes14: Least Squares](course-notes/14-least-squares)
 - [Notes15: Inference for Simple Linear Regression](course-notes/15-inference-for-slr) and [code supplement](course-notes/15-inference-for-slr)
+- [Notes16: Correlation and Matrix Approach to Least Squares](course-notes/16-correlation-and-matrix-approach)
 
 ## Homework Assignments
 - [Homework11: Due 12/6](homework/homework11)
