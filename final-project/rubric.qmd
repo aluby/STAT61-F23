@@ -1,0 +1,58 @@
+---
+title: "Project Rubric"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    classoption: landscape
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+# Rubric
+
+Projects will be scored out of ten in each category; final score will be determined by weight as in the last column. Partial points/adjustments within each category are possible, this is to give you a rough idea of how project will be graded. 
+
+
+
+|                                                                      | 1                                                                                                      | 5                                                                                                                             | 10                                                                                                                                                       | Weight    |
+|----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| Demonstrates proficiency with Mathematical Statistics course content | Final product does not make clear how the project is related to course content                         | Project is related to course content but final product does not integrate material into broader context of what we’ve covered | Project demonstrates a strong understanding of course material and it is very clear how topic fits in to broader context of mathematical statistics      | x 3 |
+| Substantially engages with a topic beyond what was covered in class  | Most of the final product could be done with material that was covered in class                        | Moderate engagement with additional content (e.g. summarized sources, replicated a simulation or analysis)                    | Deep engagement with additional content (e.g. proofs/simulations/analyses are not replications from sources; combines ideas from multiple sources, etc.) | x 3 |
+| Format and Presentation                                              | Substantial issues in meeting expectations                                                             | Meets most expectations                                                                                                       | Meets all expectations (defined in more detail for specific projects below)                                                                              | x 2 |
+| Followed proposal                                                    | Major changes between proposal and final project OR did not follow proposal feedback in final product  | Some changes between proposal and final project OR did not completely follow proposal feedback in final product               | Only minor changes between proposal and final project; followed all feedback                                                                             | x 1 |
+| Scope of project/Creativity                                          | Chose an appropriate topic and format                                                                  | Chose an appropriate topic and format. Clearly spent extra time customizing format and/or incorporating content creatively    | Ambitious; goes above and beyond course material in content or format.                                                                                   | x 1  |
+ 
+ 
+
+# Format and presentation expectations: 
+
+## Paper
+
+Should be engaging and readable to a Stat61 audience; well-written; publication-ready (no typos, etc.). All equations should be typed, all graphs should have appropriate and readable labels. 5 (single-space) page limit. (If you need to go over 5 pages, you must decide which proofs and/or results belong in an appendix rather than the main text). 
+
+## Presentation/Slides
+
+Should be engaging and readable to a Stat61 audience; well-written; publication-ready (no typos, etc.). All equations should be typed, all graphs should have appropriate and readable labels. Slides should *not* be text-heavy and presentation should be organized to tell a clear story. Maximum 20 slides. 
+
+## Other formats (blog post, jupyter notebook, dashboard, etc.)
+
+Should be engaging and readable to a Stat61 audience; publication-ready (no typos, etc.). All equations should be formatted, all graphs should have appropriate and readable labels. Code should run with no errors and methods should be fully explained throughout (you can assume familiarity with your chosen programming language). It is harder to quantify a “limit”, but it should take the user no longer than 15-20 minutes to get through all of your content. 
+
+
+
+
+
