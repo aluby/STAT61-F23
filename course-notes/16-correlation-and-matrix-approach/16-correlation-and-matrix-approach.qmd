@@ -1,0 +1,179 @@
+---
+title: "16: Correlation and Matrix Approach"
+subtitle: "Larsen & Marx 11.4; Rice 14.3; 14.4"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(modelr)
+theme_set(theme_minimal(base_size = 12))
+```
+
+# Covariance and Correlation
+
+When we started linear regression, we began with the simplest scenario from a statistical standpoint -- the case where each $(x_i, y_i)$ are just constants with no probabilistic structure. When we moved into inference for this setting, we treated $x_i$ as constant and $Y_i$ as a random variable. We'll now move into the next layer of complexity: assuming both $X_i$ and $Y_i$ are random variables. 
+
+::: callout-note 
+## Covariance
+
+Let $X$ and $Y$ be two random variables. The *covariance* of $X$ and $Y$ is given by: 
+
+$$\text{Cov}(X, Y) = E(XY) - E(X)E(Y)$$
+
+:::
+
+::: callout-note 
+Let $X$ and $Y$ be two random variables with finite variances. Then, 
+
+$$\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X,Y)$$
+:::
+
+\vspace{1.25in}
+
+The covariance of two random variables gives us a sense of how/what direction they are "related", but it also depends on the scale of the mean/variance for each RV. The *correlation coefficient* gives us a similar measure that is comparable across all RV's: 
+
+::: callout-note 
+## Correlation coefficient
+
+Let $X$ and $Y$ be two random variables.   The correlation coefficient of $X$ and $Y$ is given by: 
+
+$$\rho(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \text{Cov}(X^*,Y^*)$$
+where
+
+:::
+
+**Note:** $|\rho(X,Y)| \le 1$: 
+
+\vspace{2in}    
+
+**Example:** Suppose the correlation coefficient between $X$ and $Y$ is unknown, but we have observed $n$ measurements $(X_1, Y_1), (X_2, Y_2), ..., (X_n, Y_n)$. How could we use this data to estimate $\rho$?
+
+\vspace{3in}
+
+If we square the (estimated) correlation coefficient, we can simplify to: 
+
+$$r^2 = \frac{\sum (y_i - \bar{y})^2 - \sum (y_i - \hat{y})^2}{\sum (y_i - \bar{y})^2}$$
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+gentoo = palmerpenguins::penguins %>% 
+  filter(species == "Gentoo")
+
+gentoo %>%
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_hline(aes(yintercept = mean(flipper_length_mm, na.rm = T)), linetype = "dashed")
+```
+
+**Interpretation of $R^2$:**
+
+\vspace{1in}
+
+```{r}
+#| echo: true
+
+cor(gentoo$body_mass_g, gentoo$flipper_length_mm, use = "complete.obs")
+```
+
+
+```{r}
+#| echo: true
+
+gentoo_lm = lm(flipper_length_mm ~ body_mass_g, data = gentoo)
+summary(gentoo_lm)
+```
+
+# Matrix Approach to Least Squares
+
+## Deriving the least squares solutions for 1 variable case
+
+Define: 
+
+$\mathbf{X} =$ \hspace{2in} $\mathbf{Y} =$ \hspace{2in} $\boldsymbol{\beta} =$ 
+
+\vspace{1in}
+
+$\hat{\mathbf{Y}} = \mathbf{X}\beta$
+
+\vspace{1.5in}
+
+The least squares problem is to find $\beta$ to minimize $L = \sum (y_i - (\beta_0 + \beta_1x_i))^2$. 
+
+\vspace{1in}
+
+In Notes14, we should that the least squares estimates satisfy: 
+
+$$\sum (y_i - (\beta_0 + \beta_1)x_i) = 0$$
+
+$$\sum (y_i - (\beta_0 + \beta_1)x_i)x_i = 0$$
+
+In matrix form, these equations are equivalent to: 
+
+$$X^T X \hat{\beta} = X^T Y$$
+
+\pagebreak
+
+Which means that the least squares solution is (assuming $(X^T X)$ invertible)
+
+$$\hat{\beta} = (X^T X)^{-1} X^T Y$$
+
+\vspace{4in}
+
+## Mean and Covariance of Vector-Valued RV's
+
+Let **Y** be a random vector where $E(Y_i) = \mu_i$ and $Cov(Y_i, Y_j) = \sigma_{ij}$
+
+\vspace{2in}
+
+::: callout-note 
+## Linear functions of random variables
+
+Let $\mathbf{Z}= \mathbf{c + A Y}$. Then 
+
+$E(\mathbf{Z})= \mathbf{c + A }E(\mathbf{Y})$ and $\Sigma_Z = \mathbf{A} \Sigma_Y \mathbf{A}^T$
+:::
+
+\vspace{2in}
+
+## Mean and Covariance of Least Squares Estimates
+
+Let $Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$, where: 
+
+\vspace{2in}
+
+::: callout-note 
+## Mean and covariance of LS estimates (Matrix Form)
+
+$E(\hat{\beta}) = \beta$
+
+$\Sigma_{\hat{\beta}} = \sigma^2 (X^TX)^{-1}$
+:::
+
+
