@@ -1,0 +1,149 @@
+---
+title: "16: Multiple Regression"
+subtitle: "Rice 14.4"
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(modelr)
+theme_set(theme_minimal(base_size = 12))
+```
+
+# The Hat Matrix 
+
+$$\epsilon= \mathbf{Y - \hat{Y}}$$
+
+\vspace{2in}
+
+*Note:* The "hat matrix" has some nice properties: $H = H^T = H^2$ and $(I-H) = (I-H)^T = (I-H)^2$. 
+
+# Estimation of $\sigma^2$
+
+In Notes 15, two of the properties that we worked with were: 
+
+(1) $\frac{n \hat\sigma^2}{\sigma^2} \sim \chi^2_{n-2}$
+(2) $S^2 = \frac{n}{n-2} \hat\sigma^2$
+
+In matrix notation, we can write: 
+
+$$ \sum (Y_i - \hat{Y_i})^2 = || Y - HY ||^2$$
+\vspace{3in}
+
+Then, using some nice properties for finding means of matrices (see Rice 14.4), we can show that $E(||Y - \hat{Y}||^2) = (n-p)\sigma^2$. This leads to the unbiased estimate for $\sigma^2$ for the multiple regression case: 
+
+\vspace{1in}
+
+
+**Errors vs Residuals:** 
+
+\vspace{1in}
+
+
+**Covariance matrix of the residuals:** 
+
+\vspace{2in}
+
+::: callout-note 
+## Cross-covariance matrix
+
+Let $X$ be a random vector of length $n$ with covariance matrix $\Sigma_X$. If $Y = AX$ and $Z = BX$, where $A = p \times n$ and $B = m \times n$, then the cross-covariance matrix of $Y$ and $Z$ is given by: 
+\vspace{.5in}
+
+:::
+
+::: callout-note 
+If the errors have covariance matrix $\sigma^2 I$, the residuals are uncorrelated with the predicted values
+:::
+*Proof:*
+
+\vspace{3in}
+
+# CI's for $\beta$
+
+::: callout-note
+## Sampling distribution for $\hat{\beta}$
+
+\vspace{1in}
+
+:::
+
+\vspace{2in}
+
+# CI's and PI's for predictions 
+
+Let $x^T = (1, x_1, ..., x_p)$ be a vector of predictors for a new observation $Y$. 
+\vspace{5in}
+
+# Multiple $R^2$
+
+In the simple regression case, recall that 
+
+$R^2 =$
+
+In simple linear regression, $R^2 = r^2$, where $r$ is the sample correlation between $X$ and $Y$. In the multiple regression case, we define $R = \text{Cor}(\hat{y}, y)$. 
+
+In multiple regression, whenever we add another predictor variable, $R^2$ *never gets worse*. The *Adjusted $R^2$* is more often used in practice: 
+
+Adjusted $R^2 =$
+
+as the number of predictors increase, what happens to the adjusted $R^2$?
+
+# Interpretation of $\beta_i$ in Multiple Regression
+
+```{r}
+#| fig-width: 8
+#| fig-height: 3
+#| 
+gentoo = palmerpenguins::penguins %>%
+  filter(species == "Gentoo")
+
+p1 = gentoo %>%
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) + 
+  geom_point()
+
+p2 = gentoo %>%
+  ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) + 
+  geom_point()
+
+p3 = gentoo %>%
+  ggplot(aes(x = bill_depth_mm, y = flipper_length_mm)) + 
+  geom_point()
+
+p1 + p2 + p3
+```
+
+```{r}
+lm(flipper_length_mm ~ body_mass_g, data = gentoo)
+lm(flipper_length_mm ~ bill_length_mm, data = gentoo)
+lm(flipper_length_mm ~ bill_depth_mm, data = gentoo)
+lm(flipper_length_mm ~ body_mass_g + bill_length_mm + bill_depth_mm, data = gentoo)
+```
+
+```{r}
+lm(flipper_length_mm ~ body_mass_g + bill_length_mm + bill_depth_mm, data = gentoo) %>% summary()
+```
