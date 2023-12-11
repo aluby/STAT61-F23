@@ -31,12 +31,12 @@ library(tidyverse)
 1. For the simple linear regression case ($y = \beta_0 + \beta_1 x + \epsilon$), show that $\hat{\beta}_1 = r  \frac{\hat\sigma_y}{\hat\sigma_x}$. 
 
 2. Assuming the standard multiple linear model ($Y = \beta X + \epsilon$, where $X$ is an $n \times p$ design matrix):
-   (a) Show that $\sigma^2 I = \Sigma_{\hat{y}} + \Sigma_{\epsilon}$
-   (b) Using (a), conclude that $n\sigma^2 = \sum Var(\hat{Y}_i) + \sum Var(\epsilon_i)$
+   (a) Show that $\sigma^2 I = \Sigma_{\hat{y}} + \Sigma_{\hat\epsilon}$
+   (b) Using (a), conclude that $n\sigma^2 = \sum Var(\hat{Y}_i) + \sum Var(\hat\epsilon_i)$
 
 3. Consider a multiple linear regression problem with design matrix $\mathbf{X}$ and observations $\mathbf{Y}$. Let $\mathbf{X}_1$ be the matrix remaining when at least one column is *removed* from $\mathbf{X}$. (So $\mathbf{X}_1$ is the design matrix for a linear regression on $\mathbf{Y}$ but with fewer predictors). Show that $R^2$ (non-adjusted) for the regression model calculated using design matrix $\mathbf{X}$ is *at least as large* as the $R^2$ for the regression model using design matrix $\mathbf{X}_1$. 
 
-4. Problem from Monday
+4. ~~Problem from Monday~~
 
-5. Problem from Wednesday 
+5. Problem from Mon/Wed TBA
 
