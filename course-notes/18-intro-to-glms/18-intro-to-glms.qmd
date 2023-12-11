@@ -1,0 +1,185 @@
+---
+title: "18: Intro to Generalized Linear Models"
+subtitle: ""
+date: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+knitr:
+    opts_chunk: 
+      dev: "ragg_png"
+      echo: false
+      warning: false
+      message: false
+format:
+  pdf:
+    include-in-header: 
+       - "../preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    fontsize: 11pt
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(modelr)
+theme_set(theme_minimal(base_size = 12))
+```
+
+Let's start with our dear old `penguins` friends. The full dataset contains information about three different species of penguins. Rather than understanding the relationship between `body_mass` and `flipper_length`, we might instead be interested in how `body_mass` is related to species. In this case, we'll treat species as either `Gentoo` or `Not Gentoo`
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+
+
+penguins = palmerpenguins::penguins %>%
+  mutate(
+    gentoo = ifelse(species == "Gentoo", 1, 0)
+  )
+
+ggplot(penguins, aes(x = body_mass_g, y = gentoo, col = gentoo)) + 
+  geom_point(size = .5) +
+  ylim(c(-.25, 1.25)) + 
+  theme(legend.position = "none")
+```
+
+On first glance, it looks like we could go ahead and fit a linear regression model for this problem: 
+
+```{r}
+gentoo_lm = lm(gentoo ~ body_mass_g, data = penguins)
+summary(gentoo_lm)$coef %>% round(., digits = 4)
+```
+
+\vspace{.25in}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.5
+
+gentoo_lm = lm(gentoo ~ body_mass_g, data = penguins)
+p1 = ggplot(broom::augment(gentoo_lm), aes(x = .fitted, y = .resid)) +
+  geom_point()
+
+p2 = ggplot(broom::augment(gentoo_lm), aes( sample = .resid)) +
+  geom_qq() +
+  geom_qq_line()
+
+p1 + p2
+```
+
+
+
+Let's list some reasons why this approach is not ideal: 
+
+\vspace{2.5in}
+
+What distribution does `gentoo` have? A better approach would be to start there. 
+
+\vspace{3in}
+
+# Logistic Regression 
+
+::: callout-note
+## Logistic Regression Model
+
+\vspace{1in}
+
+:::
+
+Solving for $p$, this gives: 
+
+\vspace{.5in}
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.5
+
+p1 = tibble(
+  x = seq(-10, 10, by = .5),
+  y = exp(x)/(1+exp(x))
+  ) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  labs(
+    x = expression(X~beta),
+    y = "p"
+  )
+
+p2 = tibble(
+  x = seq(-10, 10, by = .5),
+  y = exp(x)
+  ) %>%
+  ggplot(aes(x = x, y = y)) + 
+  geom_line() + 
+  labs(
+    x = expression(X~beta),
+    y = "log(p)"
+  )
+
+p3 = tibble(
+  x = seq(-10, 10, by = .5),
+  y = exp(x)/(1+exp(x))
+  ) %>%
+  ggplot(aes(x = x, y = log(y/(1-y)))) + 
+  geom_line() + 
+  labs(
+    x = expression(X~beta),
+    y = "logistic(p)"
+  )
+
+p3 + p2 + p1
+```
+
+## Maximum Likelihood Estimation 
+
+Now that we have the structure of the model, we have to think about how to estimate the $\beta$'s. Recall that the likelihood function for a $n$ Bernoulli random variables is: 
+
+$$ l(p) = \sum y_i \ln p + (1-y_i)\ln (1-p)$$
+
+But, since we now have an $X$ variable, $p = p(x_i)$ 
+
+\vspace{3in}
+
+
+::: callout-note
+## Sampling distribution of logistic regression coefficients
+
+\vspace{1in}
+
+:::
+
+```{r}
+#| echo: true
+
+gentoo_mod = glm(gentoo ~ body_mass_g, 
+                 data = penguins, 
+                 family = "binomial")
+summary(gentoo_mod)
+```
+## Interpretation of coefficients
+
+\vspace{2in}
+
+# Generalized Linear Models 
+
+We've now seen two different settings for regression. If $X$ is a vector of predictors and $Y \in \mathbb{R}$, we have assumed a linear model: 
+
+\vspace{.5in}
+
+and if $Y \in \{0, 1\}$, we assumed a logistic model: 
+
+\vspace{.5in}
+
+In both settings, we are assuming that a transformation of the conditional expectation is a linear function of $X$: 
+
+
+

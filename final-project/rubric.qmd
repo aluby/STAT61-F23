@@ -22,6 +22,8 @@ format:
     fontsize: 11pt
 ---
 
+The final project is due **Wednesday, Dec 20 at 11:59pm** on gradescope. 
+
 # Rubric
 
 Projects will be scored out of ten in each category; final score will be determined by weight as in the last column. Partial points/adjustments within each category are possible, this is to give you a rough idea of how project will be graded. 
