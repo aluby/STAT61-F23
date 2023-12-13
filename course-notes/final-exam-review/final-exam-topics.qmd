@@ -1,0 +1,105 @@
+---
+title: "Topics for Final Exam"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+```
+
+The final exam will be **Sunday, Dec 17 from 9am-12pm**. No calculators or resources other than the note sheet that will be provided. The preliminary version of the note sheet is on GitHub (I am going to try to make it fit on one page front/back so minor changes are possible). My hope is that you will not need the whole time. 
+
+The questions on the final will be similar to quiz questions: if you review previous quizzes, homework and in-class problems, and the regression review problems; you'll be in great shape. 
+
+## Estimation 
+
+1. Statistics, parameters, estimators, etc.
+1. Likelihood functions
+1. Deriving maximum likelihood estimators
+1. Deriving MoM estimators 
+1. Deriving Bayes estimators (conjugate priors!)
+1. Bias and Variance of estimators 
+
+## Properties of Estimators 
+
+*You should know how to derive or apply these properties given a problem set-up, and also understand conceptually how they relate to one another. I will not ask you to do in-depth proofs*
+
+1. Fisher information
+1. Cramer-Rao lower bound and efficiency
+1. MVUE's
+1. Asymptotic unbiasedness
+1. Consistency
+1. Invariance of consistent estimators 
+1. Invariance of MLEs
+1. Sufficiency
+1. Factorization Theorem
+1. Rao-Blackwell Theorem
+1. Exponential Families
+
+## Inference
+
+1. Central Limit Theorem
+1. Delta Method
+1. Uncertainty Intervals 
+   a. Using large-sample normal approximations
+   b. Using exact sampling distributions
+   c. "Conservative" CI's 
+   d. Bayesian posterior intervals 
+1. Hypothesis Testing
+   a. Setting up null and alternative hypotheses
+   b. Defining decision rules based on sampling distributions
+   c. Significance level and power of the test
+1. Power Function
+   a. Relationship to power and significance level
+   b. Size of the test and composite null hypotheses
+   c. Type I and II errors 
+1. GLRTs
+   a. Why we like them
+   b. How we derive them 
+1. Two-sample Inference
+   a. Means: Equal variance vs Welch's approximation
+   b. Proportions: different normal approximations for different assumptions
+1. Chi-Square Goodness of Fit tests
+
+## Regression 
+
+1. Simple Linear Regression 
+   a. Least squares solution
+   b. Maximum likelihood solution
+   c. Assumptions of simple linear regression ($Y_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)$) and how to check them
+2. Inference for SLR
+   a. Sampling distributions of $\hat\beta_0 ,\hat\beta_1, s^2$
+   b. Inference for $\beta$'s, $\sigma^2$, $\hat{Y}_i$'s 
+   c. Prediction vs Confidence Intervals 
+   d. Correlation coefficient and $R^2$
+3. Multiple Regression
+   a. Matrix approach to least squares (*basic* matrix algebra: simplifying transposes, inverses)
+   b. Expected value and variance of vector-valued random variables 
+   c. Sampling distributions of $\hat\beta_0 ,\hat\beta_1, s^2$
+   d. Inference for $\beta$'s, $\sigma^2$, $\hat{Y}_i$'s 
+   e. Prediction vs Confidence Intervals 
+   f. Multiple and adjusted $R^2$
+4. Generalized Linear Models
+   a. Logistic Regression
+   b. Relationship to exponential family
