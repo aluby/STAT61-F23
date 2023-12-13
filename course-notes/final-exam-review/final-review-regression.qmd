@@ -1,0 +1,113 @@
+---
+title: "Regression Problems -- Final Exam Review"
+subtitle: "Stat061-F23"
+author: "Prof Amanda Luby"
+callout-appearance: minimal
+format:
+  pdf:
+    include-in-header: 
+       - "../homework-preamble.tex"
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=1in
+      - left=1in
+      - right=1in
+      - bottom=1in
+      - heightrounded
+    fontfamily: libertine
+    monofont: "Courier New"
+    fontsize: 11pt
+---
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+library(patchwork)
+theme_set(theme_minimal())
+```
+
+*Note:* these may be harder/longer than what I would expect to give on the final, but wanted to give problems that would help with conceptual understanding and review. If you want more practice with mechanics, try some of the problems from Larsen & Marx or DeGroot & Schervish. 
+
+1. Consider a problem of simple linear regression in which the durability Y of a certain type of alloy is to be related to the temperature X at which it was produced. Eight specimens were produced at different temperatures and their durability was recorded. A linear regression model was fit to this data. The coefficient table and residual plots are shown below. 
+
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 2.5
+
+
+durability_data = tibble(
+  temperature = c(.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+  durability = c(40, 41, 43, 42, 44, 42, 43, 42)
+)
+
+X = cbind(
+  rep(1, nrow(durability_data)), 
+  durability_data$temperature
+)
+
+durability_lm = lm(durability ~ temperature, data = durability_data)
+
+summary(durability_lm)
+
+p1 = ggplot(broom::augment(durability_lm), aes(y = .resid, x = .fitted)) + 
+  geom_point()
+
+p2 = ggplot(broom::augment(durability_lm), aes(sample = .resid)) + 
+  geom_qq() + 
+  geom_qq_line() + 
+  labs(
+    x = "Theoretical Quantiles", 
+    y = "Residuals"
+  )
+  
+
+p1 + p2
+```
+
+Using the R output above, answer the following questions: 
+
+  (a) What are the values of the MLEs $\hat{\beta}_0$, $\hat{\beta}_1$ and $\hat\sigma^2$? 
+  (b) Do you have any concerns about the assumptions of the linear model? State how you can tell. 
+  (c) Construct a 95% confidence interval for $\beta_1$. Does this interval contain 0? 
+  (d) Test at the $\alpha = .05$ level the hypothesis that the regression line passes through the origin in the x-y plane. 
+  (b) First, note that $(X^TX)^{-1} = \begin{bmatrix} 0.61 & -.214 \\ -.214 & .095 \end{bmatrix}$. Find the covariance of $\hat{\beta}_0$ and $\hat{\beta_1}$. 
+  (d) Using (b), find an expression for the correlation between $\hat{\beta_0}$ and $\hat{\beta_1}$. You should be able to plug in all numbers but you do not need to simplify. 
+  (e) What is the correlation coefficient between `durability` and `temperature`?
+  (e) Let $\theta = c_1 \beta_1 - \beta_0$, where $c_1$ is a constant. Determine an unbiased estimator $\hat{\theta}$ for $\theta$. 
+  (f) Show how you would find the MSE $E[(\theta - \hat\theta)^2]$
+  (g) In simple linear regression, it is common to instead make a residual plot of residuals against the x-variable. Fill in the scatterplot below and explain how you were able to do so. 
+  
+```{r}
+#| echo: false
+#| fig-width: 3
+#| fig-height: 2.5
+#| 
+ggplot(broom::augment(durability_lm), aes(y = .resid, x = temperature))
+```
+  
+
+2. You are given a dataset with one response variable $Y$ and two predictor variables $X_1, X_2$, with $n=5$ observations. You are going to fit the following multiple linear regression model *without an intercept*: 
+
+$$Y_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i$$
+
+   (a) Write out the matrix form of the multiple linear regression, including the error assumptions. Indicate the dimensions for all matrices. 
+   (b) Express $\frac{1}{n}X^T X$ in terms of sums related to $X_{i1}, X_{i2}, Y_i$, etc. 
+   (c) To estimate the coefficients, we minimize the sum of squares $\sum (Y_i - \beta_1 X_{i1} - \beta_2 X_{i2})^2$ and derive the following estimating equations: 
+$$\sum X_{i1} Y_i = \beta_1 \sum X_i^2 + \beta_2 \sum X_{i1} X_{i2}$$
+$$ \sum X_{i2} Y_i = \beta_1 \sum X_{i1} X_{i2} \beta_2 \sum X_{i2}^2$$
+Rewrite the minimization problem using matrices, derive the matrix form of the estimating equations, and show that it has solution $\hat{\beta} = (X^T X)^{-1} X^T Y$
+   (d) What is the dimension of the hat matrix $H$ for this model? 
+   (e) Express the formula of residual vector $\hat{\epsilon}$ in terms of the hat matrix. Derive the expectation and covariance of $\hat{\epsilon}$ in matrix notation.  
+
+
+3. Recall that in logistic regression, we use the model:
+
+$$\log(\frac{p_i}{1-p_i}) = \beta_0 + \beta_1 x_i$$
+
+That is, 1-unit increase in $x_i$ is associated with a $\beta_1$ increase in the logit. It is hard to interpret things on a logit scale. It is often more useful to interpret on the *odds* scale, where the odds = $\frac{p}{1-p}$. Show that an equivalent interpretation is: a 1-unit increase in $x_i$ means that the odds increase by a factor of $e^{\beta_1}$.
+
