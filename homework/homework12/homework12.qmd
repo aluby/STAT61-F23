@@ -30,7 +30,7 @@ library(tidyverse)
 
 1. For the simple linear regression case ($y = \beta_0 + \beta_1 x + \epsilon$), show that $\hat{\beta}_1 = r  \frac{\hat\sigma_y}{\hat\sigma_x}$. 
 
-2. Assuming the standard multiple linear model ($Y = \beta X + \epsilon$, where $X$ is an $n \times p$ design matrix):
+2. Assuming the standard multiple linear model ($Y = X\beta  + \epsilon$, where $X$ is an $n \times p$ design matrix):
    (a) Show that $\sigma^2 I = \Sigma_{\hat{y}} + \Sigma_{\hat\epsilon}$
    (b) Using (a), conclude that $n\sigma^2 = \sum Var(\hat{Y}_i) + \sum Var(\hat\epsilon_i)$
 
