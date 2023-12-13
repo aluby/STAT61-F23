@@ -17,7 +17,7 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
   
 ## Final Exam: Sunday Dec 17
 - [Final Exam Topic List](course-notes/final-exam-review/final-exam-topics.pdf)
-- [Formula Sheet](course-notes/final-exam-review/formula-sheeet.pdf)
+- [Formula Sheet](course-notes/final-exam-review/formula-sheet.pdf)
 - [Regression Practice Problems](course-notes/final-exam-review/final-review-regression.pdf)
   
 # Week 7-11: Inference
