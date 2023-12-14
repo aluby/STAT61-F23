@@ -76,7 +76,7 @@ Using the R output above, answer the following questions:
   (c) Construct a 95% confidence interval for $\beta_1$. Does this interval contain 0? 
   (d) Test at the $\alpha = .05$ level the hypothesis that the regression line passes through the origin in the x-y plane. 
   (b) First, note that $(X^TX)^{-1} = \begin{bmatrix} 0.61 & -.214 \\ -.214 & .095 \end{bmatrix}$. Find the covariance of $\hat{\beta}_0$ and $\hat{\beta_1}$. 
-  (d) Using (b), find an expression for the correlation between $\hat{\beta_0}$ and $\hat{\beta_1}$. You should be able to plug in all numbers but you do not need to simplify. 
+  (d) Using your result from the previous part, find an expression for the correlation between $\hat{\beta_0}$ and $\hat{\beta_1}$. You should be able to plug in all numbers but you do not need to simplify. 
   (e) What is the correlation coefficient between `durability` and `temperature`?
   (e) Let $\theta = c_1 \beta_1 - \beta_0$, where $c_1$ is a constant. Determine an unbiased estimator $\hat{\theta}$ for $\theta$. 
   (f) Show how you would find the MSE $E[(\theta - \hat\theta)^2]$
