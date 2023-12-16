@@ -11,14 +11,14 @@ Course notes and homework assignments (typically in both .qmd and .pdf format) f
 
 ## Homework Assignments
 - [Homework11: Due 12/6](homework/homework11)
-- [Homework12: Due 12/13](homework/homework12)
+- [Homework12: Due 12/13](homework/homework12) and [Solutions](homework/homework12/homework12-sols.pdf)
 
 ## Labs and Activities
   
 ## Final Exam: Sunday Dec 17
 - [Final Exam Topic List](course-notes/final-exam-review/final-exam-topics.pdf)
 - [Formula Sheet](course-notes/final-exam-review/formula-sheet.pdf)
-- [Regression Practice Problems](course-notes/final-exam-review/final-review-regression.pdf)
+- [Regression Practice Problems](course-notes/final-exam-review/final-review-regression.pdf) and [Solutions](course-notes/final-exam-review/regression-review-sols.pdf)
   
 # Week 7-11: Inference
 
